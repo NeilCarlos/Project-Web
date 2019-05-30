@@ -1,0 +1,50 @@
+/* Barra de Busqueda */
+/* .form-control-borderless {
+  border: none;
+} */
+
+/* .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+} */
+.header-recolector{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fin Barra de busqueda */
+  
+  
+  .card{
+    width: 250px;
+    min-width: 250px;
+    margin: 5px;
+  }
+.contenedorcards{      
+    display: flex;    
+    flex-flow: row wrap;  
+    justify-content: center;
+}
+
+img{
+    height: 200px; 
+    width: 100%; 
+    display: block;
+    padding: 5px;
+    border-radius: 10px;
+}
+img:hover{
+  transition:all 0.3s ease;
+  transform: scale(0.9);
+}
+.flex-card-footer{
+  display: flex;
+  justify-content: space-between;
+}
+.footer-precio{
+  display: flex;
+  justify-content: center;
+}
