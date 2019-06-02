@@ -1,7 +1,9 @@
 import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import Recolector from './components/recolector/Recolector';
+// import Recolector from './components/recolector/Recolector';
+// import Mensaje from './components/mensaje/Mensaje';
+import Registrar from './components/registrar/Registrar'
 function App() {
   return (
     // <div className="App">
@@ -20,7 +22,10 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <Recolector></Recolector>
+
+    // <Recolector></Recolector>
+    // <Mensaje></Mensaje>
+    <Registrar></Registrar>
   );
 }
 

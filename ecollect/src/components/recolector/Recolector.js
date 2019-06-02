@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 
 import './Recolector.css';
 export default class Recolector extends Component {
+  
+
+
   render() {
     return (
       <div className="contenedor-recolector container-fluid">
@@ -152,6 +155,10 @@ export default class Recolector extends Component {
 
         </div>
         <hr class="my-4" />
+
+
+
+        
         {/* Paginador Inferior */}
         <nav aria-label="Page navigation example">
           <ul class="pagination pagination-lg justify-content-center">
