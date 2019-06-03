@@ -1,0 +1,42 @@
+body{
+    background: url("https://concepto.de/wp-content/uploads/2013/08/ecolog%C3%ADa-e1551739090805.jpg") fixed no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+}
+.container{
+    background: white;
+
+}
+img {width:100%;}
+
+input[type=file]#Foto {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    }
+
+label[for="Foto"] {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background-color: green;
+    display: inline-block;
+    transition: all .5s;
+    cursor: pointer;
+    padding: 8px 40px !important;
+    text-transform: uppercase;
+    width: fit-content;
+    text-align: center;
+    }
+.mapa{
+    height: 200px;
+    width: 300px;
+}
