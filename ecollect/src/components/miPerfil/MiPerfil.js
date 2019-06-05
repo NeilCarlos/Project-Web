@@ -15,12 +15,8 @@ export default class MiPerfil extends Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
 
-        this.handleShow2 = this.handleShow2.bind(this);
-        this.handleClose2 = this.handleClose2.bind(this);
-
         this.state = {
             show: false,
-            show2: false,
         };
     }
 
@@ -30,14 +26,6 @@ export default class MiPerfil extends Component {
 
     handleShow() {
         this.setState({ show: true });
-    }
-
-    handleClose2() {
-        this.setState({ show2: false });
-    }
-
-    handleShow2() {
-        this.setState({ show2: true });
     }
     render() {
         return (
@@ -62,6 +50,9 @@ export default class MiPerfil extends Component {
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link eventKey="third">Cambiar contraseña</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="fourth">Desactivar Cuenta</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Col>
@@ -135,6 +126,28 @@ export default class MiPerfil extends Component {
                                     </div>
                                     <br />
                                     <button className="btn btn-primary mb-5">Guardar Cambios</button>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="fourth">
+                                    <h2 className="mt-5">DESACTIVAR CUENTA</h2>
+                                    <br/>
+                                    <Button variant="primary" onClick={this.handleShow}>
+                                        Desactivar cuenta
+                                    </Button>
+
+                                    <Modal show={this.state.show} onHide={this.handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Desactivar cuenta</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>Realmente desea desactivar su cuenta?</Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={this.handleClose}>
+                                                NO
+                                            </Button>
+                                            <Button variant="primary" onClick={this.handleClose}>
+                                                SI
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

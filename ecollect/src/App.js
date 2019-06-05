@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
-import Reciclar from './components/reciclar/Reciclar';
-
+import Registrar from './components/registrar/Registrar';
+// import Reciclar from './components/reciclar/Reciclar';
+// import MiPerfil from './components/miPerfil/MiPerfil';
+// import {BrowserRouter,Switch,Route } from 'react-router-dom';
 function App() {
   return (
-
-      <Reciclar/>
+      <Registrar></Registrar>
+      // <Reciclar/>
+      // <MiPerfil></MiPerfil>
 
   );
 }

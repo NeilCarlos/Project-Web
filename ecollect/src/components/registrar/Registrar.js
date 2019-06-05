@@ -115,6 +115,14 @@ export default class Registrar extends Component {
                             <div className="form-row">
                                 <button type="button" className="btn btn-danger">Registrar</button>
                             </div>
+
+                            <button class="loginBtn loginBtn--facebook">
+                                Registrar con Facebook
+                            </button>
+
+                            <button class="loginBtn loginBtn--google">
+                                Registrar con Google
+                            </button>
                         </form>
                     </div>
                 </div>
