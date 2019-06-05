@@ -1,85 +1,185 @@
 import React, { Component } from 'react'
+import Carrusel from './Carrusel';
+import Mapa from '../mapa/Mapa';
 
 
 export default class Reciclar extends Component {
+
+
+    handleInputChange(event) {
+        var image = event.target.files[0];
+        var pattern = /image-*/;
+        //var reader = new FileReader();
+        if (!image.type.match(pattern)) {
+          console.error('File is not an image');
+          return;
+        }
+        //this.objUsuario.picture = image;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('imgReciclado').setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(image);
+        //readURL(event);
+      }
+    
+      readURL(input) {
+        if (input.target.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById('imgReciclado').setAttribute('src', e.target.result);
+          }
+          reader.readAsDataURL(input.target.files[0]);
+        }
+      }
+    
+
     render() {
-    const style1 = {left: '0px', top: '0px', position: 'absolute', transform: 'translate3d(0px, 42px, 0px)'};
+        const estilo = {
+            card: {
+                width: '50rem',
+                height: '50rem',
+                //position: 'absolute'
+            },
+            img: {
+                height: '65%',
+                width: '80%',
+                //position: 'absolute'
+                
+            },
+            tabs: {
+                width: '100%',
+                height: '100%',
+                //position: 'absolute'
+            }
+
+        }
         return (
             <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
 
-                <ul className="nav nav-tabs">
-                    <li className="nav-item">
-                        <a className="nav-link" href="#home" data-toggle="tab">Home</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link active" href="#profile" data-toggle="tab">Profile</a>
-                    </li>
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" role="button" aria-expanded="false" aria-haspopup="true" href="#" data-toggle="dropdown">Dropdown</a>
-                        <div className="dropdown-menu" style={style1} x-placement="bottom-start">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                            <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Separated link</a>
+
+
+
+
+                        <div className="card text-white bg-danger mb-3" style={estilo.card}>
+                            <div className="card-header">Reciclar</div>
+                            <div className="card-body">
+                                <h4 className="card-title">Publica tu Reciclaje</h4>
+
+
+
+
+                                <div className="row mb-3">
+                                    <div className="col-md-6">
+                                        <label htmlFor="inTiempoVigencia" className="col-form-label">Tiempo Vigencia</label>
+                                        <select class="custom-select" id="inTiempoVigencia">
+                                            <option selected="">Selecciona aqui</option>
+                                            <option value="1">3 dias</option>
+                                            <option value="2">6 dias</option>
+                                            <option value="2">1 semana</option>
+                                            <option value="2">3 semanas</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label htmlFor="inEstado" className="col-form-label">Estado</label>
+                                        <div class="form-check">
+                                            <label class="form-check-label mr-5">
+                                                <input name="optionsRadios" class="form-check-input" id="optionsRadios1" type="radio" checked="true" value="option1" />
+                                                Activo
+                                            </label>
+                                            <label class="form-check-label">
+                                                <input name="optionsRadios" class="form-check-input" id="optionsRadios2" type="radio" value="option2" />
+                                                No Activo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <ul className="nav nav-tabs bg-info">
+                                    <li className="nav-item" id="tabCategoria">
+                                        <a className="nav-link active" href="#categoria" data-toggle="tab">Categoria</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="#producto" data-toggle="tab">Producto</a>
+                                    </li>
+                                </ul>
+                                <div className="tab-content" id="myTabContent" style={estilo.tabs}>
+                                    <div className="tab-pane fade active show p-2" id="categoria">
+
+                                        <Carrusel />
+
+                                    </div>
+
+                                    <div className="tab-pane fade bg-warning p-2" id="producto">
+
+                                        <label htmlFor="inDescripcion" className="col-form-label">Descripcion</label>
+                                        <input type="text" className="form-control" placeholder="Ejem.: Envases de vidrio" id="inDescripcion" />
+
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label htmlFor="inCantidad" className="col-form-label">Cantidad</label>
+                                                <input type="number" className="form-control" placeholder="Ejem.: 20" id="inCantidad" />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label htmlFor="inDeseo" className="col-form-label">Deseo</label>
+                                                <select class="custom-select">
+                                                    <option selected="">Selecciona aqui</option>
+                                                    <option value="1">Darlo</option>
+                                                    <option value="2">Venderlo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <center>
+                                            <img alt="" id="imgReciclado" style={estilo.img}/>
+                                            <br/>
+                                            <input type="file" accept="image/*" name = "image" onChange={this.handleInputChange}/>
+                                        </center>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                            </div>
+
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#categoria">Categoria</a></li>
+                                <li class="breadcrumb-item active">Vidrio</li>
+                            </ol>
+
+
                         </div>
-                    </li>
-                </ul>
-                <div className="tab-content" id="myTabContent">
-                    <div className="tab-pane fade" id="home">
-                        <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, 
-                            retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. 
-                            Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. 
-                            Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+
+
+                        <br />
+                        <Mapa />
+
+                        <br/>
+                       
+
+
                     </div>
-                    <div className="tab-pane fade active show" id="profile">
-                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, 
-                            blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. 
-                            Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. 
-                            Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-                    </div>
-                    <div className="tab-pane fade" id="dropdown1">
-                        <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi 
-                            farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles 
-                            etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-                    </div>
-                    <div className="tab-pane fade" id="dropdown2">
-                        <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse 
-                            gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf 
-                            cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table 
-                            VHS viral locavore cosby sweater.</p>
-                    </div>
+
                 </div>
 
+                <div className="row m-3 text-right">
+                    <div className="col-md-12">
+                        <button class="btn btn-primary" type="button">Reciclar</button>
+                        <button class="btn btn-danger" type="button">Cancelar</button>
+                    </div>
+                </div>
             </div>
+
+
         )
     }
 }
-
-
-
-
-// <div>
-// <h3> Test 1 </h3>
-// <hr />
-// <ul className="nav nav-pills">
-//     <li className="active"><a data-toggle="pill" href="#home">Home</a></li>
-//     <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
-//     <li><a data-toggle="pill" href="#menu2">Menu 2</a></li>
-// </ul>
-
-// <div className="tab-content">
-//     <div id="home" className="tab-pane fade in active">
-//         <h3>HOME</h3>
-//         <p>Some content.</p>
-//     </div>
-//     <div id="menu1" className="tab-pane fade">
-//         <h3>Menu 1</h3>
-//         <p>Some content in menu 1.</p>
-//     </div>
-//     <div id="menu2" className="tab-pane fade">
-//         <h3>Menu 2</h3>
-//         <p>Some content in menu 2.</p>
-//     </div>
-// </div>
-// </div>
