@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Carrusel from './Carrusel';
 import Mapa from '../mapa/Mapa';
-
+import './Reciclar.css';
 
 export default class Reciclar extends Component {
 
@@ -51,6 +51,7 @@ export default class Reciclar extends Component {
                 width: '100%',
                 height: '100%',
                 //position: 'absolute'
+                // overflowY:'scroll'
             }
 
         }
@@ -136,11 +137,11 @@ export default class Reciclar extends Component {
                                             </div>
                                         </div>
                                         <br />
-                                        <center>
-                                            <img alt="" id="imgReciclado" style={estilo.img}/>
-                                            <br/>
-                                            <input type="file" accept="image/*" name = "image" onChange={this.handleInputChange}/>
-                                        </center>
+                                        
+                                        <img alt="" id="imgReciclado" style={estilo.img}/>
+                                        <br/>
+                                        <input type="file" accept="image/*" name = "image" onChange={this.handleInputChange}/>
+                                        
 
                                     </div>
 
