@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-
-import './dashboard.css'
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import $ from 'jquery'; 
+import $ from 'jquery';
+
+import './dashboard.css';
+
 
 export default class Dashboard extends Component {
 
@@ -18,12 +19,6 @@ export default class Dashboard extends Component {
         // $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     }
 
-    ClickSideBar=()=>{
-        $("#sidebar").mCustomScrollbar({
-            theme: "minimal"
-        });
-    }
-
     render() {
         return (
 
@@ -31,22 +26,22 @@ export default class Dashboard extends Component {
 
                 <nav id="sidebar">
                     <div className="sidebar-header">
-                        <h3>Bootstrap Sidebar</h3>
+                        <h3>ECOLLECT</h3>
                     </div>
 
                     <ul className="list-unstyled components">
-                        <p>Dummy Heading</p>
+                        <p>Recicla con Ecollect</p>
                         <li className="active">
-                            <Link to="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Home</Link>
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Home</a>
                             <ul className="collapse list-unstyled" id="homeSubmenu">
                                 <li>
-                                    <Link to="#">Home 1</Link>
+                                    <a href="#">Home 1</a>
                                 </li>
                                 <li>
-                                    <Link to="#">Home 2</Link>
+                                    <a href="#">Home 2</a>
                                 </li>
                                 <li>
-                                    <Link to="#">Home 3</Link>
+                                    <a href="#">Home 3</a>
                                 </li>
                             </ul>
                         </li>
@@ -54,16 +49,16 @@ export default class Dashboard extends Component {
                             <Link to="#">About</Link>
                         </li>
                         <li>
-                            <Link to="#pageSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Pages</Link>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Pages</a>
                             <ul className="collapse list-unstyled" id="pageSubmenu">
                                 <li>
-                                    <Link to="#">Page 1</Link>
+                                    <a href="#">Page 1</a>
                                 </li>
                                 <li>
-                                    <Link to="#">Page 2</Link>
+                                    <a href="#">Page 2</a>
                                 </li>
                                 <li>
-                                    <Link to="#">Page 3</Link>
+                                    <a href="#">Page 3</a>
                                 </li>
                             </ul>
                         </li>
@@ -93,10 +88,10 @@ export default class Dashboard extends Component {
 
                             <button type="button" id="sidebarCollapse" onClick={this.ClickToggleSidebar} className="btn btn-info">
                                 <i className="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span>Menu</span>
                             </button>
 
-                            <button onClick={this.ClickSideBar} className="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <button className="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <i className="fas fa-align-justify"></i>
                             </button>
 
