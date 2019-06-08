@@ -45,10 +45,6 @@ exports.publicacion_model = (sequelize) => {
             type: sequelize_1.DataTypes.TEXT,
             allowNull: true
         },
-        publi_titu: {
-            type: sequelize_1.DataTypes.STRING(50),
-            allowNull: true
-        }
     }, {
         timestamps: false,
         tableName: 't_publicacion'

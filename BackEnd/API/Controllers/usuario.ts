@@ -2,6 +2,10 @@
 import { Request, Response } from 'express';
 import { Usuario } from './../Configuracion/sequelize';
 
+// Retornar Archivo
+var fs = require('fs');
+var path_module=require('path');
+
 export var UsuarioController = {
 
     loginUsuario: (req: Request, res: Response) => {
@@ -34,6 +38,28 @@ export var UsuarioController = {
             }
         });
 
+    },
+    loginUsuarioRedesSociales: (req: Request, res: Response) => {
+        //BuscarUsuario
+        let { usu_email, usu_pass } = req.body;
+        Usuario.findOne({
+            where: {
+                usu_email: usu_email
+            }
+        }).then((usuario_encontrado: any) => {
+            if (usuario_encontrado) {
+                res.status(200).send({
+                    message: 'ok',
+                    content:'Usuario Encontrado'                    
+                });                
+            }
+            else {
+                res.status(500).json({
+                    message: 'error',
+                    content: 'No existe usuario'
+                });
+            }
+        });
     },
     cambiarPass: (req: Request, res: Response) => {
         let { usu_email, usu_pass, new_pass } = req.body;
@@ -96,20 +122,7 @@ export var UsuarioController = {
             }
         });
     },
-    updateUsuariobyId:(req: Request, res: Response)=>{
-        // let{usu_id,usu_nombre,usu_urlimagen,usu_email,usu_telefono,usu_tiposesion,usu_lng,usu_lat,usu_tipousu,usu_avatar}=req.body;
-
-        // let updateusuario={
-        //     usu_nombre:usu_nombre,
-        //     usu_urlimagen:usu_urlimagen,
-        //     usu_email:usu_email,
-        //     usu_telefono:usu_telefono,
-        //     usu_tiposesion:usu_tiposesion,
-        //     usu_lng:usu_lng,
-        //     usu_lat:usu_lat,
-        //     usu_tipousu:usu_tipousu,
-        //     usu_avatar:usu_avatar
-        // }
+    updateUsuariobyId:(req: Request, res: Response)=>{  
         Usuario.update(req.body, {where: {usu_id:req.body.usu_id}}).then((datos_actualizados:any)=>{            
             
             if(datos_actualizados[0]>0){
@@ -207,4 +220,41 @@ export var UsuarioController = {
             }
         });
     },
+    uploadImageAvatar:(req:Request,res:Response)=>{
+        let{usu_id}=req.params;        
+        
+        if(req.files){
+            let ruta=req.files.archivo.path;
+            // para separar la ruta del nombre .images\d
+            let nombreyextension=ruta.split('\\')[1];
+            console.log(nombreyextension);
+            Usuario.update({usu_avatar:nombreyextension},{where: {usu_id:usu_id}}).then((datos_actualizados:any)=>{
+                if(datos_actualizados[0]>0){
+                    res.status(200).json({
+                        message:"updated",
+                        content:datos_actualizados[0]
+                    });
+                }else{
+                    res.status(400).json({
+                        message:"not updated",
+                        content:null
+                    });
+                }
+            });            
+        }else{
+            return res.status(500).send({
+                message:"No hay archivos"
+            })
+        }        
+    },
+    getImagenAvatar:(req:Request,res:Response)=>{
+        let ruta=`./images/${req.params.name}`;
+        let rutaDefault=`./images/default.png`;
+        if(fs.existsSync(ruta)){
+            return res.sendfile(path_module.resolve(ruta));
+        }else{
+            return res.sendfile(path_module.resolve(rutaDefault));
+        }
+    },
+
 }

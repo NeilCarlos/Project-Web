@@ -5,11 +5,12 @@ import {Request,Response,NextFunction} from 'express'
 // Importando Rutas de API
 import {UsuarioRouter} from './../Routes/usuario'
 import { PublicacionRouter } from '../Routes/publicacion';
+import { OfertaRouter } from '../Routes/oferta';
 
 export default class Server{
 
     public app:express.Application;
-    public PUERTO;
+    public PUERTO:any;
 
     constructor(){
         this.app=express();
@@ -41,6 +42,7 @@ export default class Server{
     asignarRutas(){
         this.app.use('/api',UsuarioRouter);
         this.app.use('/api',PublicacionRouter);
+        this.app.use('/api',OfertaRouter);
         // this.app.get('/',(req:Request,res:Response)=>{
         //     res.send("Holas");
         // });

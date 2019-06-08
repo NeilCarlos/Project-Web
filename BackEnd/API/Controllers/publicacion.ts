@@ -2,8 +2,8 @@
 import { Request, Response } from 'express';
 import { Publicacion, Oferta ,Foto} from './../Configuracion/sequelize';
 
-// var fs = require('fs');
-// var path_module = require('path');
+var fs = require('fs');
+var path_module = require('path');
 
 const Sequelize=require('sequelize');
 const Op = Sequelize.Op;
@@ -56,12 +56,42 @@ export var PublicacionController = {
             });
         }
     },
-    getPublicacionByIdPubliacion:(req: Request, res: Response)=>{
+    getImagenPublicacion:(req:Request,res:Response)=>{
+        // let {publi_id}=req.params;
+        // // Buscar Fotos Publicacion
+        // let fotos=[];
+
+        // Foto.findAll({where:{publi_id}}).then((respuesta:any)=>{                        
+        //     if(respuesta.length>0){
+        //         // return respuesta.json();
+        //         respuesta.forEach((element:any) => {
+
+        //             let ruta=`./images/${element.fot_img}`;
+        //             if(fs.existsSync(ruta)){
+        //                 fotos.push(path_module.resolve(ruta));
+        //             }
+
+        //         });
+        //         res.sendfile(fotos);          
+        //     }else{
+        //         res.status(500).json({
+        //             message: "not found photos",
+        //             content: null
+        //         });
+        //     }
+        // });
+        let ruta=`./images/${req.params.name}`;
+        let rutaDefault=`./images/default.png`;
+        if(fs.existsSync(ruta)){
+            return res.sendfile(path_module.resolve(ruta));
+        }else{
+            return res.sendfile(path_module.resolve(rutaDefault));
+        }
+    },
+    getPublicacionByIdPublicacion:(req: Request, res: Response)=>{
         let {publi_id}=req.params;
 
-        Publicacion.findAll({
-            where: {[Op.and]: [{publi_id: {[Op.eq]: publi_id}}]},
-            }).then((respuesta:any)=>{
+        Publicacion.findAll({where:{publi_id:publi_id},include:[{model:Foto},{model:Oferta}]}).then((respuesta:any)=>{
             if(respuesta){
                 res.status(200).json({
                     message: "ok",
@@ -93,6 +123,7 @@ export var PublicacionController = {
     },
     getPublicacionByNombre:(req: Request, res: Response)=>{
         let {nombre}=req.params;
+
         Publicacion.findAll({
             where: {[Op.and]: [{publi_descripcion: {[Op.like]: `%${nombre}%`}}, {publi_estado: {[Op.eq]: 'p'}}]},
             },{include:[{model:Foto}]}).then((respuesta:any)=>{
@@ -150,22 +181,20 @@ export var PublicacionController = {
                 });
             }
         });
-    },
-    AnularPublicacionById:(req: Request, res: Response)=>{
-        let {publi_id}=req.params;
-        // Buscar Publicacion
-        Publicacion.findAll({
-            where: {[Op.and]: [{publi_id: {[Op.eq]: publi_id}}]},
-            }).then((respuesta:any)=>{
-            if(respuesta){
+    },    
+    cambiarEstadoPublicacionById:(req: Request, res: Response)=>{
+        let{publi_id,publi_estado}=req.body;
+        
+        Publicacion.update({publi_estado:publi_estado}, {where: {publi_id:publi_id}}).then((datos_actualizados:any)=>{
+            if(datos_actualizados[0]>0){
                 res.status(200).json({
-                    message: "ok",
-                    content: respuesta
+                    message:"updated",
+                    content:datos_actualizados[0]
                 });
             }else{
-                res.status(500).json({
-                    message: "not found",
-                    content: null
+                res.status(400).json({
+                    message:"not updated",
+                    content:null
                 });
             }
         });

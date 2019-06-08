@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 // Importando Rutas de API
 const usuario_1 = require("./../Routes/usuario");
 const publicacion_1 = require("../Routes/publicacion");
+const oferta_1 = require("../Routes/oferta");
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -35,6 +36,7 @@ class Server {
     asignarRutas() {
         this.app.use('/api', usuario_1.UsuarioRouter);
         this.app.use('/api', publicacion_1.PublicacionRouter);
+        this.app.use('/api', oferta_1.OfertaRouter);
         // this.app.get('/',(req:Request,res:Response)=>{
         //     res.send("Holas");
         // });

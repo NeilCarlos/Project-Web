@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("./../Configuracion/sequelize");
+// Retornar Archivo
+var fs = require('fs');
+var path_module = require('path');
 exports.UsuarioController = {
     loginUsuario: (req, res) => {
         //BuscarUsuario
@@ -29,6 +32,28 @@ exports.UsuarioController = {
                 res.status(500).json({
                     message: 'error',
                     content: 'usuario o pasword incorrectos'
+                });
+            }
+        });
+    },
+    loginUsuarioRedesSociales: (req, res) => {
+        //BuscarUsuario
+        let { usu_email, usu_pass } = req.body;
+        sequelize_1.Usuario.findOne({
+            where: {
+                usu_email: usu_email
+            }
+        }).then((usuario_encontrado) => {
+            if (usuario_encontrado) {
+                res.status(200).send({
+                    message: 'ok',
+                    content: 'Usuario Encontrado'
+                });
+            }
+            else {
+                res.status(500).json({
+                    message: 'error',
+                    content: 'No existe usuario'
                 });
             }
         });
@@ -95,18 +120,6 @@ exports.UsuarioController = {
         });
     },
     updateUsuariobyId: (req, res) => {
-        // let{usu_id,usu_nombre,usu_urlimagen,usu_email,usu_telefono,usu_tiposesion,usu_lng,usu_lat,usu_tipousu,usu_avatar}=req.body;
-        // let updateusuario={
-        //     usu_nombre:usu_nombre,
-        //     usu_urlimagen:usu_urlimagen,
-        //     usu_email:usu_email,
-        //     usu_telefono:usu_telefono,
-        //     usu_tiposesion:usu_tiposesion,
-        //     usu_lng:usu_lng,
-        //     usu_lat:usu_lat,
-        //     usu_tipousu:usu_tipousu,
-        //     usu_avatar:usu_avatar
-        // }
         sequelize_1.Usuario.update(req.body, { where: { usu_id: req.body.usu_id } }).then((datos_actualizados) => {
             if (datos_actualizados[0] > 0) {
                 res.status(200).json({
@@ -202,5 +215,43 @@ exports.UsuarioController = {
                 });
             }
         });
+    },
+    uploadImageAvatar: (req, res) => {
+        let { usu_id } = req.params;
+        if (req.files) {
+            let ruta = req.files.archivo.path;
+            // para separar la ruta del nombre .images\d
+            let nombreyextension = ruta.split('\\')[1];
+            console.log(nombreyextension);
+            sequelize_1.Usuario.update({ usu_avatar: nombreyextension }, { where: { usu_id: usu_id } }).then((datos_actualizados) => {
+                if (datos_actualizados[0] > 0) {
+                    res.status(200).json({
+                        message: "updated",
+                        content: datos_actualizados[0]
+                    });
+                }
+                else {
+                    res.status(400).json({
+                        message: "not updated",
+                        content: null
+                    });
+                }
+            });
+        }
+        else {
+            return res.status(500).send({
+                message: "No hay archivos"
+            });
+        }
+    },
+    getImagenAvatar: (req, res) => {
+        let ruta = `./images/${req.params.name}`;
+        let rutaDefault = `./images/default.png`;
+        if (fs.existsSync(ruta)) {
+            return res.sendfile(path_module.resolve(ruta));
+        }
+        else {
+            return res.sendfile(path_module.resolve(rutaDefault));
+        }
     },
 };

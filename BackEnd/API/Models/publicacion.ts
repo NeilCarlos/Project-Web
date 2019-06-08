@@ -43,10 +43,10 @@ export var publicacion_model=(sequelize:Sequelize)=>{
             type:DataTypes.TEXT,
             allowNull:true
         },
-        publi_titu:{
-            type:DataTypes.STRING(50),
-            allowNull:true
-        }
+        // publi_titu:{
+        //     type:DataTypes.STRING(50),
+        //     allowNull:true
+        // }
     },
     {
         timestamps:false,
