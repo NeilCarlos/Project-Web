@@ -95,19 +95,19 @@ exports.UsuarioController = {
         });
     },
     updateUsuariobyId: (req, res) => {
-        let { usu_id, usu_nombre, usu_urlimagen, usu_email, usu_telefono, usu_tiposesion, usu_lng, usu_lat, usu_tipousu, usu_avatar } = req.body;
-        let updateusuario = {
-            usu_nombre: usu_nombre,
-            usu_urlimagen: usu_urlimagen,
-            usu_email: usu_email,
-            usu_telefono: usu_telefono,
-            usu_tiposesion: usu_tiposesion,
-            usu_lng: usu_lng,
-            usu_lat: usu_lat,
-            usu_tipousu: usu_tipousu,
-            usu_avatar: usu_avatar
-        };
-        sequelize_1.Usuario.update(updateusuario, { where: { usu_id: usu_id } }).then((datos_actualizados) => {
+        // let{usu_id,usu_nombre,usu_urlimagen,usu_email,usu_telefono,usu_tiposesion,usu_lng,usu_lat,usu_tipousu,usu_avatar}=req.body;
+        // let updateusuario={
+        //     usu_nombre:usu_nombre,
+        //     usu_urlimagen:usu_urlimagen,
+        //     usu_email:usu_email,
+        //     usu_telefono:usu_telefono,
+        //     usu_tiposesion:usu_tiposesion,
+        //     usu_lng:usu_lng,
+        //     usu_lat:usu_lat,
+        //     usu_tipousu:usu_tipousu,
+        //     usu_avatar:usu_avatar
+        // }
+        sequelize_1.Usuario.update(req.body, { where: { usu_id: req.body.usu_id } }).then((datos_actualizados) => {
             if (datos_actualizados[0] > 0) {
                 res.status(200).json({
                     message: "updated",
@@ -160,6 +160,36 @@ exports.UsuarioController = {
                     else {
                         res.status(500).json({
                             message: "not created",
+                            content: null
+                        });
+                    }
+                });
+            }
+            else {
+                res.status(500).json({
+                    message: `Failed, El usuario con email ${req.body.usu_email} ya esta registrado.`,
+                    content: null
+                });
+            }
+        });
+    },
+    createSocialRegister: (req, res) => {
+        sequelize_1.Usuario.findAll({
+            where: {
+                usu_email: req.body.usu_email
+            }
+        }).then((resultado) => {
+            if (resultado[0] == null) {
+                sequelize_1.Usuario.create(req.body).then((retorno) => {
+                    if (retorno) {
+                        res.status(201).json({
+                            message: "ok",
+                            content: retorno
+                        });
+                    }
+                    else {
+                        res.status(500).json({
+                            message: 'error',
                             content: null
                         });
                     }

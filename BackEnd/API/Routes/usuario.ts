@@ -8,7 +8,9 @@ export var UsuarioRouter=Router();
  */
 UsuarioRouter.get('/usuario/:idusuario',UsuarioController.getUsuarioById);
 UsuarioRouter.post('/usuario',UsuarioController.createUsuario);
+UsuarioRouter.post('/usuario/social',UsuarioController.createSocialRegister);
 UsuarioRouter.post('/usuario/login',UsuarioController.loginUsuario);
 UsuarioRouter.post('/usuario/cambiopass',UsuarioController.cambiarPass);
 UsuarioRouter.put('/usuario',UsuarioController.updateUsuariobyId);
 UsuarioRouter.put('/usuario/darbaja/:usu_id',UsuarioController.darBajaUsuarioById);
+

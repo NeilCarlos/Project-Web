@@ -9,6 +9,7 @@ exports.UsuarioRouter = express_1.Router();
  */
 exports.UsuarioRouter.get('/usuario/:idusuario', usuario_1.UsuarioController.getUsuarioById);
 exports.UsuarioRouter.post('/usuario', usuario_1.UsuarioController.createUsuario);
+exports.UsuarioRouter.post('/usuario/social', usuario_1.UsuarioController.createSocialRegister);
 exports.UsuarioRouter.post('/usuario/login', usuario_1.UsuarioController.loginUsuario);
 exports.UsuarioRouter.post('/usuario/cambiopass', usuario_1.UsuarioController.cambiarPass);
 exports.UsuarioRouter.put('/usuario', usuario_1.UsuarioController.updateUsuariobyId);

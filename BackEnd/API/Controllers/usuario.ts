@@ -97,20 +97,20 @@ export var UsuarioController = {
         });
     },
     updateUsuariobyId:(req: Request, res: Response)=>{
-        let{usu_id,usu_nombre,usu_urlimagen,usu_email,usu_telefono,usu_tiposesion,usu_lng,usu_lat,usu_tipousu,usu_avatar}=req.body;
+        // let{usu_id,usu_nombre,usu_urlimagen,usu_email,usu_telefono,usu_tiposesion,usu_lng,usu_lat,usu_tipousu,usu_avatar}=req.body;
 
-        let updateusuario={
-            usu_nombre:usu_nombre,
-            usu_urlimagen:usu_urlimagen,
-            usu_email:usu_email,
-            usu_telefono:usu_telefono,
-            usu_tiposesion:usu_tiposesion,
-            usu_lng:usu_lng,
-            usu_lat:usu_lat,
-            usu_tipousu:usu_tipousu,
-            usu_avatar:usu_avatar
-        }
-        Usuario.update(updateusuario, {where: {usu_id:usu_id}}).then((datos_actualizados:any)=>{            
+        // let updateusuario={
+        //     usu_nombre:usu_nombre,
+        //     usu_urlimagen:usu_urlimagen,
+        //     usu_email:usu_email,
+        //     usu_telefono:usu_telefono,
+        //     usu_tiposesion:usu_tiposesion,
+        //     usu_lng:usu_lng,
+        //     usu_lat:usu_lat,
+        //     usu_tipousu:usu_tipousu,
+        //     usu_avatar:usu_avatar
+        // }
+        Usuario.update(req.body, {where: {usu_id:req.body.usu_id}}).then((datos_actualizados:any)=>{            
             
             if(datos_actualizados[0]>0){
                 res.status(200).json({
@@ -174,8 +174,37 @@ export var UsuarioController = {
                 })
             }
         });
+    },
+    createSocialRegister: (req: Request, res: Response) => {
+        
+        Usuario.findAll({
+            where: {
+                usu_email: req.body.usu_email
+            }
+        }).then((resultado: any) => {            
 
-
-
+            if (resultado[0] == null) {
+            
+                Usuario.create(req.body).then((retorno:any)=>{
+                    if(retorno){
+                        res.status(201).json({
+                            message:"ok",
+                            content:retorno
+                        });
+                    }else{
+                        res.status(500).json({
+                            message:'error',
+                            content:null
+                        });
+                    }
+                });                                
+                
+            } else {
+                res.status(500).json({
+                    message: `Failed, El usuario con email ${req.body.usu_email} ya esta registrado.`,
+                    content: null
+                })
+            }
+        });
     },
 }
