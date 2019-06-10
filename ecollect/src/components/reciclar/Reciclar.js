@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import Carrusel from './Carrusel';
 import Mapa from '../mapa/Mapa';
-import './Reciclar.css';
+
+import Tab from 'react-bootstrap/Tab'
+import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
+//import './Reciclar.css';
 
 export default class Reciclar extends Component {
 
@@ -11,8 +18,8 @@ export default class Reciclar extends Component {
         var pattern = /image-*/;
         //var reader = new FileReader();
         if (!image.type.match(pattern)) {
-          console.error('File is not an image');
-          return;
+            console.error('File is not an image');
+            return;
         }
         //this.objUsuario.picture = image;
         var reader = new FileReader();
@@ -21,31 +28,31 @@ export default class Reciclar extends Component {
         }
         reader.readAsDataURL(image);
         //readURL(event);
-      }
-    
-      readURL(input) {
+    }
+
+    readURL(input) {
         if (input.target.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            document.getElementById('imgReciclado').setAttribute('src', e.target.result);
-          }
-          reader.readAsDataURL(input.target.files[0]);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imgReciclado').setAttribute('src', e.target.result);
+            }
+            reader.readAsDataURL(input.target.files[0]);
         }
-      }
-    
+    }
+
 
     render() {
         const estilo = {
             card: {
-                width: '50rem',
-                height: '50rem',
+                width: '100%',
+                //height: '50rem',
                 //position: 'absolute'
             },
             img: {
                 height: '65%',
                 width: '80%',
                 //position: 'absolute'
-                
+
             },
             tabs: {
                 width: '100%',
@@ -102,7 +109,7 @@ export default class Reciclar extends Component {
 
 
 
-                                <ul className="nav nav-tabs bg-info">
+                                {/* <ul className="nav nav-tabs bg-info">
                                     <li className="nav-item" id="tabCategoria">
                                         <a className="nav-link active" href="#categoria" data-toggle="tab">Categoria</a>
                                     </li>
@@ -137,15 +144,64 @@ export default class Reciclar extends Component {
                                             </div>
                                         </div>
                                         <br />
-                                        
-                                        <img alt="" id="imgReciclado" style={estilo.img}/>
-                                        <br/>
-                                        <input type="file" accept="image/*" name = "image" onChange={this.handleInputChange}/>
-                                        
+
+                                        <img alt="" id="imgReciclado" style={estilo.img} />
+                                        <br />
+                                        <input type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
+
 
                                     </div>
 
-                                </div>
+                                </div> */}
+
+
+                                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                                    <Row>
+                                        <Col sm={3}>
+                                            <Nav variant="pills" className="flex-column">
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey="first">Categoria</Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey="second">Producto</Nav.Link>
+                                                </Nav.Item>
+                                            </Nav>
+                                        </Col>
+                                        <Col sm={9}>
+                                            <Tab.Content>
+                                                <Tab.Pane eventKey="first">
+                                                    <Carrusel />
+                                                </Tab.Pane>
+                                                <Tab.Pane eventKey="second">
+
+                                                    <label htmlFor="inDescripcion" className="col-form-label">Descripcion</label>
+                                                    <input type="text" className="form-control" placeholder="Ejem.: Envases de vidrio" id="inDescripcion" />
+
+                                                    <div className="row">
+                                                        <div className="col-md-6">
+                                                            <label htmlFor="inCantidad" className="col-form-label">Cantidad</label>
+                                                            <input type="number" className="form-control" placeholder="Ejem.: 20" id="inCantidad" />
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label htmlFor="inDeseo" className="col-form-label">Deseo</label>
+                                                            <select class="custom-select">
+                                                                <option selected="">Selecciona aqui</option>
+                                                                <option value="1">Darlo</option>
+                                                                <option value="2">Venderlo</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+                                                    <img alt="" id="imgReciclado" style={estilo.img} />
+                                                    <br />
+                                                    <input type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
+
+                                                </Tab.Pane>
+                                            </Tab.Content>
+                                        </Col>
+                                    </Row>
+                                </Tab.Container>
 
 
 
@@ -164,8 +220,8 @@ export default class Reciclar extends Component {
                         <br />
                         <Mapa />
 
-                        <br/>
-                       
+                        <br />
+
 
 
                     </div>

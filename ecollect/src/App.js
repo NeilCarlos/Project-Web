@@ -4,7 +4,7 @@ import './App.css';
 // import Reciclar from './components/reciclar/Reciclar';
 // import MiPerfil from './components/miPerfil/MiPerfil';
 import {BrowserRouter,Switch,Route } from 'react-router-dom';
-import Dashboard from './components/dashboard2/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import Login from './components/login/Login'
 
 
