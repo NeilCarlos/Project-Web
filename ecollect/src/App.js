@@ -2,9 +2,9 @@ import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
 // import Recolector from './components/recolector/Recolector';
-// import Mensaje from './components/mensaje/Mensaje';
+import Mensaje from './components/mensaje/Mensaje';
 // import Registrar from './components/registrar/Registrar'
-import Dashboard from './components/dashboard/Dashboard';
+// import Dashboard from './components/dashboard/Dashboard';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
     // <Mensaje></Mensaje>
     <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" component={Dashboard}/>                    
+                    <Route exact path="/" component={Mensaje}/>                    
                     {/* <Route exact path="/portafolio" component={Portafolio}/>    */}
                     {/* <Route exact path="/productos" component={Productos}/>    */}
                 </Switch>
