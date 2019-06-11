@@ -3,7 +3,6 @@ import './MiPerfil.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -92,7 +91,7 @@ export default class MiPerfil extends Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <h2 className="mt-5">CAMBIAR UBICACION</h2>
-                                    <img className="mapa" src="https://fotos.e-consulta.com/maps2.jpg"></img>
+                                    <img className="mapa" src="https://fotos.e-consulta.com/maps2.jpg" alt=""/>
                                     <div class="form-group">
                                         <fieldset>
                                             <label className="control-label" for="readOnlyInput">Latitud</label>

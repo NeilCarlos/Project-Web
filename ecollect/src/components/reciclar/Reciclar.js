@@ -65,7 +65,7 @@ export default class Reciclar extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-12 text-center">
 
 
 
@@ -82,23 +82,23 @@ export default class Reciclar extends Component {
                                 <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label htmlFor="inTiempoVigencia" className="col-form-label">Tiempo Vigencia</label>
-                                        <select class="custom-select" id="inTiempoVigencia">
-                                            <option selected="">Selecciona aqui</option>
+                                        <select className="custom-select" id="inTiempoVigencia">
+                                            <option >Selecciona aqui</option>
                                             <option value="1">3 dias</option>
                                             <option value="2">6 dias</option>
-                                            <option value="2">1 semana</option>
-                                            <option value="2">3 semanas</option>
+                                            <option value="3">1 semana</option>
+                                            <option value="4">3 semanas</option>
                                         </select>
                                     </div>
                                     <div className="col-md-6">
                                         <label htmlFor="inEstado" className="col-form-label">Estado</label>
-                                        <div class="form-check">
-                                            <label class="form-check-label mr-5">
-                                                <input name="optionsRadios" class="form-check-input" id="optionsRadios1" type="radio" checked="true" value="option1" />
+                                        <div className="form-check">
+                                            <label className="form-check-label mr-5">
+                                                <input name="optionsRadios" className="form-check-input" id="optionsRadios1" type="radio" defaultChecked value="option1" />
                                                 Activo
                                             </label>
-                                            <label class="form-check-label">
-                                                <input name="optionsRadios" class="form-check-input" id="optionsRadios2" type="radio" value="option2" />
+                                            <label className="form-check-label">
+                                                <input name="optionsRadios" className="form-check-input" id="optionsRadios2" type="radio" value="option2" />
                                                 No Activo
                                             </label>
                                         </div>
@@ -184,8 +184,8 @@ export default class Reciclar extends Component {
                                                         </div>
                                                         <div className="col-md-6">
                                                             <label htmlFor="inDeseo" className="col-form-label">Deseo</label>
-                                                            <select class="custom-select">
-                                                                <option selected="">Selecciona aqui</option>
+                                                            <select className="custom-select">
+                                                                <option >Selecciona aqui</option>
                                                                 <option value="1">Darlo</option>
                                                                 <option value="2">Venderlo</option>
                                                             </select>
@@ -208,9 +208,9 @@ export default class Reciclar extends Component {
 
                             </div>
 
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#categoria">Categoria</a></li>
-                                <li class="breadcrumb-item active">Vidrio</li>
+                            <ol className="breadcrumb">
+                                <li className="breadcrumb-item"><a href="#categoria">Categoria</a></li>
+                                <li className="breadcrumb-item active">Vidrio</li>
                             </ol>
 
 
@@ -218,6 +218,7 @@ export default class Reciclar extends Component {
 
 
                         <br />
+
                         <Mapa />
 
                         <br />
@@ -230,8 +231,8 @@ export default class Reciclar extends Component {
 
                 <div className="row m-3 text-right">
                     <div className="col-md-12">
-                        <button class="btn btn-primary" type="button">Reciclar</button>
-                        <button class="btn btn-danger" type="button">Cancelar</button>
+                        <button className="btn btn-primary" type="button">Reciclar</button>
+                        <button className="btn btn-danger" type="button">Cancelar</button>
                     </div>
                 </div>
             </div>
