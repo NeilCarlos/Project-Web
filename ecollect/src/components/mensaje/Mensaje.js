@@ -22,35 +22,62 @@ export default class Mensaje extends Component {
                                     </div>
                                 </div>
                             </div>
-                            {/* Usuario */}
-                            <div className="inbox_chat">                                
-                                <div className="chat_list active_chat">
-                                    <div className="chat_people">
-                                        <div className="chat_img">
-                                            <img src="https://www.flaticon.com/premium-icon/icons/svg/145/145855.svg" alt="sunil" />
-                                        </div>
 
-                                        <div className="chat_ib">
-                                            <h5>Usuario1
-                                                    <span className="chat_date">Dec 25</span>
-                                            </h5>
+                            {/* Usuario */}
+                            <div class="inbox_chat">
+
+                                <div class="chat_list active_chat">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://www.flaticon.com/premium-icon/icons/svg/145/145855.svg" alt="sunil" /> </div>
+                                        <div class="chat_ib">
+                                            <h5>Saul, Ramos Villanueva<span class="chat_date">Dec 25</span></h5>
+                                            
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://www.flaticon.com/premium-icon/icons/svg/145/145857.svg" alt="sunil" /> </div>
+                                        <div class="chat_ib">
+                                            <h5>Hernesto, R. Zaens<span class="chat_date">Dec 25</span></h5>                                            
+                                        </div>
+                                    </div>
+                                </div>                              
+                                
+                                
+{/* 
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                        <div class="chat_ib">
+                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                        <div class="chat_ib">
+                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                        <div class="chat_ib">
+                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>                                            
+                                        </div>
+                                    </div>
+                                </div> */}
+
+
                             </div>
-                            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"/> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
+
                         </div>
-
-
                         {/* Mensajes */}
 
                         <div className="mesgs">
@@ -74,28 +101,29 @@ export default class Mensaje extends Component {
                                 </div>
 
                                 <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                    <div className="incoming_msg_img"> <img src="https://www.flaticon.com/premium-icon/icons/svg/145/145855.svg" alt="sunil" /> </div>
                                     <div className="received_msg">
                                         <div className="received_withd_msg">
-                                            <p>Test, which is a new approach to have</p>
-                                            <span className="time_date"> 11:01 AM    |    Yesterday</span></div>
+                                            <p>El producto que publicaste , la cantidad que colocaste es real?</p>
+                                            <span className="time_date"> 11:20 AM    |    Ayer</span></div>
                                     </div>
                                 </div>
+
                                 <div className="outgoing_msg">
                                     <div className="sent_msg">
-                                        <p>Apollo University, Delhi, India Test</p>
-                                        <span className="time_date"> 11:01 AM    |    Today</span> </div>
+                                        <p>Claro aun esta disponible, pero la cantidad es grande por lo que necesitaras algun vehiculo especial para llevarlo.</p>
+                                        <span className="time_date"> 09:01 AM    |    Hoy</span> </div>
                                 </div>
+
                                 <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                    <div className="incoming_msg_img"> <img src="https://www.flaticon.com/premium-icon/icons/svg/145/145855.svg" alt="sunil" /> </div>
                                     <div className="received_msg">
                                         <div className="received_withd_msg">
-                                            <p>We work directly with our designers and suppliers,
-                                              and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
+                                            <p>Por eso no tengo inconveniente.</p>
                                             <span className="time_date"> 11:01 AM    |    Today</span></div>
                                     </div>
                                 </div>
+
                             </div>
 
                             {/* Input y boton de Enviar */}
@@ -106,9 +134,12 @@ export default class Mensaje extends Component {
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
-                </div></div>
+                </div>
+            </div>
+            // </div>
 
         )
     }
