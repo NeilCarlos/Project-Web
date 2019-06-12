@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import Media from 'react-bootstrap/Media'
 import $ from 'jquery';
 
 import Home from '../home/Home'
-import Index from '../index/index'
 import MiPerfil from '../miPerfil/MiPerfil'
 import MisPublicaciones from '../usuario/misAnuncios/MisAnuncios'
 import Oferta from '../oferta/Oferta'
@@ -17,6 +15,10 @@ import './dashboard.css';
 
 export default class Dashboard extends Component {
 
+    constructor(props){
+        super(props)
+        this.Salir = this.Salir.bind(this)
+    }
 
     componentDidMount() {
         this.ClickToggleSidebar();
@@ -27,6 +29,10 @@ export default class Dashboard extends Component {
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
         //$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    }
+
+    Salir = () => {
+        this.props.history.push('/');
     }
 
     render() {
@@ -42,7 +48,7 @@ export default class Dashboard extends Component {
                         </div>
 
                         <ul className="list-unstyled components">
-                            <Link className="nav-link" component={Link} to='/'>Recicla con Ecollect</Link>
+                            <Link className="nav-link" component={Link} to='/Home'>Recicla con Ecollect</Link>
                             <li className="active">
                                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Usuario</a>
                                 <ul className="collapse list-unstyled" id="homeSubmenu">
@@ -67,7 +73,7 @@ export default class Dashboard extends Component {
                                 <Link className="nav-link" component={Link} to='/publicaciones'>Publicaciones</Link>
                             </li>
                             <li>
-                                <Link to="#">Salir</Link>
+                                <Link className="nav-link" component={Link} to='/' onClick={this.Salir}>Salir</Link>
                             </li>
                         </ul>
                     </nav>
@@ -98,7 +104,8 @@ export default class Dashboard extends Component {
                         </nav>
                     
                         <Switch>
-                            <Route exact path="/" component={Index} />
+                            <Route exact path="/" />
+                            <Route exact path="/Home" component={Home} />
                             <Route exact path="/miPerfil" component={MiPerfil} />
                             <Route exact path="/misPublicaciones" component={MisPublicaciones} />
                             <Route exact path="/misOfertas" component={Oferta} />
@@ -108,6 +115,7 @@ export default class Dashboard extends Component {
                         </Switch>
                     </div>
                 </div>
+                
             </BrowserRouter>
         )
     }
