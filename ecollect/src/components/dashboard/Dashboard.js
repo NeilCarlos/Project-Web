@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import Media from 'react-bootstrap/Media'
 import $ from 'jquery';
 
 import Home from '../home/Home'
 import Index from '../index/index'
 import MiPerfil from '../miPerfil/MiPerfil'
-//import MisPublicaciones from ''
+import MisPublicaciones from '../usuario/misAnuncios/MisAnuncios'
 import Oferta from '../oferta/Oferta'
 import Mensaje from '../mensaje/Mensaje'
 import Reciclar from '../reciclar/Reciclar'
@@ -88,17 +89,8 @@ export default class Dashboard extends Component {
 
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="nav navbar-nav ml-auto">
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="#">Page</Link>
-                                        </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link" to="#">Page</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="#">Page</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="#">Page</Link>
+                                            <Link className="nav-link" to="#">Salir</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -108,7 +100,7 @@ export default class Dashboard extends Component {
                         <Switch>
                             <Route exact path="/" component={Index} />
                             <Route exact path="/miPerfil" component={MiPerfil} />
-                            <Route exact path="/misPublicaciones" component={Home} />
+                            <Route exact path="/misPublicaciones" component={MisPublicaciones} />
                             <Route exact path="/misOfertas" component={Oferta} />
                             <Route exact path="/misMensajes" component={Mensaje} />
                             <Route exact path="/reciclar" component={Reciclar} />
