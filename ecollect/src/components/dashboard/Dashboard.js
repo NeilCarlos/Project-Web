@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import $ from 'jquery';
 
 import Home from '../home/Home'
+import Index from '../index/index'
 import MiPerfil from '../miPerfil/MiPerfil'
 //import MisPublicaciones from ''
-//import MisOfertas from '..'
-//import MisMensajes from '../'
+import Oferta from '../oferta/Oferta'
+import Mensaje from '../mensaje/Mensaje'
 import Reciclar from '../reciclar/Reciclar'
 import Publicaciones from '../recolector/Recolector'
 
@@ -103,12 +104,13 @@ export default class Dashboard extends Component {
                                 </div>
                             </div>
                         </nav>
+                    
                         <Switch>
-                            <Route exact path="/" component={Home} />
+                            <Route exact path="/" component={Index} />
                             <Route exact path="/miPerfil" component={MiPerfil} />
                             <Route exact path="/misPublicaciones" component={Home} />
-                            <Route exact path="/misOfertas" component={Home} />
-                            <Route exact path="/misMensajes" component={Home} />
+                            <Route exact path="/misOfertas" component={Oferta} />
+                            <Route exact path="/misMensajes" component={Mensaje} />
                             <Route exact path="/reciclar" component={Reciclar} />
                             <Route exact path="/publicaciones" component={Publicaciones} />
                         </Switch>
