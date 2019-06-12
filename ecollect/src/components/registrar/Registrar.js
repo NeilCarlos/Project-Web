@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Registrar.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Mapa from '../mapa/Mapa';
 
 export default class Registrar extends Component {
     constructor(props, context) {
@@ -27,6 +28,10 @@ export default class Registrar extends Component {
         this.setState({ show: true });
     }
 
+    obtenerUbicacion = () => {
+
+    }
+
     registrar = () => {
         let objRegistro = {
             usu_nombre: this.nombre.current.value,
@@ -50,7 +55,7 @@ export default class Registrar extends Component {
             })
             .then(data => {
                 if (data.message === "created") {
-                    console.log("bien");
+                    console.log("usuario creado");
                 };
             });
     }
@@ -107,16 +112,26 @@ export default class Registrar extends Component {
                                             <Modal.Title>INGRESAR UBICACION</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <img className="mapa" src="https://fotos.e-consulta.com/maps2.jpg"></img>
-                                            <div class="form-group">
+                                            <div
+                                                style={{
+                                                    height: 300,
+                                                    width: '100%',
+                                                    padding: 0,
+                                                    marginLeft: 0,
+                                                    position: "relative",
+                                                }}
+                                            >
+                                                <Mapa />
+                                            </div>
+                                            <div className="form-group">
                                                 <fieldset>
-                                                    <label class="control-label" for="readOnlyInput">Latitud</label>
-                                                    <input class="form-control" id="readOnlyInput" type="text" placeholder="-70.123412" readonly="" />
-                                                    <label class="control-label" for="readOnlyInput">Longitud</label>
-                                                    <input class="form-control" id="readOnlyInput" type="text" placeholder="-16.123412" readonly="" />
+                                                    <label className="control-label" for="readOnlyInput">Latitud</label>
+                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -70.123412" readOnly />
+                                                    <label className="control-label" for="readOnlyInput">Longitud</label>
+                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -16.123412" readOnly />
                                                 </fieldset>
                                             </div>
-                                            <Button variant="primary" onClick={this.handleClose}>
+                                            <Button variant="primary" onClick={this.obtenerUbicacion}>
                                                 CLICK PARA OBTENER UBICACION
                                             </Button>
                                         </Modal.Body>
