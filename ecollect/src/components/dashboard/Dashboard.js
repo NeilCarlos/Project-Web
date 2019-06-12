@@ -24,7 +24,7 @@ export default class Dashboard extends Component {
         // console.log("Se hizo clic");
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
-        // $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        //$('a[aria-expanded=true]').attr('aria-expanded', 'false');
     }
 
     render() {
@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
 
                     <nav id="sidebar">
                         <div className="sidebar-header">
-                            <h3>ECOLLECT</h3>
+                            <h2>ECOLLECT</h2>
                         </div>
 
                         <ul className="list-unstyled components">
@@ -61,20 +61,6 @@ export default class Dashboard extends Component {
                             <li>
                                 <Link className="nav-link" component={Link} to='/reciclar'>Reciclar</Link>
                             </li>
-                            {/* <li>
-                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Pages</a>
-                            <ul className="collapse list-unstyled" id="pageSubmenu">
-                                <li>
-                                    <a href="#">Page 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Page 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Page 3</a>
-                                </li>
-                            </ul>
-                        </li> */}
                             <li>
                                 <Link className="nav-link" component={Link} to='/publicaciones'>Publicaciones</Link>
                             </li>
@@ -117,14 +103,7 @@ export default class Dashboard extends Component {
                                 </div>
                             </div>
                         </nav>
-
-                        
                         <Switch>
-                            {/* <Route exact path="/" render={
-                                ()=>
-                                    (<label>buenas</label>)
-                                
-                            }/> */}
                             <Route exact path="/" component={Home} />
                             <Route exact path="/miPerfil" component={MiPerfil} />
                             <Route exact path="/misPublicaciones" component={Home} />
