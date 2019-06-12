@@ -6,6 +6,7 @@ import Tab from 'react-bootstrap/Tab'
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container'
 
 
 //import './Reciclar.css';
@@ -63,9 +64,9 @@ export default class Reciclar extends Component {
 
         }
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-12 text-center">
+            <Container>
+                <Row>
+                    <Col>
 
 
 
@@ -213,29 +214,27 @@ export default class Reciclar extends Component {
                                 <li className="breadcrumb-item active">Vidrio</li>
                             </ol>
 
-
                         </div>
 
+                    </Col>
 
-                        <br />
+                </Row>
 
+                <Row>
+                    <Col style={{height:450}}>
                         <Mapa />
+                    </Col>
+                </Row>
 
-                        <br />
 
 
-
-                    </div>
-
-                </div>
-
-                <div className="row m-3 text-right">
-                    <div className="col-md-12">
+                <Row style={{marginTop:25}}>
+                    <Col>
                         <button className="btn btn-primary" type="button">Reciclar</button>
                         <button className="btn btn-danger" type="button">Cancelar</button>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
 
 
         )
