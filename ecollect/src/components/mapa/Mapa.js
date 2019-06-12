@@ -14,6 +14,12 @@ export class Mapa extends Component {
         }
     }
 
+    envieCoord = ()=>{
+        if(this.props.enviarCoord){
+            this.props.enviarCoord(this.state.puntoInicial)
+        }
+        
+    }
     
     componentDidMount(){
     navigator.geolocation.getCurrentPosition(
@@ -38,6 +44,7 @@ export class Mapa extends Component {
                         lng: clickEvent.latLng.lng()
                         }
             });
+        this.envieCoord();
     }
 
     render() {
