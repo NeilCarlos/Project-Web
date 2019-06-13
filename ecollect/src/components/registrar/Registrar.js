@@ -13,6 +13,10 @@ export default class Registrar extends Component {
         this.state = {
             show: false,
         };
+        this.nombre = React.createRef();
+        this.email = React.createRef();
+        this.telefono = React.createRef();
+        this.pass = React.createRef();
     }
 
     handleClose() {
@@ -22,9 +26,39 @@ export default class Registrar extends Component {
     handleShow() {
         this.setState({ show: true });
     }
+
+    registrar = () => {
+        let objRegistro = {
+            usu_nombre: this.nombre.current.value,
+            usu_email: this.email.current.value,
+            usu_telefono: this.telefono.current.value,
+            usu_pass: this.pass.current.value,
+            usu_estado: "a",
+        }
+        console.log(objRegistro);
+        let headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objRegistro)
+        };
+        fetch('https://backend-ecollect.herokuapp.com/api/usuario', headers)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "created") {
+                    console.log("bien");
+                };
+            });
+    }
+
+
     render() {
         return (
-            <div className="container">
+            <div className="container" >
                 <div className="row ">
                     <div className="col-md-4 py-5 bg-primary text-white text-center ">
                         <div className=" ">
@@ -40,22 +74,22 @@ export default class Registrar extends Component {
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-12">
-                                    <input id="Nombre" name="Nombre" placeholder="Nombre Completo" className="form-control" type="text" />
+                                    <input id="Nombre" name="Nombre" placeholder="Nombre Completo" className="form-control" type="text" required="required" ref={this.nombre} />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-12">
-                                    <input type="email" className="form-control" id="inputEmail4" placeholder="Correo electronico" />
+                                    <input type="email" className="form-control" id="inputEmail4" placeholder="Correo electronico" required="required" ref={this.email} />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-12">
-                                    <input id="Telefono" name="Telefono" placeholder="Telefono" className="form-control" required="required" type="text" />
+                                    <input id="Telefono" name="Telefono" placeholder="Telefono" className="form-control" required="required" type="text" ref={this.telefono} />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-12">
-                                    <input id="Contrasenia" name="Contrasenia" placeholder="Contraseña" className="form-control" required="required" type="text" />
+                                    <input id="Contrasenia" name="Contrasenia" placeholder="Contraseña" className="form-control" required="required" type="password" ref={this.pass} />
                                 </div>
                             </div>
                             <div className="form-row">
@@ -102,7 +136,7 @@ export default class Registrar extends Component {
                                 <div className="form-group">
                                     <div className="form-group">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
+                                            <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required="required" />
                                             <label className="form-check-label" for="invalidCheck2">
                                                 <small>Haciendo click aceptas nuestro terminos y condiciones de uso de la App.</small>
                                             </label>
@@ -113,14 +147,14 @@ export default class Registrar extends Component {
                             </div>
 
                             <div className="form-row">
-                                <button type="button" className="btn btn-danger">Registrar</button>
+                                <button type="button" className="btn btn-danger" onClick={this.registrar}>Registrar</button>
                             </div>
 
-                            <button class="loginBtn loginBtn--facebook">
+                            <button className="loginBtn loginBtn--facebook">
                                 Registrar con Facebook
                             </button>
 
-                            <button class="loginBtn loginBtn--google">
+                            <button className="loginBtn loginBtn--google">
                                 Registrar con Google
                             </button>
                         </form>

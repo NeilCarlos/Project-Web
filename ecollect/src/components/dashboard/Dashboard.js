@@ -4,9 +4,9 @@ import $ from 'jquery';
 
 import Home from '../home/Home'
 import MiPerfil from '../miPerfil/MiPerfil'
-//import MisPublicaciones from ''
-//import MisOfertas from '..'
-//import MisMensajes from '../'
+import MisPublicaciones from '../usuario/misAnuncios/MisAnuncios'
+import Oferta from '../oferta/Oferta'
+import Mensaje from '../mensaje/Mensaje'
 import Reciclar from '../reciclar/Reciclar'
 import Publicaciones from '../recolector/Recolector'
 
@@ -15,6 +15,10 @@ import './dashboard.css';
 
 export default class Dashboard extends Component {
 
+    constructor(props){
+        super(props)
+        this.Salir = this.Salir.bind(this)
+    }
 
     componentDidMount() {
         this.ClickToggleSidebar();
@@ -25,6 +29,10 @@ export default class Dashboard extends Component {
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
         //$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    }
+
+    Salir = () => {
+        this.props.history.push('/');
     }
 
     render() {
@@ -40,7 +48,7 @@ export default class Dashboard extends Component {
                         </div>
 
                         <ul className="list-unstyled components">
-                            <Link className="nav-link" component={Link} to='/'>Recicla con Ecollect</Link>
+                            <Link className="nav-link" component={Link} to='/Home'>Recicla con Ecollect</Link>
                             <li className="active">
                                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Usuario</a>
                                 <ul className="collapse list-unstyled" id="homeSubmenu">
@@ -65,7 +73,7 @@ export default class Dashboard extends Component {
                                 <Link className="nav-link" component={Link} to='/publicaciones'>Publicaciones</Link>
                             </li>
                             <li>
-                                <Link to="#">Salir</Link>
+                                <Link className="nav-link" component={Link} to='/' onClick={this.Salir}>Salir</Link>
                             </li>
                         </ul>
                     </nav>
@@ -87,33 +95,27 @@ export default class Dashboard extends Component {
 
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="nav navbar-nav ml-auto">
-                                        <li className="nav-item active">
-                                            <Link className="nav-link" to="#">Page</Link>
-                                        </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link" to="#">Page</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="#">Page</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="#">Page</Link>
+                                            <Link className="nav-link" to="#">Salir</Link>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </nav>
+                    
                         <Switch>
-                            <Route exact path="/" component={Home} />
+                            <Route exact path="/" />
+                            <Route exact path="/Home" component={Home} />
                             <Route exact path="/miPerfil" component={MiPerfil} />
-                            <Route exact path="/misPublicaciones" component={Home} />
-                            <Route exact path="/misOfertas" component={Home} />
-                            <Route exact path="/misMensajes" component={Home} />
+                            <Route exact path="/misPublicaciones" component={MisPublicaciones} />
+                            <Route exact path="/misOfertas" component={Oferta} />
+                            <Route exact path="/misMensajes" component={Mensaje} />
                             <Route exact path="/reciclar" component={Reciclar} />
                             <Route exact path="/publicaciones" component={Publicaciones} />
                         </Switch>
                     </div>
                 </div>
+                
             </BrowserRouter>
         )
     }

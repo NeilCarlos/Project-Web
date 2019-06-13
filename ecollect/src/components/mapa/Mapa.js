@@ -1,17 +1,7 @@
 import React, { Component } from 'react'
-import GoogleMapReact from 'google-map-react';
+import {GoogleApiWrapper, Map, Marker} from 'google-maps-react';
 
-//const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-export default class Mapa extends Component {
-
-    // static defaultProps = {
-    //     center: {
-    //         lat: -16.4296694,
-    //         lng: -71.5162855
-    //     },
-    //     zoom: 17
-    // };
+export class Mapa extends Component {
 
     constructor(props){
         super(props)
@@ -24,6 +14,12 @@ export default class Mapa extends Component {
         }
     }
 
+    envieCoord = ()=>{
+        if(this.props.enviarCoord){
+            this.props.enviarCoord(this.state.puntoInicial)
+        }
+        
+    }
     
     componentDidMount(){
     navigator.geolocation.getCurrentPosition(
@@ -40,39 +36,38 @@ export default class Mapa extends Component {
         );
 
     }
-
-    renderMarkers(map, maps) {
-        let marker = new maps.Marker({
-          position: this.state.puntoInicial,
-          map,
-          title: 'Hello World!'
-        });
-      }
     
-    situarMarcador(e){
-        console.log(e);
+    situarMarcador = (mapProps, map, clickEvent)=>{
         this.setState({
             puntoInicial: {
-                lat: e.lat,
-                lng: e.lng
-                }
+                        lat: clickEvent.latLng.lat(),
+                        lng: clickEvent.latLng.lng()
+                        }
             });
+        this.envieCoord();
     }
 
     render() {
         return (
             // Important! Always set the container height explicitly
-            <div style={{ height: '450px', width: '100%' }}>
-                <GoogleMapReact
-                    bootstrapURLKeys={{ key:'AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E'}}
-                    defaultCenter={this.state.puntoInicial}
-                    defaultZoom={this.state.zoom}
-                    yesIWantToUseGoogleMapApiInternals
-                    onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+            <div style={{ height: '100%', width: '100%' }}>
+                <Map google={this.props.google}
+                    initialCenter={this.state.puntoInicial}
+                    zoom={this.state.zoom}
                     onClick={this.situarMarcador}
                 >
-                </GoogleMapReact>
+                    <Marker
+                        title={'Tu te encuentras aquí.'}
+                        name={'miUbi'}
+                        position={this.state.puntoInicial} />
+
+                </Map>
+
             </div>
         )
     }
 }
+
+export default GoogleApiWrapper({
+    apiKey: ('AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E')
+  })(Mapa)
