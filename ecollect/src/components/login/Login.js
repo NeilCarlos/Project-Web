@@ -3,58 +3,76 @@ import React, { Component } from 'react'
 import './Login.css';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+// import utils from './../utils/utils'
 
-export default class Login extends Component {    
+export default class Login extends Component {
+    // this=new utils();
 
-    constructor(props) {
+    constructor(props) {        
         super(props);
         this.email = React.createRef();
         this.pass = React.createRef();
         this.mensaje = React.createRef();
-        this.state={
-            usuario:{
-                nombre:'',
-                email:'',
-                token:'',
-                sesion:''
+        this.state = {
+            usuario: {
+                id: 0,
+                nombre: '',
+                email: '',
+                token: '',
+                sesion: '',
+                img: '',
+                exp: 0
             }
         }
-
         if (this.ValidarUsuario()) {
-            // this.props.history.push("/dashboard")
+            this.props.history.push("/dashboard")
         }
     }
 
     ValidarUsuario = () => {
-        let userDetails = this.ObtenerDetalleToken();
-        console.log(JSON.parse(userDetails));
-        
-        if (userDetails) {
+        let usuarioLocalstorage = this.ObtenerUsuario()
+        if (usuarioLocalstorage != null) {
+            usuarioLocalstorage = JSON.parse(usuarioLocalstorage);
             let ahora = Date.now() / 1000;
-            if (JSON.parse(userDetails).exp > ahora) {
-                return true;
-            } else {
-                localStorage.removeItem("usuario-ecollect");
+            // console.log(usuarioLocalstorage);
+            if (usuarioLocalstorage.token != null) {
+                let userDetails = this.ObtenerDetalleToken(usuarioLocalstorage.token);
+                console.log(JSON.parse(userDetails));                
+                if (userDetails) {                    
+                    if (JSON.parse(userDetails).exp > ahora) {
+                        return true;
+                    } else {
+                        localStorage.removeItem("usuario-ecollect");
+                    }
+                }
+            }else{
+                if (usuarioLocalstorage.exp > ahora) {
+                    return true;
+                } else {
+                    localStorage.removeItem("usuario-ecollect");
+                }
             }
+
         }
         return false;
     }
-    ObtenerToken = () => {
-        let token = localStorage.getItem('usuario-ecollect')
-        if (token) {
-            return token
+
+    ObtenerUsuario = () => {
+        let usuarioLocalstorage = localStorage.getItem('usuario-ecollect')
+        if (usuarioLocalstorage) {
+            return usuarioLocalstorage
         } else {
             return null
         }
     }
-    ObtenerDetalleToken() {
-        let token = this.ObtenerToken();
+    ObtenerDetalleToken(token) {
         if (token) {
             let centro = token.split(".")[1];
             return window.atob(centro);
         }
         return null;
     }
+
     login = () => {
 
         if (this.email.current.value.trim() && this.pass.current.value.trim()) {
@@ -74,14 +92,22 @@ export default class Login extends Component {
                 return respuesta.json();
             }).then((data) => {
                 if (data.token) {
-                    // console.log(data);
-                    
-                    // Guardando en el Storage
+                    // Creando Usuario para localstorage
+                    let detalle = JSON.parse(this.ObtenerDetalleToken(data.token));
+                    this.setState({
+                        usuario: {
+                            nombre: detalle.usu_nombre,
+                            email: detalle.usu_email,
+                            token: data.token,
+                            sesion: detalle.usu_tiposesion,
+                            img: `https://backend-ecollect.herokuapp.com/api/usuario/avatar/${1}`
+                        }
+                    })
                     this.mensaje.current.innerHTML = '';
 
-                    localStorage.setItem('usuario-ecollect', data.token);
+                    localStorage.setItem('usuario-ecollect', JSON.stringify(this.state.usuario));
                     if (this.ValidarUsuario()) {
-                        // this.props.history.push("/dashboard")
+                        this.props.history.push("/dashboard")
                     }
                 }
                 else {
@@ -94,15 +120,97 @@ export default class Login extends Component {
     }
 
     LoginGoogle = (usuario) => {
-        console.log(usuario);
-        // console.log(error);
-    }
-    LoginFacebook=(usuario)=>{
-        console.log(usuario);
+        // Verificar Si usario existe en nuestra base de datos
+        let detalle = JSON.parse(this.ObtenerDetalleToken(usuario.tokenId));
+
+        let headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usu_email: detalle.email,
+                usu_tiposesion: 'google'
+            })
+        };
+        // Se verifica que el usario exista y que inicie sesion con API Facebook o Google
+        fetch('https://backend-ecollect.herokuapp.com/api/usuario/login/social', headers).then((respuesta) => {
+            return respuesta.json();
+        }).then((data) => {
+            if (data.message === 'ok') {
+                console.log(data);
+                // console.log(detalle);
+                this.setState({
+                    usuario: {
+                        id: data.content.usu_id,
+                        nombre: detalle.name,
+                        email: detalle.email,
+                        token: usuario.tokenId,
+                        sesion: data.content.usu_tiposesion,
+                        img: detalle.picture
+                    }
+                })
+                this.mensaje.current.innerHTML = '';
+                localStorage.setItem('usuario-ecollect', JSON.stringify(this.state.usuario));
+                if (this.ValidarUsuario()) {
+                    this.props.history.push("/dashboard")
+                }
+            } else {
+                this.mensaje.current.innerHTML = data.content;
+            }
+        });
     }
 
+    LoginFacebook = (usuario) => {
+        // console.log(usuario);
+        // Verificar Si usario existe en nuestra base de datos
+        // let detalle = JSON.parse(this.ObtenerDetalleToken(usuario.tokenId));
+
+        let headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usu_email: usuario.email,
+                usu_tiposesion: 'facebook'
+            })
+        };
+        // Se verifica que el usario exista y que inicie sesion con API Facebook o Google
+        fetch('https://backend-ecollect.herokuapp.com/api/usuario/login/social', headers).then((respuesta) => {
+            return respuesta.json();
+        }).then((data) => {
+            if (data.message === 'ok') {
+                console.log(data);
+                // console.log(detalle);
+                this.setState({
+                    usuario: {
+                        id: data.content.usu_id,
+                        nombre: usuario.name,
+                        email: usuario.email,
+                        token: null,
+                        sesion: data.content.usu_tiposesion,
+                        img: usuario.picture.data.url,
+                        exp: usuario.data_access_expiration_time
+                    }
+                })
+                this.mensaje.current.innerHTML = '';
+                localStorage.setItem('usuario-ecollect', JSON.stringify(this.state.usuario));
+                if (this.ValidarUsuario()) {
+                    this.props.history.push("/dashboard")
+                }
+            } else {
+                this.mensaje.current.innerHTML = data.content;
+            }
+        });
+    }
     submitForm = (event) => {
         event.preventDefault();
+    }
+    nuevoRegistro = () => {
+        this.props.history.push("/registrar")
     }
     render() {
         return (
@@ -119,11 +227,11 @@ export default class Login extends Component {
                                     <hr className="my-1" />
                                     <div className="form-group">
 
-                                        <input ref={this.email} type="text" name="email" id="email" className="form-control" placeholder="Correo Electronico" required autoFocus />
+                                        <input ref={this.email} type="text" name="email" id="email" className="form-control" placeholder="Correo Electronico" autoFocus />
                                     </div>
 
                                     <div className="form-group">
-                                        <input ref={this.pass} type="password" name="password" id="password" className="form-control" placeholder="Contraseña" required />
+                                        <input ref={this.pass} type="password" name="password" id="password" className="form-control" placeholder="Contraseña" />
                                     </div>
                                     <div>
                                         <small ref={this.mensaje} style={{ color: 'red' }}></small>
@@ -135,7 +243,7 @@ export default class Login extends Component {
                                             <label className="custom-control-label">Recordar Contraseña</label>
                                         </div>
 
-                                        <button className="text-info btn-link">Registrar Aqui</button>
+                                        <button className="text-info btn-link" onClick={this.nuevoRegistro}>Registrar Aqui</button>
 
                                     </div>
 
@@ -143,7 +251,7 @@ export default class Login extends Component {
                                     <hr className="my-1" />
                                     <GoogleLogin className="btn-block"
                                         clientId="499637178396-0rd7ne99bkhkqvvi3bj1h8eif8oi5a3n.apps.googleusercontent.com"
-                                        
+
                                         onSuccess={this.LoginGoogle}
                                         onFailure={this.LoginGoogle}
                                     >
@@ -151,7 +259,7 @@ export default class Login extends Component {
                                     </GoogleLogin>
 
                                     {/* <button className="btn btn-lg btn-google btn-block text-uppercase" ><i className="fab fa-google mr-2"></i> Login con Google</button> */}
-                                    <FacebookLogin 
+                                    <FacebookLogin
                                         appId="468853403866304"
                                         fields="name,email,picture"
                                         callback={this.LoginFacebook}
