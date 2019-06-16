@@ -7,7 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container'
-import Form from 'react-bootstrap/Form'
+//import Form from 'react-bootstrap/Form'
 
 
 //import './Reciclar.css';
@@ -18,18 +18,19 @@ export default class Reciclar extends Component {
     publi_estado;
     publi_fecha;
     usu_id;
+    publi_tiempo_oferta;
+    publi_cant;
+    publi_descripcion;
+    catpro_id;
+    fot_img;
 
     constructor(props) {
         super(props)
-        this.publi_tiempo_ofertaRef = React.createRef()
-        this.publi_cantRef = React.createRef()
-        this.publi_descripcionRef = React.createRef()
-        this.catpro_idRef = React.createRef()
-        this.fot_imgRef = React.createRef()
+        
     }
 
 
-    handleInputChange(event) {
+    handleInputChange = (event) => {
         var image = event.target.files[0];
         var pattern = /image-*/;
         //var reader = new FileReader();
@@ -37,7 +38,7 @@ export default class Reciclar extends Component {
             console.error('File is not an image');
             return;
         }
-        //this.objUsuario.picture = image;
+        this.fot_img = image;
         var reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('imgReciclado').setAttribute('src', e.target.result);
@@ -49,10 +50,10 @@ export default class Reciclar extends Component {
     obtenerCoord = (dataMapa) => {
         this.publi_lat = '' + dataMapa.lat;
         this.publi_lng = '' + dataMapa.lng;
-        console.log(this.publi_tiempo_ofertaRef);
+        console.log(this.publi_tiempo_oferta);
     }
 
-    readURL(input) {
+    readURL = (input) => {
         if (input.target.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -67,8 +68,20 @@ export default class Reciclar extends Component {
 
     }
 
-    onChangeEstado(e){
+    onChangeEstado = (e) => {
         this.publi_estado = e.currentTarget.value;
+    }
+
+    onChangeTiempoOferta = (e)=>{
+        this.publi_tiempo_oferta = e.target.value;
+    }
+
+    onChangeCant = (e) => {
+        this.publi_cant = e.target.value;
+    }
+
+    onChangeDescripcion = (e) => {
+        this.publi_descripcion = e.target.value;
     }
 
 
@@ -93,6 +106,7 @@ export default class Reciclar extends Component {
             }
 
         }
+
         return (
             <React.Fragment>
                 <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
@@ -109,12 +123,12 @@ export default class Reciclar extends Component {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <label htmlFor="inTiempoVigencia" className="col-form-label">Tiempo Vigencia</label>
-                                                <select className="custom-select" id="inTiempoVigencia">
+                                                <select className="custom-select" id="inTiempoVigencia" onChange={this.onChangeTiempoOferta}>
                                                     <option >Selecciona aqui</option>
-                                                    <option value="1" inputRef={input => (this.publi_tiempo_ofertaRef = input)}>1 semana</option>
-                                                    <option value="2">2 semanas</option>
-                                                    <option value="3">1 mes</option>
-                                                    <option value="4">2 meses</option>
+                                                    <option value="1 semana">1 semana</option>
+                                                    <option value="2 semanas">2 semanas</option>
+                                                    <option value="1 mes">1 mes</option>
+                                                    <option value="2 meses">2 meses</option>
                                                 </select>
                                             </div>
                                             <div className="col-md-6">
@@ -154,12 +168,14 @@ export default class Reciclar extends Component {
                                                         <Tab.Pane eventKey="second">
 
                                                             <label htmlFor="inDescripcion" className="col-form-label">Descripcion</label>
-                                                            <input type="text" className="form-control" placeholder="Ejem.: Envases de vidrio" id="inDescripcion" />
+                                                            <input type="text" className="form-control" placeholder="Ejem.: Envases de vidrio" id="inDescripcion" 
+                                                                onChange={this.onChangeDescripcion}/>
 
                                                             <div className="row">
                                                                 <div className="col-md-6">
                                                                     <label htmlFor="inCantidad" className="col-form-label">Cantidad</label>
-                                                                    <input type="number" className="form-control" placeholder="Ejem.: 20" id="inCantidad" />
+                                                                    <input type="number" className="form-control" placeholder="Ejem.: 20" id="inCantidad" 
+                                                                        onChange={this.onChangeCant}/>
                                                                 </div>
                                                                 <div className="col-md-6">
                                                                     <label htmlFor="inDeseo" className="col-form-label">Deseo</label>
