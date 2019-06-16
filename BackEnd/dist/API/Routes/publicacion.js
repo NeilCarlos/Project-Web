@@ -9,12 +9,19 @@ var multipartyMiddleware = multiparty({ uploadDir: './images' });
 /**
  * Implementamos las consultas mediante  GET
  */
-exports.PublicacionRouter.get('/publicacion', publicacion_1.PublicacionController.getAllPublicaciones);
-exports.PublicacionRouter.get('/publicacion/:publi_id', publicacion_1.PublicacionController.getPublicacionByIdPublicacion);
-exports.PublicacionRouter.get('/publicacion/buscarByNombre/:nombre', publicacion_1.PublicacionController.getPublicacionByNombre);
-exports.PublicacionRouter.get('/publicacion/buscarByNombreyCatProd/:nombre/:catpro_id', publicacion_1.PublicacionController.getPublicacionByNombreYCategotia);
+// Mostrar todas las Publicaciones por estado
+exports.PublicacionRouter.get('/publicacion/:publi_estado', publicacion_1.PublicacionController.getAllPublicaciones);
+// Buscar publicacion por publi_id
+exports.PublicacionRouter.get('/publicacion/buscarById/:publi_id', publicacion_1.PublicacionController.getPublicacionByIdPublicacion);
+// Mostrar todas las publicaiones por nombre y estado
+exports.PublicacionRouter.get('/publicacion/buscarByNombre/:nombre/:publi_estado', publicacion_1.PublicacionController.getPublicacionByNombre);
+// Mostrar todas las publiaciones por nombre ,cat_id, estado
+exports.PublicacionRouter.get('/publicacion/buscarByNombreyCatProd/:nombre/:catpro_id/:publi_estado', publicacion_1.PublicacionController.getPublicacionByNombreYCategotia);
+// Mostrar todas las publicaciones por usu_id
 exports.PublicacionRouter.get('/publicacion/buscarByIdUsuario/:usu_id', publicacion_1.PublicacionController.getPublicacionByIdUsuario);
-exports.PublicacionRouter.get('/publicacion/buscarFotos/:name', publicacion_1.PublicacionController.getImagenPublicacion);
-exports.PublicacionRouter.put('/publicacion/cambiarEstado', publicacion_1.PublicacionController.cambiarEstadoPublicacionById);
+// Mostrar Fotos de una publicacion
+exports.PublicacionRouter.get('/publicacion/fotos/:publi_id', publicacion_1.PublicacionController.getImagenPublicacion);
+// Cambiar Estado de una publicacion por publi_id
+exports.PublicacionRouter.put('/publicacion/cambiarEstado/:publi_id/:publi_estado', publicacion_1.PublicacionController.cambiarEstadoPublicacionById);
+// Crear Publicacion
 exports.PublicacionRouter.post('/publicacion', publicacion_1.PublicacionController.createPublicacion);
-exports.PublicacionRouter.post('/publicacion/upload/:publi_id', multipartyMiddleware, publicacion_1.PublicacionController.uploadFile);

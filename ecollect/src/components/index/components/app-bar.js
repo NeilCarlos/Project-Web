@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom';
 
 export default class AppBar extends Component {
     render() {
@@ -31,7 +32,8 @@ export default class AppBar extends Component {
                             <form className="form-inline my-2 my-lg-0">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">Ingresar</a>
+                                        <Link className="nav-link" to={'/login'}>Ingresar</Link>
+                                        {/* <a className="nav-link" href="#">Ingresar</a> */}
                                     </li>
                                 </ul>
                                 <button className="btn btnregistrarse my-2 my-sm-0" type="submit">Regístrate</button>

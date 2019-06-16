@@ -8,8 +8,8 @@ export var foto_model=(sequelize:Sequelize)=>{
             allowNull:false
         },
         fot_img:{
-            type:DataTypes.TEXT,
-            allowNull:true
+            type:DataTypes.TEXT('medium'),
+            allowNull:false
         }
     },{
         timestamps:false,

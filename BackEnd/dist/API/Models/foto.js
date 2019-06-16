@@ -10,8 +10,8 @@ exports.foto_model = (sequelize) => {
             allowNull: false
         },
         fot_img: {
-            type: sequelize_1.DataTypes.TEXT,
-            allowNull: true
+            type: sequelize_1.DataTypes.TEXT('medium'),
+            allowNull: false
         }
     }, {
         timestamps: false,

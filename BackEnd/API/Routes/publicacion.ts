@@ -10,14 +10,19 @@ var multipartyMiddleware=multiparty({uploadDir:'./images'});
 /**
  * Implementamos las consultas mediante  GET
  */
-PublicacionRouter.get('/publicacion',PublicacionController.getAllPublicaciones);
-PublicacionRouter.get('/publicacion/:publi_id',PublicacionController.getPublicacionByIdPublicacion);
-PublicacionRouter.get('/publicacion/buscarByNombre/:nombre',PublicacionController.getPublicacionByNombre);
-PublicacionRouter.get('/publicacion/buscarByNombreyCatProd/:nombre/:catpro_id',PublicacionController.getPublicacionByNombreYCategotia);
+// Mostrar todas las Publicaciones por estado
+PublicacionRouter.get('/publicacion/:publi_estado',PublicacionController.getAllPublicaciones);
+// Buscar publicacion por publi_id
+PublicacionRouter.get('/publicacion/buscarById/:publi_id',PublicacionController.getPublicacionByIdPublicacion);
+// Mostrar todas las publicaiones por nombre y estado
+PublicacionRouter.get('/publicacion/buscarByNombre/:nombre/:publi_estado',PublicacionController.getPublicacionByNombre);
+// Mostrar todas las publiaciones por nombre ,cat_id, estado
+PublicacionRouter.get('/publicacion/buscarByNombreyCatProd/:nombre/:catpro_id/:publi_estado',PublicacionController.getPublicacionByNombreYCategotia);
+// Mostrar todas las publicaciones por usu_id
 PublicacionRouter.get('/publicacion/buscarByIdUsuario/:usu_id',PublicacionController.getPublicacionByIdUsuario);
-PublicacionRouter.get('/publicacion/buscarFotos/:name',PublicacionController.getImagenPublicacion);
-
-PublicacionRouter.put('/publicacion/cambiarEstado',PublicacionController.cambiarEstadoPublicacionById);
-
+// Mostrar Fotos de una publicacion
+PublicacionRouter.get('/publicacion/fotos/:publi_id',PublicacionController.getImagenPublicacion);
+// Cambiar Estado de una publicacion por publi_id
+PublicacionRouter.put('/publicacion/cambiarEstado/:publi_id/:publi_estado',PublicacionController.cambiarEstadoPublicacionById);
+// Crear Publicacion
 PublicacionRouter.post('/publicacion',PublicacionController.createPublicacion);
-PublicacionRouter.post('/publicacion/upload/:publi_id',multipartyMiddleware,PublicacionController.uploadFile);

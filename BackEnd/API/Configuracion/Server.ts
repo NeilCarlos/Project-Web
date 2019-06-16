@@ -6,6 +6,10 @@ import {Request,Response,NextFunction} from 'express'
 import {UsuarioRouter} from './../Routes/usuario'
 import { PublicacionRouter } from '../Routes/publicacion';
 import { OfertaRouter } from '../Routes/oferta';
+import { HCalificacionRouter } from '../Routes/calificacion';
+import { CitaRouter } from '../Routes/cita';
+import { MensajeRouter } from '../Routes/mensaje';
+import { CategoriaRouter } from '../Routes/categoria';
 
 export default class Server{
 
@@ -23,8 +27,8 @@ export default class Server{
     // config BodyPArser
     ConfigurarBodyPArser(){
         var BodyPArser=require('body-parser');
-        this.app.use(BodyPArser.urlencoded({extended:false}));
-        this.app.use(BodyPArser.json());
+        this.app.use(BodyPArser.urlencoded({limit: '16mb', extended: true}));
+        this.app.use(BodyPArser.json({limit: '16mb', extended: true}));
     }
 
     configurarCORS(){
@@ -40,12 +44,16 @@ export default class Server{
 
 
     asignarRutas(){
+        this.app.get('/',(req,res)=>{
+            res.send("Backend Ecollect corriendo");
+        });
         this.app.use('/api',UsuarioRouter);
         this.app.use('/api',PublicacionRouter);
         this.app.use('/api',OfertaRouter);
-        // this.app.get('/',(req:Request,res:Response)=>{
-        //     res.send("Holas");
-        // });
+        this.app.use('/api',HCalificacionRouter);
+        this.app.use('/api',CitaRouter);
+        this.app.use('/api',MensajeRouter);
+        this.app.use('/api',CategoriaRouter);
     }
 
     IniciarServidor(){

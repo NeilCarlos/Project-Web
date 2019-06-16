@@ -16,9 +16,24 @@ const unidadMedida_1 = require("../Models/unidadMedida");
 /**
  * FIN MODELS
  */
+// 
+// const Sequelize=require('sequelize');
+// export const sequelize=new Sequelize('ecollect','root','root',{
+//     host:'localhost',
+//     dialect:'mysql',
+//     timeZone:'-05.00'
+// });
+// Base de Datos Prueba
+// const Sequelize=require('sequelize');
+// export const sequelize=new Sequelize('wVa0gcHZjN','wVa0gcHZjN','efmBSACYRg',{
+//     host:'remotemysql.com',
+//     dialect:'mysql',
+//     timeZone:'-05.00'
+// });
+// Base de datos Final
 const Sequelize = require('sequelize');
-exports.sequelize = new Sequelize('ecollect', 'root', 'root', {
-    host: 'localhost',
+exports.sequelize = new Sequelize('ecollect', 'codigo', 'tecsup', {
+    host: '3.18.116.129',
     dialect: 'mysql',
     timeZone: '-05.00'
 });
@@ -55,10 +70,10 @@ exports.Cita.belongsTo(exports.Usuario, { foreignKey: 'usu_id' });
 exports.Usuario.hasMany(exports.Cita, { foreignKey: 'usu_id' });
 exports.Mensaje.belongsTo(exports.Cita, { foreignKey: 'cita_id' });
 exports.Cita.hasMany(exports.Mensaje, { foreignKey: 'cita_id' });
-exports.Mensaje.belongsTo(exports.Usuario, { foreignKey: 'usu_id' });
-exports.Usuario.hasMany(exports.Mensaje, { foreignKey: 'usu_id' });
-exports.Mensaje.belongsTo(exports.Usuario, { foreignKey: 'usu_destino' });
-exports.Usuario.hasMany(exports.Mensaje, { foreignKey: 'usu_destino' });
+exports.Mensaje.belongsTo(exports.Usuario, { foreignKey: 'usu_envia' });
+exports.Usuario.hasMany(exports.Mensaje, { foreignKey: 'usu_envia' });
+exports.Mensaje.belongsTo(exports.Usuario, { foreignKey: 'usu_recibe' });
+exports.Usuario.hasMany(exports.Mensaje, { foreignKey: 'usu_recibe' });
 exports.HistorialCalificacion.belongsTo(exports.Usuario, { foreignKey: 'usu_id' });
 exports.Usuario.hasMany(exports.HistorialCalificacion, { foreignKey: 'usu_id' });
 exports.HistorialCalificacion.belongsTo(exports.Usuario, { foreignKey: 'usu_idcalif' });

@@ -9,6 +9,10 @@ const express_1 = __importDefault(require("express"));
 const usuario_1 = require("./../Routes/usuario");
 const publicacion_1 = require("../Routes/publicacion");
 const oferta_1 = require("../Routes/oferta");
+const calificacion_1 = require("../Routes/calificacion");
+const cita_1 = require("../Routes/cita");
+const mensaje_1 = require("../Routes/mensaje");
+const categoria_1 = require("../Routes/categoria");
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -20,8 +24,8 @@ class Server {
     // config BodyPArser
     ConfigurarBodyPArser() {
         var BodyPArser = require('body-parser');
-        this.app.use(BodyPArser.urlencoded({ extended: false }));
-        this.app.use(BodyPArser.json());
+        this.app.use(BodyPArser.urlencoded({ limit: '16mb', extended: true }));
+        this.app.use(BodyPArser.json({ limit: '16mb', extended: true }));
     }
     configurarCORS() {
         this.app.use((req, res, next) => {
@@ -34,12 +38,16 @@ class Server {
         });
     }
     asignarRutas() {
+        this.app.get('/', (req, res) => {
+            res.send("Backend Ecollect corriendo");
+        });
         this.app.use('/api', usuario_1.UsuarioRouter);
         this.app.use('/api', publicacion_1.PublicacionRouter);
         this.app.use('/api', oferta_1.OfertaRouter);
-        // this.app.get('/',(req:Request,res:Response)=>{
-        //     res.send("Holas");
-        // });
+        this.app.use('/api', calificacion_1.HCalificacionRouter);
+        this.app.use('/api', cita_1.CitaRouter);
+        this.app.use('/api', mensaje_1.MensajeRouter);
+        this.app.use('/api', categoria_1.CategoriaRouter);
     }
     IniciarServidor() {
         let port = this.PUERTO;
