@@ -13,7 +13,7 @@ exports.usuario_model = (sequelize) => {
         },
         usu_nombre: {
             type: sequelize_1.DataTypes.STRING(100),
-            allowNull: true
+            allowNull: false
         },
         usu_urlimagen: {
             type: sequelize_1.DataTypes.TEXT,
@@ -21,7 +21,7 @@ exports.usuario_model = (sequelize) => {
         },
         usu_email: {
             type: sequelize_1.DataTypes.STRING(100),
-            allowNull: true
+            allowNull: false
         },
         usu_telefono: {
             type: sequelize_1.DataTypes.STRING(20),
@@ -29,7 +29,7 @@ exports.usuario_model = (sequelize) => {
         },
         usu_estado: {
             type: sequelize_1.DataTypes.STRING(1),
-            allowNull: true
+            allowNull: false
         },
         usu_salt: {
             type: sequelize_1.DataTypes.TEXT,
@@ -41,7 +41,7 @@ exports.usuario_model = (sequelize) => {
         },
         usu_tiposesion: {
             type: sequelize_1.DataTypes.STRING(45),
-            allowNull: true
+            allowNull: false
         },
         usu_lng: {
             type: sequelize_1.DataTypes.DECIMAL(10, 2),
@@ -60,7 +60,7 @@ exports.usuario_model = (sequelize) => {
             allowNull: true
         },
         usu_avatar: {
-            type: sequelize_1.DataTypes.TEXT,
+            type: sequelize_1.DataTypes.TEXT('medium'),
             allowNull: true
         }
     }, {
@@ -85,9 +85,11 @@ exports.usuario_model = (sequelize) => {
     //Generar Token
     usuario_model.prototype.generarJWT = function () {
         let payload = {
+            usu_id: this.usu_id,
             usu_nombre: this.usu_nombre,
             usu_urlimagen: this.usu_urlimagen,
-            usu_email: this.usu_email
+            usu_email: this.usu_email,
+            usu_tiposesion: this.usu_tiposesion
         };
         var token = jwt.sign(payload, 'ecollect', { expiresIn: '5h' }, { algorithm: 'RS256' });
         return token;

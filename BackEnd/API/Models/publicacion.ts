@@ -24,7 +24,7 @@ export var publicacion_model=(sequelize:Sequelize)=>{
             allowNull:true
         },
         publi_tiempo_oferta:{
-            type:DataTypes.DATE,
+            type:DataTypes.TEXT,
             allowNull:true
         },
         // publi_foto:{

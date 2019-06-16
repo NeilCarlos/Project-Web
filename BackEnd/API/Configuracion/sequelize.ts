@@ -15,10 +15,26 @@ import { unidadMedida_model } from '../Models/unidadMedida';
 /**
  * FIN MODELS
  */
+// 
+// const Sequelize=require('sequelize');
+// export const sequelize=new Sequelize('ecollect','root','root',{
+//     host:'localhost',
+//     dialect:'mysql',
+//     timeZone:'-05.00'
+// });
 
+// Base de Datos Prueba
+// const Sequelize=require('sequelize');
+// export const sequelize=new Sequelize('wVa0gcHZjN','wVa0gcHZjN','efmBSACYRg',{
+//     host:'remotemysql.com',
+//     dialect:'mysql',
+//     timeZone:'-05.00'
+// });
+
+// Base de datos Final
 const Sequelize=require('sequelize');
-export const sequelize=new Sequelize('ecollect','root','root',{
-    host:'localhost',
+export const sequelize=new Sequelize('ecollect','codigo','tecsup',{
+    host:'3.18.116.129',
     dialect:'mysql',
     timeZone:'-05.00'
 });
@@ -65,11 +81,11 @@ export const Usuario:any=usuario_model(sequelize);
     Mensaje.belongsTo(Cita,{foreignKey:'cita_id'});
     Cita.hasMany(Mensaje,{foreignKey:'cita_id'});
 
-    Mensaje.belongsTo(Usuario,{foreignKey:'usu_id'});
-    Usuario.hasMany(Mensaje,{foreignKey:'usu_id'})
+    Mensaje.belongsTo(Usuario,{foreignKey:'usu_envia'});
+    Usuario.hasMany(Mensaje,{foreignKey:'usu_envia'})
 
-    Mensaje.belongsTo(Usuario,{foreignKey:'usu_destino'});
-    Usuario.hasMany(Mensaje,{foreignKey:'usu_destino'})
+    Mensaje.belongsTo(Usuario,{foreignKey:'usu_recibe'});
+    Usuario.hasMany(Mensaje,{foreignKey:'usu_recibe'})
 
     HistorialCalificacion.belongsTo(Usuario,{foreignKey:'usu_id'});
     Usuario.hasMany(HistorialCalificacion,{foreignKey:'usu_id'});

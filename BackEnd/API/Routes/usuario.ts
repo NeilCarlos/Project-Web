@@ -9,14 +9,24 @@ var multipartyMiddleware=multiparty({uploadDir:'./images'});
 /**
  * Implementamos las consultas mediante  GET
  */
-UsuarioRouter.get('/usuario/:idusuario',UsuarioController.getUsuarioById);
-UsuarioRouter.get('/usuario/avatar/:name',UsuarioController.getImagenAvatar);
+// Crear Usuario
 UsuarioRouter.post('/usuario',UsuarioController.createUsuario);
+//Crear usuario con redes Sociales
 UsuarioRouter.post('/usuario/social',UsuarioController.createSocialRegister);
-UsuarioRouter.post('/usuario/login',UsuarioController.loginUsuario);
-UsuarioRouter.post('/usuario/login/social',UsuarioController.loginUsuarioRedesSociales);
-UsuarioRouter.post('/usuario/cambiopass',UsuarioController.cambiarPass);
+// Actualizar usuario
 UsuarioRouter.put('/usuario',UsuarioController.updateUsuariobyId);
-UsuarioRouter.put('/usuario/darbaja/:usu_id',UsuarioController.darBajaUsuarioById);
-UsuarioRouter.post('/usuario/uploadavatar/:usu_id',multipartyMiddleware,UsuarioController.uploadImageAvatar);
+// Bucar Usuario por ID
+UsuarioRouter.get('/usuario/:usu_id',UsuarioController.getUsuarioById);
+// Login usuario
+UsuarioRouter.post('/usuario/login',UsuarioController.loginUsuario);
+// Login con redes sociales google o facebook
+UsuarioRouter.post('/usuario/login/social',UsuarioController.loginUsuarioRedesSociales);
+// Cambiar contraseña
+UsuarioRouter.post('/usuario/cambiopass',UsuarioController.cambiarPass);
+// Dar de baja a usuario () cambiar estado)
+UsuarioRouter.put('/usuario/darbaja/:usu_id/:usu_estado',UsuarioController.darBajaUsuarioById);
+// Subir imagen como avatar
+UsuarioRouter.put('/usuario/uploadavatar',UsuarioController.uploadImageAvatar);
+// Retornar imagen avatar
+UsuarioRouter.get('/usuario/avatar/:usu_id',UsuarioController.getImagenAvatar);
 
