@@ -57,9 +57,11 @@ export default class Reciclar extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.objReciclaje.publi_fecha = new Date();
-        this.objReciclaje.catpro_id = 15;
-        this.objReciclaje.usu_id = 1;
+        // Falta completar estos campos
+        this.objReciclaje.publi_fecha=new Date();
+        this.objReciclaje.catpro_id=15;
+        this.objReciclaje.usu_id=1;
+        // 
 
         var myHeaders = {
             method: 'POST',
