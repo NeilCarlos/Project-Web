@@ -13,16 +13,19 @@ import Container from 'react-bootstrap/Container'
 //import './Reciclar.css';
 
 export default class Reciclar extends Component {
-    publi_lat;
-    publi_lng;
-    publi_estado;
-    publi_fecha;
-    usu_id;
-    publi_tiempo_oferta;
-    publi_cant;
-    publi_descripcion;
-    catpro_id;
-    fot_img;
+    objReciclaje = {
+        publi_lat: '',
+        publi_lng: '',
+        publi_estado: '',
+        publi_fecha: '',
+        usu_id: '',
+        publi_tiempo_oferta: '',
+        publi_cant: '',
+        publi_descripcion: '',
+        catpro_id: '',
+        fot_img: ''
+    }
+    
 
     constructor(props) {
         super(props)
@@ -31,6 +34,7 @@ export default class Reciclar extends Component {
 
 
     handleInputChange = (event) => {
+        var sImagen;
         var image = event.target.files[0];
         var pattern = /image-*/;
         //var reader = new FileReader();
@@ -38,50 +42,52 @@ export default class Reciclar extends Component {
             console.error('File is not an image');
             return;
         }
-        this.fot_img = image;
         var reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = (e) => {
             document.getElementById('imgReciclado').setAttribute('src', e.target.result);
+            sImagen = e.target.result;
+            this.objReciclaje.fot_img = sImagen;
         }
         reader.readAsDataURL(image);
-        //readURL(event);
     }
 
     obtenerCoord = (dataMapa) => {
-        this.publi_lat = '' + dataMapa.lat;
-        this.publi_lng = '' + dataMapa.lng;
-        console.log(this.publi_tiempo_oferta);
-    }
-
-    readURL = (input) => {
-        if (input.target.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('imgReciclado').setAttribute('src', e.target.result);
-            }
-            reader.readAsDataURL(input.target.files[0]);
-        }
+        this.objReciclaje.publi_lat = '' + dataMapa.lat;
+        this.objReciclaje.publi_lng = '' + dataMapa.lng;
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+        var myHeaders = {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: this.objReciclaje
+          }
+        console.log(this.objReciclaje);
+        fetch('https://backend-ecollect.herokuapp.com/api/publicacion', myHeaders)
+        .then(response => { return response.json(); })
+        .then(data => {
+            console.log(data);
+        })
     }
 
     onChangeEstado = (e) => {
-        this.publi_estado = e.currentTarget.value;
+        this.objReciclaje.publi_estado = e.currentTarget.value;
     }
 
     onChangeTiempoOferta = (e)=>{
-        this.publi_tiempo_oferta = e.target.value;
+        this.objReciclaje.publi_tiempo_oferta = e.target.value;
     }
 
     onChangeCant = (e) => {
-        this.publi_cant = e.target.value;
+        this.objReciclaje.publi_cant = e.target.value;
     }
 
     onChangeDescripcion = (e) => {
-        this.publi_descripcion = e.target.value;
+        this.objReciclaje.publi_descripcion = e.target.value;
     }
 
 
@@ -224,7 +230,7 @@ export default class Reciclar extends Component {
 
                         <Row style={{ marginTop: 25 }}>
                             <Col>
-                                <button className="btn btn-primary" type="button">Reciclar</button>
+                                <button type="submit" className="btn btn-primary">Reciclar</button>
                                 <button className="btn btn-danger" type="button">Cancelar</button>
                             </Col>
                         </Row>
