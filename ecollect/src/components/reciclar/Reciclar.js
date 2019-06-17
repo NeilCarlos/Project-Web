@@ -23,7 +23,7 @@ export default class Reciclar extends Component {
         publi_cant: '',
         publi_descripcion: '',
         catpro_id: '',
-        fot_img: ''
+        foto_img: ''
     }
     
 
@@ -46,7 +46,7 @@ export default class Reciclar extends Component {
         reader.onload = (e) => {
             document.getElementById('imgReciclado').setAttribute('src', e.target.result);
             sImagen = e.target.result;
-            this.objReciclaje.fot_img = sImagen;
+            this.objReciclaje.foto_img = sImagen;
         }
         reader.readAsDataURL(image);
     }
@@ -58,13 +58,19 @@ export default class Reciclar extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        // Falta completar estos campos
+        this.objReciclaje.publi_fecha=new Date();
+        this.objReciclaje.catpro_id=15;
+        this.objReciclaje.usu_id=1;
+        // 
+
         var myHeaders = {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: this.objReciclaje
+            body: JSON.stringify(this.objReciclaje)
           }
         console.log(this.objReciclaje);
         fetch('https://backend-ecollect.herokuapp.com/api/publicacion', myHeaders)

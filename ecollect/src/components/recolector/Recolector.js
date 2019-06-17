@@ -2,7 +2,29 @@ import React, { Component } from 'react'
 
 import './Recolector.css';
 export default class Recolector extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state={
+      categorias:[],
+      loadCategorias:false
+      
+    }
+    
+  }
+  componentDidMount(){
+
+    // Obteniendo Categorias    
+    fetch('https://backend-ecollect.herokuapp.com/api/categoria').then((respuesta)=>{
+      return respuesta.json();
+    }).then((data)=>{
+      console.log(data);    
+      this.setState({
+        loadCategorias:true
+      });  
+    });
+
+  }
+
 
 
   render() {
@@ -12,10 +34,9 @@ export default class Recolector extends Component {
           {/* dropdownlist categorias */}
           <div class="col-4 col-md-3 col-lg-2">
             <select class=" form-control form-control-lg form-control-borderless">
-              <option selected="">Categorias</option>
-              <option value="1">Categoria 1</option>
-              <option value="2">Categoria 2</option>
-              <option value="3">Categoria 3</option>
+              
+              
+              
             </select>
           </div>
           {/* Barra de busqueda */}

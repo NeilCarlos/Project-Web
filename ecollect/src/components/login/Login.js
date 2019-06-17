@@ -131,7 +131,8 @@ export default class Login extends Component {
             },
             body: JSON.stringify({
                 usu_email: detalle.email,
-                usu_tiposesion: 'google'
+                usu_tiposesion: 'google',
+                usu_estado:'a'
             })
         };
         // Se verifica que el usario exista y que inicie sesion con API Facebook o Google
@@ -175,7 +176,8 @@ export default class Login extends Component {
             },
             body: JSON.stringify({
                 usu_email: usuario.email,
-                usu_tiposesion: 'facebook'
+                usu_tiposesion: 'facebook',
+                usu_estado:'a'
             })
         };
         // Se verifica que el usario exista y que inicie sesion con API Facebook o Google
