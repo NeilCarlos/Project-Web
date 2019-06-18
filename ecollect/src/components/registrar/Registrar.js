@@ -2,8 +2,53 @@ import React, { Component } from 'react'
 import './Registrar.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-export default class Registrar extends Component {
+var objFacebook;
+const responseGoogle = (response) => {
+    let objRegistro = {
+        usu_email: response.profileObj.email,
+        usu_nombre: response.profileObj.name,
+        usu_estado: "a",
+        usu_tiposesion: "google"
+    }
+    console.log(objRegistro);
+    let headers = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(objRegistro)
+    };
+    fetch('https://backend-ecollect.herokuapp.com/api/usuario/social', headers)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            if (data.message === "ok") {
+                console.log("usuario creado");
+                // <Link to={`/Login`} />
+            }
+            else {
+                console.log("error");
+            }
+        });
+};
+
+const responseFacebook = (response) => {
+    objFacebook = {
+        usu_email: response.email,
+        usu_nombre: response.name,
+        usu_estado: "a",
+        usu_tiposesion: "facebook"
+    }
+}
+
+export class Registrar extends Component {
     constructor(props, context) {
         super(props, context);
 
@@ -12,20 +57,29 @@ export default class Registrar extends Component {
 
         this.state = {
             show: false,
+            puntoInicial: {
+                lat: -16.4296694,
+                lng: -71.5162855
+            },
+            zoom: 17
         };
         this.nombre = React.createRef();
         this.email = React.createRef();
         this.telefono = React.createRef();
         this.pass = React.createRef();
-    }
+    };
 
     handleClose() {
         this.setState({ show: false });
-    }
+    };
 
     handleShow() {
         this.setState({ show: true });
-    }
+    };
+
+    obtenerUbicacion = () => {
+
+    };
 
     registrar = () => {
         let objRegistro = {
@@ -34,8 +88,8 @@ export default class Registrar extends Component {
             usu_telefono: this.telefono.current.value,
             usu_pass: this.pass.current.value,
             usu_estado: "a",
+            usu_tiposesion: "aplicacion"
         }
-        console.log(objRegistro);
         let headers = {
             method: 'POST',
             headers: {
@@ -50,11 +104,39 @@ export default class Registrar extends Component {
             })
             .then(data => {
                 if (data.message === "created") {
-                    console.log("bien");
-                };
+                    console.log("usuario creado");
+                    // <Link to={`/Login`} />
+                }
+                else {
+                    console.log("mal ingresado");
+                }
+            });
+    };
+
+    registrarFacebook = () => {
+        let headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objFacebook)
+        };
+        console.log(objFacebook);
+        fetch('https://backend-ecollect.herokuapp.com/api/usuario/social', headers)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "ok") {
+                    console.log("usuario creado");
+                    // <Link to={`/Login`} />
+                }
+                else {
+                    console.log("error");
+                }
             });
     }
-
 
     render() {
         return (
@@ -95,7 +177,7 @@ export default class Registrar extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="Foto">Haga click para insertar su foto</label>
-                                    <input type="file" id="Foto" name="Foto" required="required" />
+                                    <input type="file" accept="image/*" id="Foto" name="Foto" required="required" />
                                 </div>
                                 <div className="form-group col-md-6">
                                     <Button variant="primary" onClick={this.handleShow}>
@@ -107,16 +189,22 @@ export default class Registrar extends Component {
                                             <Modal.Title>INGRESAR UBICACION</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <img className="mapa" src="https://fotos.e-consulta.com/maps2.jpg"></img>
-                                            <div class="form-group">
+                                            PRESIONE EL MAPA PARA OBTENER UBICACION
+                                            <div style={{ height: '300px', width: '100%', position: 'relative' }}>
+                                                <Map google={this.props.google}
+                                                    initialCenter={this.state.puntoInicial}
+                                                    zoom={this.state.zoom}>
+                                                </Map>
+                                            </div>
+                                            <div className="form-group">
                                                 <fieldset>
-                                                    <label class="control-label" for="readOnlyInput">Latitud</label>
-                                                    <input class="form-control" id="readOnlyInput" type="text" placeholder="-70.123412" readonly="" />
-                                                    <label class="control-label" for="readOnlyInput">Longitud</label>
-                                                    <input class="form-control" id="readOnlyInput" type="text" placeholder="-16.123412" readonly="" />
+                                                    <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
+                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -70.123412" readOnly />
+                                                    <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
+                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -16.123412" readOnly />
                                                 </fieldset>
                                             </div>
-                                            <Button variant="primary" onClick={this.handleClose}>
+                                            <Button variant="primary" onClick={this.obtenerUbicacion}>
                                                 CLICK PARA OBTENER UBICACION
                                             </Button>
                                         </Modal.Body>
@@ -137,7 +225,7 @@ export default class Registrar extends Component {
                                     <div className="form-group">
                                         <div className="form-check">
                                             <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required="required" />
-                                            <label className="form-check-label" for="invalidCheck2">
+                                            <label className="form-check-label" htmlFor="invalidCheck2">
                                                 <small>Haciendo click aceptas nuestro terminos y condiciones de uso de la App.</small>
                                             </label>
                                         </div>
@@ -149,14 +237,28 @@ export default class Registrar extends Component {
                             <div className="form-row">
                                 <button type="button" className="btn btn-danger" onClick={this.registrar}>Registrar</button>
                             </div>
-
-                            <button className="loginBtn loginBtn--facebook">
-                                Registrar con Facebook
-                            </button>
-
-                            <button className="loginBtn loginBtn--google">
-                                Registrar con Google
-                            </button>
+                            <br />
+                            O registrese usando:
+                            <br />
+                            <GoogleLogin
+                                clientId="170262057332-nlcv43db8ok0d1d2g6vpicbv35vcnkss.apps.googleusercontent.com"
+                                render={renderProps => (
+                                    <button className="loginBtn loginBtn--google" onClick={renderProps.onClick} disabled={renderProps.disabled}>Registrar con Google</button>
+                                )}
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                buttonText="Login"
+                                cookiePolicy={'single_host_origin'}
+                            />
+                            <FacebookLogin
+                                appId="2091403797648472"
+                                autoLoad={true}
+                                fields="name,email,picture"
+                                callback={responseFacebook}
+                                cssClass="loginBtn loginBtn--facebook"
+                                textButton="Registrar con Facebook"
+                                onClick={this.registrarFacebook}
+                            />
                         </form>
                     </div>
                 </div>
@@ -164,3 +266,7 @@ export default class Registrar extends Component {
         )
     }
 }
+
+export default GoogleApiWrapper({
+    apiKey: ('AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E')
+})(Registrar)
