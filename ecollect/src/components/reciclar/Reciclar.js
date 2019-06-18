@@ -32,7 +32,6 @@ export default class Reciclar extends Component {
         
     }
 
-
     handleInputChange = (event) => {
         var sImagen;
         var image = event.target.files[0];

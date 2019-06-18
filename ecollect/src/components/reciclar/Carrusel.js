@@ -3,12 +3,20 @@ import CarruselItem from './CarruselItem';
 
 export default class Carrusel extends Component {
 
+    constructor(props){
+        super(props)
+        this.state = {
+            categoria: []
+        }
+    }
+
     componentDidMount(){
-        fetch('https://picsum.photos/v2/list').then(response=>{
+        fetch('https://backend-ecollect.herokuapp.com/api/categoria').then(response=>{
             return response.json();
         }).then(data=>{
-            console.log(data);
-            
+            this.setState({
+                categoria: data.content
+            })
         })
     }
 
@@ -33,8 +41,17 @@ export default class Carrusel extends Component {
                                 <p>Descripcion de la imagen</p>
                             </div>
                         </div>
-                        <CarruselItem />
-                        <CarruselItem />
+                        {/* <CarruselItem />
+                        <CarruselItem /> */}
+                        {
+                                // this.state.pageOfItems.map(item =>
+                                // <div key={item._id}>{item.vid_titu}</div>
+                                // )
+                                this.state.categoria.map((cat, i) => {
+                                            console.log(cat);
+                                            return <CarruselItem categoria={cat} key={i}/>
+                                        })
+                        }
                     </div>
 
                     {/* <!--botones de navegacion--> */}
