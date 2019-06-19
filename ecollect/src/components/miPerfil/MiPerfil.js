@@ -6,8 +6,9 @@ import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-export default class MiPerfil extends Component {
+export class MiPerfil extends Component {
     constructor(props, context) {
         super(props, context);
 
@@ -21,20 +22,18 @@ export default class MiPerfil extends Component {
                 lat: -16.4296694,
                 lng: -71.5162855
             },
-            zoom: 17
+            zoom: 17,
         };
-        this.idActual = localStorage.getItem('idActual');
+        this.idActual = localStorage.getItem('usuario-ecollect');
         this.nombre = React.createRef();
         this.email = React.createRef();
         this.telefono = React.createRef();
-        // this.pass = React.createRef();
         this.latitud = React.createRef();
         this.longitud = React.createRef();
     }
 
     componentDidMount() {
-        // fetch(`https://backend-ecollect.herokuapp.com/api/usuario/${this.idActual}`)
-        fetch(`https://backend-ecollect.herokuapp.com/api/usuario/1`)
+        fetch(`https://backend-ecollect.herokuapp.com/api/usuario/${JSON.parse(this.idActual).id}`)
             .then(response => {
                 return response.json();
             })
@@ -100,12 +99,15 @@ export default class MiPerfil extends Component {
             });
     }
 
-    situarUbicacion = (evento) => {
-        var lat = evento.latLng.lat();
-        var lng = evento.latLng.lng()
-        this.latitud.current.value = lat;
-        this.longitud.current.value = lng;
-    }
+    onMapClicked(t, map, coord) {
+        var { latLng } = coord;
+        var lat = latLng.lat();
+        var lng = latLng.lng();
+        console.log(lat);
+        console.log(this.latitud.current.value);
+        // this.latitud.current.value = lat;
+        // this.longitud.current.value = String(lng);
+    };
 
     render() {
         const estilo = {
@@ -181,17 +183,19 @@ export default class MiPerfil extends Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <h2 className="mt-5">CAMBIAR UBICACION</h2>
-<<<<<<< HEAD
-                                    <img className="mapa" src="https://fotos.e-consulta.com/maps2.jpg" alt=""/>
-                                    <div class="form-group">
-=======
+                                    <div style={{ height: '300px', width: '100%', position: 'relative' }}>
+                                        <Map google={this.props.google}
+                                            initialCenter={this.state.puntoInicial}
+                                            zoom={this.state.zoom}
+                                            onClick={this.onMapClicked}>
+                                        </Map>
+                                    </div>
                                     <div className="form-group">
->>>>>>> Front-Mauricio
                                         <fieldset>
                                             <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
-                                            <input className="form-control" id="readOnly" type="text" defaultValue="-70.123412" readOnly="" ref={this.latitud} />
+                                            <input className="form-control" id="readOnly" type="text" defaultValue={this.state.informacion.lat} readOnly ref={this.latitud} />
                                             <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
-                                            <input className="form-control" id="readOnlyInput" type="text" defaultValue="-16.123412" readOnly="" ref={this.longitud} />
+                                            <input className="form-control" id="readOnlyInput" type="text" defaultValue={this.state.informacion.lng} readOnly ref={this.longitud} />
                                         </fieldset>
                                     </div>
                                     <br />
@@ -250,3 +254,7 @@ export default class MiPerfil extends Component {
         )
     }
 }
+
+export default GoogleApiWrapper({
+    apiKey: ('AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E')
+})(MiPerfil)
