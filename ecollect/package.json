@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.1.1",
+    "@material-ui/icons": "^4.2.0",
     "base64-to-image": "^1.0.2",
     "bootstrap": "^4.3.1",
     "google-maps-react": "^2.0.2",
@@ -14,10 +16,8 @@
     "react-dom": "^16.8.6",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.4",
-<<<<<<< HEAD
+    "react-js-pagination": "^3.0.2",
     "react-key-index": "^0.1.1",
-=======
->>>>>>> Front-Mauricio
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },

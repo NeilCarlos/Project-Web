@@ -9,6 +9,7 @@ import Oferta from '../oferta/Oferta'
 import Mensaje from '../mensaje/Mensaje'
 import Reciclar from '../reciclar/Reciclar'
 import Publicaciones from '../recolector/Recolector'
+import Publicacion from '../publicacion/Publicacion'
 
 import './dashboard.css';
 
@@ -112,6 +113,7 @@ export default class Dashboard extends Component {
                             <Route exact path="/misMensajes" component={Mensaje} />
                             <Route exact path="/reciclar" component={Reciclar} />
                             <Route exact path="/publicaciones" component={Publicaciones} />
+                            <Route exact path="/publicacion/:publi_id" component={Publicacion} />
                         </Switch>
                     </div>
                 </div>

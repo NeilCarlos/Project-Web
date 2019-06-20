@@ -48,3 +48,39 @@ img:hover{
   display: flex;
   justify-content: center;
 }
+
+/* Estilos de Paginacion */
+.pagination-center {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination-item {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination-active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination-item:hover:not(.pagination-active){ 
+  background-color:rgb(72,144,178);
+}
+
+/* .botonAdd{
+  position:fixed;
+  bottom:50px;
+  right:50px;
+  transform:scale(1.5);
+} */
