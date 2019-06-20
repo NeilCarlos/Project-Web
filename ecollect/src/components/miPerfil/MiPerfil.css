@@ -38,24 +38,8 @@ form label {
     font-weight: 400;
 }
 
-.form-horizontal .form-group {
-  margin-left: -15px;
-  margin-right: -15px;
-}
-@media (min-width: 768px) {
-  .form-horizontal .control-label {
-    text-align: left;
-    margin-bottom: 0;
-    padding-top: 7px;
-  }
-}
-
 .profile-avatar {
-  width: 200px;
-  position: relative;
-  margin: 0px auto;
-  margin-top: 196px;
-  border: 4px solid #f3f3f3;
+  border-radius: 50%;
 }
 
 input[type=file]#Nueva {
@@ -75,8 +59,8 @@ label[for="Nueva"] {
     display: inline-block;
     transition: all .5s;
     cursor: pointer;
-    padding: 8px 40px !important;
+    padding: 8px 30px !important;
     text-transform: uppercase;
-    width: fit-content;
+    width: 100%;
     text-align: center;
     }
