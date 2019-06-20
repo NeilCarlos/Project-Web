@@ -7,7 +7,10 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
+var imagen;
 var objFacebook;
+var nuevaLat;
+var nuevaLng;
 const responseGoogle = (response) => {
     let objRegistro = {
         usu_email: response.profileObj.email,
@@ -67,6 +70,8 @@ export class Registrar extends Component {
         this.email = React.createRef();
         this.telefono = React.createRef();
         this.pass = React.createRef();
+        this.latitud = React.createRef();
+        this.longitud = React.createRef();
     };
 
     handleClose() {
@@ -77,9 +82,36 @@ export class Registrar extends Component {
         this.setState({ show: true });
     };
 
-    obtenerUbicacion = () => {
-
+    onMapClicked = (t, map, coord) => {
+        var { latLng } = coord;
+        var lat = latLng.lat();
+        var lng = latLng.lng();
+        this.latitud.current.value = lat;
+        this.longitud.current.value = lng;
+        nuevaLat = lat;
+        nuevaLng = lng;
     };
+
+    handleInputChange(event) {
+        var sImagen;
+        var image = event.target.files[0];
+        var pattern = /image-*/;
+        //var reader = new FileReader();
+        if (!image.type.match(pattern)) {
+            console.error('File is not an image');
+            return;
+        }
+        //this.objUsuario.picture = image;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('imgUsuario').setAttribute('src', e.target.result);
+            sImagen = e.target.result;
+            imagen = sImagen;
+        }
+        reader.readAsDataURL(image);
+        //readURL(event);
+    }
+
 
     registrar = () => {
         let objRegistro = {
@@ -87,9 +119,13 @@ export class Registrar extends Component {
             usu_email: this.email.current.value,
             usu_telefono: this.telefono.current.value,
             usu_pass: this.pass.current.value,
+            usu_lat: nuevaLat,
+            usu_lng: nuevaLng,
+            usu_avatar: imagen,
             usu_estado: "a",
             usu_tiposesion: "aplicacion"
         }
+        console.log(objRegistro);
         let headers = {
             method: 'POST',
             headers: {
@@ -111,6 +147,7 @@ export class Registrar extends Component {
                     console.log("mal ingresado");
                 }
             });
+            this.props.history.push("/login");
     };
 
     registrarFacebook = () => {
@@ -176,8 +213,10 @@ export class Registrar extends Component {
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="Foto">Haga click para insertar su foto</label>
-                                    <input type="file" accept="image/*" id="Foto" name="Foto" required="required" />
+                                    <img hidden className="profile-avatar" alt="" id="imgUsuario" />
+                                    <br />
+                                    <label htmlFor="Nueva">Haga click para insertar su foto</label>
+                                    <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
                                 </div>
                                 <div className="form-group col-md-6">
                                     <Button variant="primary" onClick={this.handleShow}>
@@ -193,27 +232,22 @@ export class Registrar extends Component {
                                             <div style={{ height: '300px', width: '100%', position: 'relative' }}>
                                                 <Map google={this.props.google}
                                                     initialCenter={this.state.puntoInicial}
-                                                    zoom={this.state.zoom}>
+                                                    zoom={this.state.zoom}
+                                                    onClick={this.onMapClicked}>
                                                 </Map>
                                             </div>
                                             <div className="form-group">
                                                 <fieldset>
                                                     <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
-                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -70.123412" readOnly />
+                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -70.123412" readOnly ref={this.latitud} />
                                                     <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
-                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -16.123412" readOnly />
+                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -16.123412" readOnly ref={this.longitud} />
                                                 </fieldset>
                                             </div>
-                                            <Button variant="primary" onClick={this.obtenerUbicacion}>
-                                                CLICK PARA OBTENER UBICACION
-                                            </Button>
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <Button variant="secondary" onClick={this.handleClose}>
-                                                Close
-                                        </Button>
-                                            <Button variant="primary" onClick={this.handleClose}>
-                                                Save Changes
+                                                Cerrar
                                         </Button>
                                         </Modal.Footer>
                                     </Modal>

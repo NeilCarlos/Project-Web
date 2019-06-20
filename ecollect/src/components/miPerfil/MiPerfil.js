@@ -8,6 +8,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
+var sImagen;
+var nuevaLat;
+var nuevaLng;
 export class MiPerfil extends Component {
     constructor(props, context) {
         super(props, context);
@@ -24,16 +27,17 @@ export class MiPerfil extends Component {
             },
             zoom: 17,
         };
-        this.idActual = localStorage.getItem('usuario-ecollect');
+        this.idActual = JSON.parse(localStorage.getItem('usuario-ecollect')).id;
         this.nombre = React.createRef();
         this.email = React.createRef();
         this.telefono = React.createRef();
         this.latitud = React.createRef();
         this.longitud = React.createRef();
+        this.usu_avatar = React.createRef();
     }
 
     componentDidMount() {
-        fetch(`https://backend-ecollect.herokuapp.com/api/usuario/${JSON.parse(this.idActual).id}`)
+        fetch(`https://backend-ecollect.herokuapp.com/api/usuario/${this.idActual}`)
             .then(response => {
                 return response.json();
             })
@@ -47,19 +51,13 @@ export class MiPerfil extends Component {
 
     handleInputChange(event) {
         var image = event.target.files[0];
-        var pattern = /image-*/;
-        //var reader = new FileReader();
-        if (!image.type.match(pattern)) {
-            console.error('File is not an image');
-            return;
-        }
-        //this.objUsuario.picture = image;
+
         var reader = new FileReader();
         reader.onload = function (e) {
-            document.getElementById('imgReciclado').setAttribute('src', e.target.result);
+            document.getElementById('imgUsuario').setAttribute('src', e.target.result);
+            sImagen = e.target.result;
         }
         reader.readAsDataURL(image);
-        //readURL(event);
     }
 
     handleClose() {
@@ -76,6 +74,7 @@ export class MiPerfil extends Component {
             usu_nombre: this.nombre.current.value,
             usu_email: this.email.current.value,
             usu_telefono: this.telefono.current.value,
+            usu_avatar: sImagen,
         }
         console.log(objUpdate);
         let headers = {
@@ -99,15 +98,43 @@ export class MiPerfil extends Component {
             });
     }
 
-    onMapClicked(t, map, coord) {
+    onMapClicked = (t, map, coord) => {
         var { latLng } = coord;
         var lat = latLng.lat();
         var lng = latLng.lng();
-        console.log(lat);
-        console.log(this.latitud.current.value);
-        // this.latitud.current.value = lat;
-        // this.longitud.current.value = String(lng);
+        this.latitud.current.value = lat;
+        this.longitud.current.value = lng;
+        nuevaLat = lat;
+        nuevaLng = lng;
     };
+
+    guardarLatLng = () => {
+        let objUpdate = {
+            usu_id: this.idActual,
+            usu_lat: nuevaLat,
+            usu_lng: nuevaLng,
+        }
+        console.log(objUpdate);
+        let headers = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objUpdate)
+        };
+        fetch('https://backend-ecollect.herokuapp.com/api/usuario', headers)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "updated") {
+                    console.log("usuario actualizado");
+                }
+                else {
+                    console.log("mal ingresado");
+                }
+            });
+    }
 
     render() {
         const estilo = {
@@ -126,7 +153,7 @@ export class MiPerfil extends Component {
                         <Col sm={3}>
                             <div className="panel panel-default mt-5">
                                 <div className="panel-body text-center">
-                                    <img className="profile-avatar" alt="" id="imgReciclado" style={estilo.img} />
+                                    <img src={this.state.informacion.usu_avatar} className="profile-avatar" alt="" id="imgUsuario" style={estilo.img} />
                                     <br />
                                     <label htmlFor="Nueva">Haga click para insertar su foto</label>
                                     <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
@@ -193,13 +220,13 @@ export class MiPerfil extends Component {
                                     <div className="form-group">
                                         <fieldset>
                                             <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
-                                            <input className="form-control" id="readOnly" type="text" defaultValue={this.state.informacion.lat} readOnly ref={this.latitud} />
+                                            <input className="form-control" id="readOnly" type="text" defaultValue={this.state.informacion.usu_lat} readOnly ref={this.latitud} />
                                             <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
-                                            <input className="form-control" id="readOnlyInput" type="text" defaultValue={this.state.informacion.lng} readOnly ref={this.longitud} />
+                                            <input className="form-control" id="readOnlyInput" type="text" defaultValue={this.state.informacion.usu_lng} readOnly ref={this.longitud} />
                                         </fieldset>
                                     </div>
                                     <br />
-                                    <button className="btn btn-primary mb-5">Guardar Cambios</button>
+                                    <button className="btn btn-primary mb-5" onClick={this.guardarLatLng}>Guardar Cambios</button>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
                                     <h2 className="mt-5">Cambiar contraseña</h2>
