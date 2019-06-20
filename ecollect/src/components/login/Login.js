@@ -96,6 +96,7 @@ export default class Login extends Component {
                     let detalle = JSON.parse(this.ObtenerDetalleToken(data.token));
                     this.setState({
                         usuario: {
+                            id: detalle.usu_id,
                             nombre: detalle.usu_nombre,
                             email: detalle.usu_email,
                             token: data.token,

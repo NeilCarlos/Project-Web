@@ -7,6 +7,7 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
+var imagen;
 var objFacebook;
 const responseGoogle = (response) => {
     let objRegistro = {
@@ -81,15 +82,38 @@ export class Registrar extends Component {
 
     };
 
+    handleInputChange(event) {
+        var sImagen;
+        var image = event.target.files[0];
+        var pattern = /image-*/;
+        //var reader = new FileReader();
+        if (!image.type.match(pattern)) {
+            console.error('File is not an image');
+            return;
+        }
+        //this.objUsuario.picture = image;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('imgUsuario').setAttribute('src', e.target.result);
+            sImagen = e.target.result;
+            imagen = sImagen;
+        }
+        reader.readAsDataURL(image);
+        //readURL(event);
+    }
+
+
     registrar = () => {
         let objRegistro = {
             usu_nombre: this.nombre.current.value,
             usu_email: this.email.current.value,
             usu_telefono: this.telefono.current.value,
             usu_pass: this.pass.current.value,
+            usu_urlimagen: imagen,
             usu_estado: "a",
             usu_tiposesion: "aplicacion"
         }
+        console.log(objRegistro);
         let headers = {
             method: 'POST',
             headers: {
@@ -176,8 +200,10 @@ export class Registrar extends Component {
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="Foto">Haga click para insertar su foto</label>
-                                    <input type="file" accept="image/*" id="Foto" name="Foto" required="required" />
+                                    <img hidden className="profile-avatar" alt="" id="imgUsuario" />
+                                    <br />
+                                    <label htmlFor="Nueva">Haga click para insertar su foto</label>
+                                    <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
                                 </div>
                                 <div className="form-group col-md-6">
                                     <Button variant="primary" onClick={this.handleShow}>
