@@ -16,19 +16,23 @@ export default class Reciclar extends Component {
     objReciclaje = {
         publi_lat: '',
         publi_lng: '',
-        publi_estado: '',
+        publi_estado: '1',
         publi_fecha: '',
         usu_id: '',
         publi_tiempo_oferta: '',
         publi_cant: '',
         publi_descripcion: '',
         catpro_id: '',
-        foto_img: ''
+        foto_img: '',
+        publi_preciobase: ''
     }
     
 
     constructor(props) {
         super(props)
+        this.state = {
+            nombreCategoria:''
+        }
         
     }
 
@@ -59,7 +63,6 @@ export default class Reciclar extends Component {
         e.preventDefault();
         // Falta completar estos campos
         this.objReciclaje.publi_fecha=new Date();
-        this.objReciclaje.catpro_id=15;
         this.objReciclaje.usu_id=1;
         // 
 
@@ -91,8 +94,19 @@ export default class Reciclar extends Component {
         this.objReciclaje.publi_cant = e.target.value;
     }
 
+    onChangePrecioBase = (e) => {
+        this.objReciclaje.publi_preciobase = e.target.value;
+    }
+
     onChangeDescripcion = (e) => {
         this.objReciclaje.publi_descripcion = e.target.value;
+    }
+
+    getNombreCategoria = (nombre, id) => {
+        this.setState({
+            nombreCategoria: nombre,
+        });
+        this.objReciclaje.catpro_id=id;
     }
 
 
@@ -134,7 +148,7 @@ export default class Reciclar extends Component {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <label htmlFor="inTiempoVigencia" className="col-form-label">Tiempo Vigencia</label>
-                                                <select className="custom-select" id="inTiempoVigencia" onChange={this.onChangeTiempoOferta}>
+                                                <select className="custom-select" id="inTiempoVigencia" onChange={this.onChangeTiempoOferta} required >
                                                     <option >Selecciona aqui</option>
                                                     <option value="1 semana">1 semana</option>
                                                     <option value="2 semanas">2 semanas</option>
@@ -174,7 +188,7 @@ export default class Reciclar extends Component {
                                                 <Col sm={9}>
                                                     <Tab.Content>
                                                         <Tab.Pane eventKey="first">
-                                                            <Carrusel />
+                                                            <Carrusel getNombreCategoria = {this.getNombreCategoria} />
                                                         </Tab.Pane>
                                                         <Tab.Pane eventKey="second">
 
@@ -183,12 +197,17 @@ export default class Reciclar extends Component {
                                                                 onChange={this.onChangeDescripcion}/>
 
                                                             <div className="row">
-                                                                <div className="col-md-6">
+                                                                <div className="col-md-4">
                                                                     <label htmlFor="inCantidad" className="col-form-label">Cantidad</label>
                                                                     <input type="number" className="form-control" placeholder="Ejem.: 20" id="inCantidad" 
                                                                         onChange={this.onChangeCant}/>
                                                                 </div>
-                                                                <div className="col-md-6">
+                                                                <div className="col-md-4">
+                                                                    <label htmlFor="inPrecioBase" className="col-form-label">Precio Base S/.</label>
+                                                                    <input type="number" className="form-control" placeholder="5" id="inPrecioBase" 
+                                                                        onChange={this.onChangePrecioBase}/>
+                                                                </div>
+                                                                <div className="col-md-4">
                                                                     <label htmlFor="inDeseo" className="col-form-label">Deseo</label>
                                                                     <select className="custom-select">
                                                                         <option >Selecciona aqui</option>
@@ -216,7 +235,7 @@ export default class Reciclar extends Component {
 
                                     <ol className="breadcrumb">
                                         <li className="breadcrumb-item"><a href="#categoria">Categoria</a></li>
-                                        <li className="breadcrumb-item active">Vidrio</li>
+                                        <li className="breadcrumb-item active">{this.state.nombreCategoria}</li>
                                     </ol>
 
                                 </div>
