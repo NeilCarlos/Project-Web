@@ -33,7 +33,7 @@ export class MiPerfil extends Component {
         this.telefono = React.createRef();
         this.latitud = React.createRef();
         this.longitud = React.createRef();
-        this.usu_urlimagen = React.createRef();
+        this.usu_avatar = React.createRef();
     }
 
     componentDidMount() {
@@ -74,7 +74,7 @@ export class MiPerfil extends Component {
             usu_nombre: this.nombre.current.value,
             usu_email: this.email.current.value,
             usu_telefono: this.telefono.current.value,
-            usu_urlimagen: sImagen,
+            usu_avatar: sImagen,
         }
         console.log(objUpdate);
         let headers = {
@@ -153,7 +153,7 @@ export class MiPerfil extends Component {
                         <Col sm={3}>
                             <div className="panel panel-default mt-5">
                                 <div className="panel-body text-center">
-                                    <img src={this.state.informacion.usu_urlimagen} className="profile-avatar" alt="" id="imgUsuario" style={estilo.img} />
+                                    <img src={this.state.informacion.usu_avatar} className="profile-avatar" alt="" id="imgUsuario" style={estilo.img} />
                                     <br />
                                     <label htmlFor="Nueva">Haga click para insertar su foto</label>
                                     <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
@@ -220,9 +220,9 @@ export class MiPerfil extends Component {
                                     <div className="form-group">
                                         <fieldset>
                                             <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
-                                            <input className="form-control" id="readOnly" type="text" defaultValue={this.state.informacion.lat} readOnly ref={this.latitud} />
+                                            <input className="form-control" id="readOnly" type="text" defaultValue={this.state.informacion.usu_lat} readOnly ref={this.latitud} />
                                             <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
-                                            <input className="form-control" id="readOnlyInput" type="text" defaultValue={this.state.informacion.lng} readOnly ref={this.longitud} />
+                                            <input className="form-control" id="readOnlyInput" type="text" defaultValue={this.state.informacion.usu_lng} readOnly ref={this.longitud} />
                                         </fieldset>
                                     </div>
                                     <br />
