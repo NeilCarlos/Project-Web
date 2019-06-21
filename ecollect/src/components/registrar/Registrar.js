@@ -88,6 +88,12 @@ export class Registrar extends Component {
         var lng = latLng.lng();
         this.latitud.current.value = lat;
         this.longitud.current.value = lng;
+        this.setState({
+            puntoInicial: {
+                lat: lat,
+                lng: lng,
+            }
+        });
         nuevaLat = lat;
         nuevaLng = lng;
     };
@@ -147,7 +153,7 @@ export class Registrar extends Component {
                     console.log("mal ingresado");
                 }
             });
-            this.props.history.push("/login");
+        this.props.history.push("/login");
     };
 
     registrarFacebook = () => {
@@ -214,7 +220,6 @@ export class Registrar extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <img hidden className="profile-avatar" alt="" id="imgUsuario" />
-                                    <br />
                                     <label htmlFor="Nueva">Haga click para insertar su foto</label>
                                     <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
                                 </div>
@@ -228,12 +233,16 @@ export class Registrar extends Component {
                                             <Modal.Title>INGRESAR UBICACION</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            PRESIONE EL MAPA PARA OBTENER UBICACION
                                             <div style={{ height: '300px', width: '100%', position: 'relative' }}>
                                                 <Map google={this.props.google}
                                                     initialCenter={this.state.puntoInicial}
                                                     zoom={this.state.zoom}
                                                     onClick={this.onMapClicked}>
+                                                    <Marker
+                                                        title={'Tu te encuentras aquí.'}
+                                                        name={'miUbi'}
+                                                        position={{ lat: this.state.puntoInicial.lat, lng: this.state.puntoInicial.lng }}
+                                                    />
                                                 </Map>
                                             </div>
                                             <div className="form-group">
