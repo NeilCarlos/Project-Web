@@ -56,7 +56,7 @@ export class Publicacion extends Component {
 
     }
     BuscarPublicacionById = (publi_id) => {
-        fetch(`http://localhost:3700/api/publicacion/buscarById/${publi_id}`).then((respuesta) => {
+        fetch(`https://backend-ecollect.herokuapp.com/api/publicacion/buscarById/${publi_id}`).then((respuesta) => {
             return respuesta.json();
         }).then((data) => {
             if (data.content.length > 0) {
@@ -71,7 +71,7 @@ export class Publicacion extends Component {
         });
     }
     BuscarOfertasByIdPublicacion = (publi_id) => {
-        fetch(`http://localhost:3700/api/oferta/${publi_id}`).then((respuesta) => {
+        fetch(`https://backend-ecollect.herokuapp.com/api/oferta/${publi_id}`).then((respuesta) => {
             return respuesta.json();
         }).then((data) => {
             if (data.content.length > 0) {
@@ -87,7 +87,7 @@ export class Publicacion extends Component {
     }
 
     direccionFromCoordinate = () => {
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.objPublicacion.publi_lat},${this.objPublicacion.publi_lng}&key=AIzaSyBBEtOrCeyOyrTS2ARjCRNwzIQXajZLE3Y`).then((respuesta) => {
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.objPublicacion.publi_lat},${this.objPublicacion.publi_lng}&key=AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E`).then((respuesta) => {
             return respuesta.json();
         }).then((data) => {
             let direccion = data.results[0].address_components[2].long_name + ', ' +
@@ -167,7 +167,7 @@ export class Publicacion extends Component {
             },
             body: JSON.stringify(objoferta)
         };        
-        fetch('http://localhost:3700/api/oferta', headers)
+        fetch('https://backend-ecollect.herokuapp.com/api/oferta', headers)
             .then(response => {
                 return response.json();
             })
