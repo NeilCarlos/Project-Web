@@ -14,7 +14,7 @@ export default class Reciclar extends Component {
     objReciclaje = {
         publi_lat: '',
         publi_lng: '',
-        publi_estado: '1',
+        publi_estado: 'p',
         publi_fecha: '',
         usu_id: '',
         publi_tiempo_oferta: '',
@@ -58,10 +58,11 @@ export default class Reciclar extends Component {
     }
 
     handleSubmit = (e) => {
+        let usuario=JSON.parse(localStorage.getItem('usuario-ecollect'));
         e.preventDefault();
         // Falta completar estos campos
         this.objReciclaje.publi_fecha=new Date();
-        this.objReciclaje.usu_id=1;
+        this.objReciclaje.usu_id=usuario.id;
         // 
 
         var myHeaders = {
@@ -75,7 +76,7 @@ export default class Reciclar extends Component {
         console.log(this.objReciclaje);
         fetch('https://backend-ecollect.herokuapp.com/api/publicacion', myHeaders)
         .then(response => { return response.json(); })
-        .then(data => {
+        .then(data => {            
             console.log(data);
         })
     }
