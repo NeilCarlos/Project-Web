@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 // Material UI
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+
+// Bootstrap react
 import Spinner from 'react-bootstrap/Spinner'
 
 import './Recolector.css';
@@ -14,7 +16,7 @@ var moment = require('moment')
 
 export default class Recolector extends Component {
 
-  itemsCountPerPage = 4;
+  itemsCountPerPage = 12;
   totalItemsCount = 0
   pageRangeDisplayed = 10;
   cambioDatos=false;
@@ -101,11 +103,6 @@ export default class Recolector extends Component {
         return `Hace unos minutos.`;
       }
     }
-    // console.log(hoy.diff(fecha1,'day'));
-    // console.log(React.key);
-
-
-    // return hoy.diff(fecha1,'day');
   }
 
   BuscarPublicacionFiltro = async() => {

@@ -6,7 +6,8 @@ import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import Toast from 'react-bootstrap/Toast'
 
 var sImagen;
 var nuevaLat;
@@ -25,7 +26,9 @@ export class MiPerfil extends Component {
                 lat: -16.4296694,
                 lng: -71.5162855
             },
-            zoom: 17,
+            zoom: 12,
+            showA: false,
+            showB: false,
         };
         this.idActual = JSON.parse(localStorage.getItem('usuario-ecollect')).id;
         this.nombre = React.createRef();
@@ -43,10 +46,34 @@ export class MiPerfil extends Component {
             })
             .then(data => {
                 this.setState({
-                    informacion: data.content[0]
+                    informacion: data.content[0],
+                    puntoInicial: {
+                        lat: data.content[0].usu_lat,
+                        lng: data.content[0].usu_lng,
+                    }
                 });
-                console.log(this.state.informacion);
             });
+    }
+
+    mostrarTostadaExito = () => {
+        this.setState({ showA: true });
+    }
+
+    cerrarTostadaExito = () => {
+        this.setState({ showA: false });
+    }
+
+    mostrarTostadaFallida = () => {
+        this.setState({ showB: true });
+    }
+
+    cerrarTostadaFallida = () => {
+        this.setState({ showA: false });
+    }
+
+    toggleShowB = () => {
+        const { showB } = this.state;
+        this.setState({ showB: !showB });
     }
 
     handleInputChange(event) {
@@ -91,9 +118,11 @@ export class MiPerfil extends Component {
             .then(data => {
                 if (data.message === "updated") {
                     console.log("usuario actualizado");
+                    this.mostrarTostadaExito();
                 }
                 else {
                     console.log("mal ingresado");
+                    this.mostrarTostadaFallida();
                 }
             });
     }
@@ -104,6 +133,12 @@ export class MiPerfil extends Component {
         var lng = latLng.lng();
         this.latitud.current.value = lat;
         this.longitud.current.value = lng;
+        this.setState({
+            puntoInicial: {
+                lat: lat,
+                lng: lng,
+            }
+        });
         nuevaLat = lat;
         nuevaLng = lng;
     };
@@ -129,9 +164,11 @@ export class MiPerfil extends Component {
             .then(data => {
                 if (data.message === "updated") {
                     console.log("usuario actualizado");
+                    this.mostrarTostadaExito();
                 }
                 else {
                     console.log("mal ingresado");
+                    this.mostrarTostadaFallida();
                 }
             });
     }
@@ -149,6 +186,26 @@ export class MiPerfil extends Component {
         return (
             <div className="container bootstrap snippets text-dark">
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                    {/* tostada exito */}
+                    <Toast show={this.state.showA} onClose={this.cerrarTostadaExito} delay={3000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">Exito</strong>
+                        </Toast.Header>
+                        <Toast.Body>
+                            Cambios guardados exitosamente
+                                </Toast.Body>
+                    </Toast>
+                    {/* fin tostada exito */}
+                    {/* tostada fallida */}
+                    <Toast show={this.state.showB} onClose={this.cerrarTostadaFallida} delay={3000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">Error</strong>
+                        </Toast.Header>
+                        <Toast.Body>
+                            No se puieron guardar los cambios
+                                </Toast.Body>
+                    </Toast>
+                    {/* fin tostada fallida */}
                     <Row>
                         <Col sm={3}>
                             <div className="panel panel-default mt-5">
@@ -215,6 +272,11 @@ export class MiPerfil extends Component {
                                             initialCenter={this.state.puntoInicial}
                                             zoom={this.state.zoom}
                                             onClick={this.onMapClicked}>
+                                            <Marker
+                                                title={'Tu te encuentras aquí.'}
+                                                name={'miUbi'}
+                                                position={{ lat: this.state.puntoInicial.lat, lng: this.state.puntoInicial.lng }}
+                                            />
                                         </Map>
                                     </div>
                                     <div className="form-group">
