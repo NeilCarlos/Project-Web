@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/Container'
 
 //import './Reciclar.css';
 
+
 export default class Reciclar extends Component {
     objReciclaje = {
         publi_lat: '',
