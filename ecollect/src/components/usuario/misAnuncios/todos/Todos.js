@@ -15,22 +15,40 @@ export default class Todos extends Component {
     }
     
     componentDidMount(){
-       
+        let usuLocalStorage = this.obtenerUsuario()
+        // console.log(usuLocalStorage.id);
+        if (usuLocalStorage != null){
+            usuLocalStorage = JSON.parse(usuLocalStorage);
+            console.log(usuLocalStorage);
+            console.log(usuLocalStorage.id);
 
-     fetch('https://backend-ecollect.herokuapp.com/api/publicacion/p').then((response) => {
-        return response.json();
-    }).then((data) => {
-        console.log(data.content);
-        this.setState({
-            publicaciones: data.content,
-            cargado: true,
-        });
-
-    });
+            fetch(`https://backend-ecollect.herokuapp.com/api/publicacion/buscarByIdUsuario/${usuLocalStorage.id}/p`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data.content);
+                this.setState({
+                    publicaciones: data.content,
+                    cargado: true,
+                });
+    
+            });
+            
+        }
         
        
     }
 
+    obtenerUsuario = () => {
+        let usuLocalStorage = localStorage.getItem('usuario-ecollect')
+        if (usuLocalStorage) {
+            console.log(usuLocalStorage);
+
+            
+            return usuLocalStorage
+        } else {
+            return null
+        }
+    }
 
    
 
