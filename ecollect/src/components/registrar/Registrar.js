@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import './Registrar.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 var imagen;
 var objFacebook;
@@ -34,17 +33,11 @@ const responseGoogle = (response) => {
         })
         .then(data => {
             if (data.message === "ok") {
-                this.props.history.push("/login");
+                console.log("usuario creado");
+                // <Link to={`/Login`} />
             }
             else {
-                toast.error('USUARIO YA EXISTENTE', {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false
-                })
+                console.log("error");
             }
         });
 };
@@ -147,37 +140,20 @@ export class Registrar extends Component {
             },
             body: JSON.stringify(objRegistro)
         };
-        if (objRegistro.usu_nombre != "" && objRegistro.usu_email != "" && objRegistro.usu_pass != "") {
-            fetch('https://backend-ecollect.herokuapp.com/api/usuario', headers)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.message === "created") {
-                        this.props.history.push("/login");
-                    }
-                    else {
-                        toast.error('USUARIO YA EXISTENTE', {
-                            position: "top-center",
-                            autoClose: 3000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: false
-                        })
-                    }
-                });
-        }
-        else {
-            toast.error('ERROR, INGRESE NOMBRE, EMAIL Y CONTRASEÑA COMO MINIMO', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false
+        fetch('https://backend-ecollect.herokuapp.com/api/usuario', headers)
+            .then(response => {
+                return response.json();
             })
-        }
+            .then(data => {
+                if (data.message === "created") {
+                    console.log("usuario creado");
+                    // <Link to={`/Login`} />
+                }
+                else {
+                    console.log("mal ingresado");
+                }
+            });
+        this.props.history.push("/login");
     };
 
     registrarFacebook = () => {
@@ -196,17 +172,11 @@ export class Registrar extends Component {
             })
             .then(data => {
                 if (data.message === "ok") {
-                    this.props.history.push("/login");
+                    console.log("usuario creado");
+                    // <Link to={`/Login`} />
                 }
                 else {
-                    toast.error('USUARIO YA EXISTENTE', {
-                        position: "top-center",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: false
-                    })
+                    console.log("error");
                 }
             });
     }
@@ -214,17 +184,6 @@ export class Registrar extends Component {
     render() {
         return (
             <div className="container" >
-                <ToastContainer
-                    position="top-center"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange
-                    draggable={false}
-                    pauseOnHover={false}
-                />
                 <div className="row ">
                     <div className="col-md-4 py-5 bg-primary text-white text-center ">
                         <div className=" ">
