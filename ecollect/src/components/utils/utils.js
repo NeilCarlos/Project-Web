@@ -1,6 +1,5 @@
 
-
-export default class utils  {
+export  class utils {
 
     ValidarUsuario = () => {
         let usuarioLocalstorage = this.ObtenerUsuario()
@@ -22,7 +21,7 @@ export default class utils  {
                 if (usuarioLocalstorage.exp > ahora) {
                     return true;
                 } else {
-                    localStorage.removeItem("usuario-ecollect");
+                    localStorage.removeItem("usuario-ecollect");                    
                 }
             }
         }
@@ -44,4 +43,7 @@ export default class utils  {
         }
         return null;
     }
+
+    
 }
+
