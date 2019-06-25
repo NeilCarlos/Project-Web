@@ -34,7 +34,6 @@ export class Mapa extends Component {
         (error) => {},
         { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
         );
-
     }
     
     situarMarcador = (mapProps, map, clickEvent)=>{
