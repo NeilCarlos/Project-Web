@@ -45,7 +45,7 @@ export default class Dashboard extends Component {
 
                     <nav id="sidebar">
                         <div className="sidebar-header">
-                            <h2>ECOLLECT</h2>
+                            <h2>E-Collect</h2>
                         </div>
 
                         <ul className="list-unstyled components">

@@ -10,7 +10,6 @@ import Container from 'react-bootstrap/Container'
 
 //import './Reciclar.css';
 
-
 export default class Reciclar extends Component {
     objReciclaje = {
         publi_lat: '',
@@ -59,11 +58,10 @@ export default class Reciclar extends Component {
     }
 
     handleSubmit = (e) => {
-        let usuario=JSON.parse(localStorage.getItem('usuario-ecollect'));
         e.preventDefault();
         // Falta completar estos campos
         this.objReciclaje.publi_fecha=new Date();
-        this.objReciclaje.usu_id=usuario.id;
+        this.objReciclaje.usu_id=17 ;
         // 
 
         var myHeaders = {
@@ -77,7 +75,7 @@ export default class Reciclar extends Component {
         console.log(this.objReciclaje);
         fetch('https://backend-ecollect.herokuapp.com/api/publicacion', myHeaders)
         .then(response => { return response.json(); })
-        .then(data => {            
+        .then(data => {
             console.log(data);
         })
     }
