@@ -14,7 +14,7 @@ export default class Reciclar extends Component {
     objReciclaje = {
         publi_lat: '',
         publi_lng: '',
-        publi_estado: '1',
+        publi_estado: 'p',
         publi_fecha: '',
         usu_id: '',
         publi_tiempo_oferta: '',
@@ -61,7 +61,7 @@ export default class Reciclar extends Component {
         e.preventDefault();
         // Falta completar estos campos
         this.objReciclaje.publi_fecha=new Date();
-        this.objReciclaje.usu_id=1;
+        this.objReciclaje.usu_id=17 ;
         // 
 
         var myHeaders = {
