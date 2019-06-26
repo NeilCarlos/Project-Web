@@ -8,8 +8,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container'
 
-//import './Reciclar.css';
-
 export default class Reciclar extends Component {
     objReciclaje = {
         publi_lat: '',
@@ -242,6 +240,8 @@ export default class Reciclar extends Component {
 
                         </Row>
 
+                        
+
                         <Row>
                             <Col style={{ height: 450 }}>
                                 <Mapa enviarCoord={this.obtenerCoord} />
@@ -261,6 +261,7 @@ export default class Reciclar extends Component {
 
 
                 </form>
+
             </React.Fragment>
 
         )
