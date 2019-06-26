@@ -8,7 +8,7 @@ export default class MisOfertas extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ofertas: [],
+            ofertas: [{}],
         }
         this.idActual = JSON.parse(localStorage.getItem('usuario-ecollect')).id;
     }
@@ -20,7 +20,7 @@ export default class MisOfertas extends Component {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
+                console.log(data.content);
                 this.setState({
                     ofertas: data.content
                 });
@@ -31,7 +31,7 @@ export default class MisOfertas extends Component {
         let publicaciones = [];
         return (
             <div>
-                {this.state.ofertas.map( async(oferta) => {
+                {this.state.ofertas.map( async(oferta, i) => {
                     await fetch(`https://backend-ecollect.herokuapp.com/api/publicacion/buscarById/${oferta.publi_id}`).then(response => {
                         return response.json();
                     })
@@ -48,13 +48,13 @@ export default class MisOfertas extends Component {
                                         <hr />
                                         <Row>
                                             <Col sm={6}>
-                                                <Card.Img src={publicaciones[0].t_fotos[0].fot_img} />
-                                                <button>Ver publicacion</button>
+                                                <Card.Img src={publicaciones[i].t_fotos[0].fot_img} />
+                                                <button className="btn btn-primary mb-5">Ver publicacion</button>
                                             </Col>
                                             <Col sm={6}>
-                                                <Card.Text> Publicado Por: {publicaciones[0].t_usuario.usu_nombre} </Card.Text>
-                                                <Card.Text> Fecha Publicacion: {publicaciones[0].publi_fecha} </Card.Text>
-                                                <Card.Text> Estado: {publicaciones[0].publi_estado} </Card.Text>
+                                                <Card.Text> Publicado Por: {publicaciones[i].t_usuario.usu_nombre} </Card.Text>
+                                                <Card.Text> Fecha Publicacion: {publicaciones[i].publi_fecha} </Card.Text>
+                                                <Card.Text> Estado: {publicaciones[i].publi_estado} </Card.Text>
                                             </Col>
                                         </Row>
 
