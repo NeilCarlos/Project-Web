@@ -7,6 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container'
+import Snackbar from '@material-ui/core/Snackbar';
 
 export default class Reciclar extends Component {
     objReciclaje = {
@@ -27,10 +28,24 @@ export default class Reciclar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            nombreCategoria:''
+            nombreCategoria:'',
+            open: false
         }
         
     }
+
+    handleClick = () => {
+        // setOpen(true);
+        this.setState({ open: true });
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        // setOpen(false);
+        this.setState({ open: false });
+      }
 
     handleInputChange = (event) => {
         var sImagen;
@@ -75,6 +90,7 @@ export default class Reciclar extends Component {
         .then(response => { return response.json(); })
         .then(data => {
             console.log(data);
+            this.handleClick();
         })
     }
 
@@ -261,6 +277,21 @@ export default class Reciclar extends Component {
 
 
                 </form>
+
+                <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Se registró su Publicación exitosamente.</span>}
+                
+                />
 
             </React.Fragment>
 
