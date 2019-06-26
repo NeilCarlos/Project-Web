@@ -112,10 +112,22 @@ export class Publicacion extends Component {
         fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.objPublicacion.publi_lat},${this.objPublicacion.publi_lng}&key=AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E`).then((respuesta) => {
             return respuesta.json();
         }).then((data) => {
-            let direccion = data.results[0].address_components[2].long_name + ', ' +
-                data.results[0].address_components[3].long_name + ', ' +
-                data.results[0].address_components[4].long_name + ', ' +
-                data.results[0].address_components[5].long_name;
+            console.log(data);
+            let fila=-1;
+            let direccion='Perú';
+            // for (let index = 0; index < data.results[0].address_components.length; index++) {
+            //     if(data.results[index].address_components.length>=6){
+            //         fila=index;
+            //         break;
+            //     }
+            // }            
+            // if(fila>-1){
+                direccion=data.results[0].formatted_address
+                // direccion = data.results[fila].address_components[2].long_name + ', ' +
+                // data.results[fila].address_components[3].long_name + ', ' +
+                // data.results[fila].address_components[4].long_name + ', ' +
+                // data.results[fila].address_components[5].long_name;
+            // }            
             this.setState({ direccionPublicacion: direccion })
         });
     }

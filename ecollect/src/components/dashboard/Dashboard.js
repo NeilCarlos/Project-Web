@@ -5,7 +5,7 @@ import $ from 'jquery';
 import Home from '../home/Home'
 import MiPerfil from '../miPerfil/MiPerfil'
 import MisPublicaciones from '../usuario/misAnuncios/MisAnuncios'
-import MisOfertas from '../misOfertas/MisOfertas'
+import Oferta from '../oferta/Oferta'
 import Mensaje from '../mensaje/Mensaje'
 import Reciclar from '../reciclar/Reciclar'
 import Publicaciones from '../recolector/Recolector'
@@ -109,7 +109,7 @@ export default class Dashboard extends Component {
                             <Route exact path="/Home" component={Home} />
                             <Route exact path="/miPerfil" component={MiPerfil} />
                             <Route exact path="/misPublicaciones" component={MisPublicaciones} />
-                            <Route exact path="/misOfertas" component={MisOfertas} />
+                            <Route exact path="/misOfertas" component={Oferta} />
                             <Route exact path="/misMensajes" component={Mensaje} />
                             <Route exact path="/reciclar" component={Reciclar} />
                             <Route exact path="/publicaciones" component={Publicaciones} />

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import './MiPerfil.css';
 import Modal from 'react-bootstrap/Modal';
@@ -8,8 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Toast from 'react-bootstrap/Toast'
 
 var sImagen;
 var nuevaLat;
@@ -29,6 +27,8 @@ export class MiPerfil extends Component {
                 lng: -71.5162855
             },
             zoom: 12,
+            showA: false,
+            showB: false,
         };
         this.idActual = JSON.parse(localStorage.getItem('usuario-ecollect')).id;
         this.nombre = React.createRef();
@@ -56,25 +56,24 @@ export class MiPerfil extends Component {
     }
 
     mostrarTostadaExito = () => {
-        toast.success('EXITO AL GUARDAR LOS CAMBIOS!', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false
-        })
+        this.setState({ showA: true });
+    }
+
+    cerrarTostadaExito = () => {
+        this.setState({ showA: false });
     }
 
     mostrarTostadaFallida = () => {
-        toast.error('ERROR AL GUARDAR LOS CAMBIOS!', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false
-        })
+        this.setState({ showB: true });
+    }
+
+    cerrarTostadaFallida = () => {
+        this.setState({ showA: false });
+    }
+
+    toggleShowB = () => {
+        const { showB } = this.state;
+        this.setState({ showB: !showB });
     }
 
     handleInputChange(event) {
@@ -183,21 +182,30 @@ export class MiPerfil extends Component {
 
             }
 
-        };
+        }
         return (
             <div className="container bootstrap snippets text-dark">
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                    <ToastContainer
-                        position="top-center"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop
-                        closeOnClick
-                        rtl={false}
-                        pauseOnVisibilityChange
-                        draggable={false}
-                        pauseOnHover={false}
-                    />
+                    {/* tostada exito */}
+                    <Toast show={this.state.showA} onClose={this.cerrarTostadaExito} delay={3000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">Exito</strong>
+                        </Toast.Header>
+                        <Toast.Body>
+                            Cambios guardados exitosamente
+                                </Toast.Body>
+                    </Toast>
+                    {/* fin tostada exito */}
+                    {/* tostada fallida */}
+                    <Toast show={this.state.showB} onClose={this.cerrarTostadaFallida} delay={3000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">Error</strong>
+                        </Toast.Header>
+                        <Toast.Body>
+                            No se puieron guardar los cambios
+                                </Toast.Body>
+                    </Toast>
+                    {/* fin tostada fallida */}
                     <Row>
                         <Col sm={3}>
                             <div className="panel panel-default mt-5">
