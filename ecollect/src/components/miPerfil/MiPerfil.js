@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import './MiPerfil.css';
 import Modal from 'react-bootstrap/Modal';
