@@ -11,19 +11,50 @@ import Reciclar from '../reciclar/Reciclar'
 import Publicaciones from '../recolector/Recolector'
 import Publicacion from '../publicacion/Publicacion'
 
+
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import Avatar from '@material-ui/core/Avatar';
+
 import './dashboard.css';
 
 
 export default class Dashboard extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.Salir = this.Salir.bind(this)
+        this.state={
+            usuario:{}
+        }
     }
 
     componentDidMount() {
         this.ClickToggleSidebar();
+        // this.props.history.push("/publicaciones");
+        this.obtenerUsuario();
     }
+
+    obtenerUsuario=()=>{
+        let usuario=JSON.parse(localStorage.getItem('usuario-ecollect'))
+        if(usuario){
+            this.setState({usuario:usuario})    
+        }else{
+            this.setState({usuario:{
+                nombre:'Invitado',
+                img:'https://www.musicu.live/assets/images/user-avatar.png'
+            }})
+        }
+        
+    }
+    obtenerFotoUsuario=()=>{
+        if(this.state.usuario.img){
+            return this.state.usuario.img
+        }else{
+            return 'https://www.musicu.live/assets/images/user-avatar.png'
+        }
+    }
+
 
     ClickToggleSidebar = () => {
         // console.log("Se hizo clic");
@@ -33,6 +64,8 @@ export default class Dashboard extends Component {
     }
 
     Salir = () => {
+        // eliminar Usuario de local Storage y redireccionar a Home
+        localStorage.removeItem('usuario-ecollect');
         this.props.history.push('/');
     }
 
@@ -96,14 +129,22 @@ export default class Dashboard extends Component {
 
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="nav navbar-nav ml-auto">
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="#">Salir</Link>
+                                        <li className="nav-item" style={{display:'flex',alignContent:'center',alignItems:'center'}}>
+
+                                            <Badge style={{marginRight:10,marginLeft:10}} badgeContent={4} color="primary">
+                                                <MailIcon />
+                                            </Badge>
+                                            <Avatar style={{marginRight:10,marginLeft:10,borderRadius:'50%'}} alt="" src={this.obtenerFotoUsuario()}  />
+                                            <label style={{marginRight:10,marginLeft:10,marginTop:5}}>{this.state.usuario.nombre}</label>                                            
+                                            <Link style={{marginRight:10,marginLeft:10}} onClick={this.Salir}>Salir</Link>
+                                            {/* Menu */}
+                                            
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </nav>
-                    
+
                         <Switch>
                             <Route exact path="/" />
                             <Route exact path="/Home" component={Home} />
@@ -117,7 +158,7 @@ export default class Dashboard extends Component {
                         </Switch>
                     </div>
                 </div>
-                
+
             </BrowserRouter>
         )
     }
