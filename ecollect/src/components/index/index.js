@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import AppBar from './components/app-bar';
 import Pilares from './components/pilares';
 import Carousel from './components/carousel';

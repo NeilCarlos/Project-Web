@@ -1,18 +1,16 @@
-body{
-    /* background: url("https://concepto.de/wp-content/uploads/2013/08/ecolog%C3%ADa-e1551739090805.jpg") fixed no-repeat; */
-    /* background-size: cover;
+#contenedorTotalRegistrar{
+    background: url("https://concepto.de/wp-content/uploads/2013/08/ecolog%C3%ADa-e1551739090805.jpg") fixed no-repeat;
+    background-size: cover;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    align-content: center; */
+    align-content: center;
 
 }
-.container{
+.contenedorRegistrar{
     background: white;
-
 }
-img {width:100%;}
 
 input[type=file]#Foto {
     width: 0.1px;

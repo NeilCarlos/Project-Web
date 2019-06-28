@@ -213,137 +213,137 @@ export class Registrar extends Component {
 
     render() {
         return (
-            <div className="container" >
-                <ToastContainer
-                    position="top-center"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange
-                    draggable={false}
-                    pauseOnHover={false}
-                />
-                <div className="row ">
-                    <div className="col-md-4 py-5 bg-primary text-white text-center ">
-                        <div className=" ">
+            <div id="contenedorTotalRegistrar">
+                <div className="container contenedorRegistrar" >
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnVisibilityChange
+                        draggable={false}
+                        pauseOnHover={false}
+                    />
+                    <div className="row ">
+                        <div className="col-md-4 py-5 bg-primary text-black text-center ">
                             <div className="card-body">
-                                <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" />
+                                <img style={{ width: "100%" }} src="http://www.ansonika.com/mavia/img/registration_bg.svg" />
                                 <h2 className="py-3">Registro</h2>
                                 <p>Registrate para que puedas ayudar al planeta y obtener beneficios en el camino</p>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-8 py-5 border">
-                        <h4 className="pb-4">Llena los siguientes datos</h4>
-                        <form>
-                            <div className="form-row">
-                                <div className="form-group col-md-12">
-                                    <input id="Nombre" name="Nombre" placeholder="Nombre Completo" className="form-control" type="text" required="required" ref={this.nombre} />
+                        <div className="col-md-8 py-5 border">
+                            <h4 className="pb-4">Llena los siguientes datos</h4>
+                            <form>
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <input id="Nombre" name="Nombre" placeholder="Nombre Completo" className="form-control" type="text" required="required" ref={this.nombre} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-12">
-                                    <input type="email" className="form-control" id="inputEmail4" placeholder="Correo electronico" required="required" ref={this.email} />
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <input type="email" className="form-control" id="inputEmail4" placeholder="Correo electronico" required="required" ref={this.email} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-12">
-                                    <input id="Telefono" name="Telefono" placeholder="Telefono" className="form-control" required="required" type="text" ref={this.telefono} />
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <input id="Telefono" name="Telefono" placeholder="Telefono" className="form-control" required="required" type="text" ref={this.telefono} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-12">
-                                    <input id="Contrasenia" name="Contrasenia" placeholder="Contraseña" className="form-control" required="required" type="password" ref={this.pass} />
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <input id="Contrasenia" name="Contrasenia" placeholder="Contraseña" className="form-control" required="required" type="password" ref={this.pass} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <img hidden className="profile-avatar" alt="" id="imgUsuario" />
-                                    <label htmlFor="Nueva">Haga click para insertar su foto</label>
-                                    <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <Button variant="primary" onClick={this.handleShow}>
-                                        Haga click para enviar su ubicacion
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <img hidden className="profile-avatar" alt="" id="imgUsuario" />
+                                        <label htmlFor="Nueva">Haga click para insertar su foto</label>
+                                        <input id="Nueva" type="file" accept="image/*" name="image" onChange={this.handleInputChange} />
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                        <Button variant="primary" onClick={this.handleShow}>
+                                            Haga click para enviar su ubicacion
                                     </Button>
 
-                                    <Modal show={this.state.show} onHide={this.handleClose}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>INGRESAR UBICACION</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <div style={{ height: '300px', width: '100%', position: 'relative' }}>
-                                                <Map google={this.props.google}
-                                                    initialCenter={this.state.puntoInicial}
-                                                    zoom={this.state.zoom}
-                                                    onClick={this.onMapClicked}>
-                                                    <Marker
-                                                        title={'Tu te encuentras aquí.'}
-                                                        name={'miUbi'}
-                                                        position={{ lat: this.state.puntoInicial.lat, lng: this.state.puntoInicial.lng }}
-                                                    />
-                                                </Map>
-                                            </div>
-                                            <div className="form-group">
-                                                <fieldset>
-                                                    <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
-                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -70.123412" readOnly ref={this.latitud} />
-                                                    <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
-                                                    <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -16.123412" readOnly ref={this.longitud} />
-                                                </fieldset>
-                                            </div>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={this.handleClose}>
-                                                Cerrar
+                                        <Modal show={this.state.show} onHide={this.handleClose}>
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>INGRESAR UBICACION</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <div style={{ height: '300px', width: '100%', position: 'relative' }}>
+                                                    <Map google={this.props.google}
+                                                        initialCenter={this.state.puntoInicial}
+                                                        zoom={this.state.zoom}
+                                                        onClick={this.onMapClicked}>
+                                                        <Marker
+                                                            title={'Tu te encuentras aquí.'}
+                                                            name={'miUbi'}
+                                                            position={{ lat: this.state.puntoInicial.lat, lng: this.state.puntoInicial.lng }}
+                                                        />
+                                                    </Map>
+                                                </div>
+                                                <div className="form-group">
+                                                    <fieldset>
+                                                        <label className="control-label" htmlFor="readOnlyInput">Latitud</label>
+                                                        <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -70.123412" readOnly ref={this.latitud} />
+                                                        <label className="control-label" htmlFor="readOnlyInput">Longitud</label>
+                                                        <input className="form-control" id="readOnlyInput" type="text" placeholder="Ejm: -16.123412" readOnly ref={this.longitud} />
+                                                    </fieldset>
+                                                </div>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={this.handleClose}>
+                                                    Cerrar
                                         </Button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </div>
-                            </div>
-                            <br />
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <div className="form-group">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required="required" />
-                                            <label className="form-check-label" htmlFor="invalidCheck2">
-                                                <small>Haciendo click aceptas nuestro terminos y condiciones de uso de la App.</small>
-                                            </label>
-                                        </div>
+                                            </Modal.Footer>
+                                        </Modal>
                                     </div>
-
                                 </div>
-                            </div>
+                                <br />
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <div className="form-group">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required="required" />
+                                                <label className="form-check-label" htmlFor="invalidCheck2">
+                                                    <small>Haciendo click aceptas nuestro terminos y condiciones de uso de la App.</small>
+                                                </label>
+                                            </div>
+                                        </div>
 
-                            <div className="form-row">
-                                <button type="button" className="btn btn-danger" onClick={this.registrar}>Registrar</button>
-                            </div>
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <button type="button" className="btn btn-danger" onClick={this.registrar}>Registrar</button>
+                                </div>
+                                <br />
+                                O registrese usando:
                             <br />
-                            O registrese usando:
-                            <br />
-                            <GoogleLogin
-                                clientId="170262057332-nlcv43db8ok0d1d2g6vpicbv35vcnkss.apps.googleusercontent.com"
-                                render={renderProps => (
-                                    <button className="loginBtn loginBtn--google" onClick={renderProps.onClick} disabled={renderProps.disabled}>Registrar con Google</button>
-                                )}
-                                onSuccess={responseGoogle}
-                                onFailure={responseGoogle}
-                                buttonText="Login"
-                                cookiePolicy={'single_host_origin'}
-                            />
-                            <FacebookLogin
-                                appId="2091403797648472"
-                                autoLoad={true}
-                                fields="name,email,picture"
-                                callback={responseFacebook}
-                                cssClass="loginBtn loginBtn--facebook"
-                                textButton="Registrar con Facebook"
-                                onClick={this.registrarFacebook}
-                            />
-                        </form>
+                                <GoogleLogin
+                                    clientId="170262057332-nlcv43db8ok0d1d2g6vpicbv35vcnkss.apps.googleusercontent.com"
+                                    render={renderProps => (
+                                        <button className="loginBtn loginBtn--google" onClick={renderProps.onClick} disabled={renderProps.disabled}>Registrar con Google</button>
+                                    )}
+                                    onSuccess={responseGoogle}
+                                    onFailure={responseGoogle}
+                                    buttonText="Login"
+                                    cookiePolicy={'single_host_origin'}
+                                />
+                                <FacebookLogin
+                                    appId="2091403797648472"
+                                    autoLoad={true}
+                                    fields="name,email,picture"
+                                    callback={responseFacebook}
+                                    cssClass="loginBtn loginBtn--facebook"
+                                    textButton="Registrar con Facebook"
+                                    onClick={this.registrarFacebook}
+                                />
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

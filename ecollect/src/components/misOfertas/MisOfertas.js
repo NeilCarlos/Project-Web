@@ -77,7 +77,7 @@ export default class MisOfertas extends Component {
                                         <hr />
                                         <Card.Text> Fecha: {this.CalcularFechaPublicacion(oferta.ofer_fecha)} </Card.Text>
                                         <Card.Text> Monto de Oferta: S/.{oferta.ofer_precio_oferta} </Card.Text>
-
+                                        <Card.Text> Estado: {oferta.ofer_estado} </Card.Text>
                                     </Col>
                                 </Row>
                             </Card.Body>

@@ -5,6 +5,26 @@
   margin: 0;
 }
 
+
+#root{
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  padding: 0;
+  margin: 0;
+}
+body {
+  padding: 0;
+  margin: 0;
+ /*  font-family: 'Lato', sans-serif; */
+  /* font-family: 'Quicksand', sans-serif; */
+ /*  -webkit-font-smoothing: antialiased; */
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F2F2F2;
+}
+
 .pilares{
     padding: 30px 0px;
     margin-top:30px;
@@ -196,4 +216,254 @@
 .footerEC{
   background-color: black;
   padding: 20px 0px;
+}
+
+
+/* general */
+.font-white{
+  color: rgb(255, 255, 255);
+}
+.font-dark{
+    margin-bottom: 30px;
+    color: rgb(24, 27, 50);
+}
+.font-green{
+  color: #1DB954;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.font-sub {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 40px;
+}
+.font-text {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+}
+h1, h2, h3, h4, h5, h6, p, span {
+  -webkit-font-smoothing: antialiased;
+  font-weight: unset;
+}
+.fs-20 {
+  font-size: 20px;
+}
+.f-weight{
+  font-weight: 900;
+}
+/* fin general */
+
+/*inicio*/
+.inicio{
+  background-image: url(./../../assets/img/reciclaje.png);
+  height: 1050px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* btn buscar */
+.btnregistrarse{
+  color: white;
+  border-radius: 40px;
+  background-color:transparent;
+  padding: 5px 30px; 
+  box-shadow: rgba(0,0,0,0.75);
+  border: 1px solid white;
+}
+
+.btnbuscar{
+  color: #00AE35;
+  border-radius: 40px;
+  background-color: white;
+  padding: 5px 30px; 
+  box-shadow: rgba(0,0,0,0.75);
+}
+
+
+/* menu logotipo */
+.logotipo {
+  background-image: url(./../../assets/img/logo_negat_ecollect.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.logotipo{
+  box-sizing: border-box;
+  padding: 25px 80px;
+  text-align: center;
+  
+}
+
+
+/* botones y label de busqueda */
+.busqueda{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.btnbuscar:hover{
+  color: white;
+  background-color:#00AE35;
+  border: 1px solid #fff;
+}
+
+
+.busq{
+  margin: 0px 30px;
+}
+.busq select{
+  background-color: transparent;
+  color: white;
+  border-bottom: 1px solid white;
+  border-radius: 0px;
+  width: 260px;
+}
+
+
+/* pasos para salvar el planeta */
+
+.iconos-pilares{
+  font-size: 80px;
+  color: whitesmoke;
+}
+.pasos{
+  background-color:rgb(27, 88, 220);
+  padding: 20px 0px;
+}
+.ti-pasos{
+  color:#fff;
+}
+
+.pasos4{
+  padding: 20px 0px;
+}
+.pasos h2{
+  color: white;
+}
+
+
+
+/*galeria*/
+.btn-salvar{
+  background-image: url("http://2.bp.blogspot.com/-UxmovzvzXiI/Tq7JLXvkhOI/AAAAAAAAAUA/4iRb1Bv2qbE/s1600/Recycle.jpg");
+  height: 300px;
+}
+
+/* ++++++++++++++++++++++ */
+.inicio .navbar-default .navbar-header .navbar-brand{
+	color: #fff;
+  font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+	font-weight: bold;
+}
+.inicio .navbar-default.affix .navbar-header .navbar-brand{
+	color:#2D313A;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:focus{
+	color: #009CA8;
+	background-color: transparent;
+}
+.navbar-default{
+	background-color: transparent;
+	border-color: transparent;
+  margin-bottom:150px;
+  padding-top: 30px;
+	transition: background-color 0.5s;
+}
+.navbar-default.affix{
+	width: 100%;
+	margin-bottom: 0px;
+	background-color: #fff;
+	top:0;
+	z-index:1004;
+	-webkit-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.5);
+	-moz-box-shadow:    0px 3px 4px 0px rgba(50, 50, 50, 0.5);
+	box-shadow:         0px 3px 4px 0px rgba(50, 50, 50, 0.5);
+}
+.navbar-default .navbar-collapse, 
+.navbar-default .navbar-form{
+	border-color: green;
+}
+.navbar-default.affix .navbar-nav>li>a{
+	color: #2D313A;
+}
+.navbar-default.affix .navbar-nav>.active>a, 
+.navbar-default.affix .navbar-nav>.active>a:focus, 
+.navbar-default.affix .navbar-nav>.active>a:hover{
+	color: #009CA8;
+}
+.navbar-default .navbar-nav>li>a{
+	color: #fff;
+	font-size: 16px;
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
+.navbar-default .navbar-nav>li>a:hover{
+	/* color: #199EA5; */
+}
+.navbar-default .navbar-nav>.active>a, 
+.navbar-default .navbar-nav>.active>a:focus, 
+.navbar-default .navbar-nav>.active>a:hover {
+    /* color: #009CA8; */
+    background-color: transparent;
+}
+
+/* botton */
+.btn-default{
+  color: white;
+  font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    display: inline-flex;
+    height: 40px;
+    position: relative;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    vertical-align: middle;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    border-image: initial;
+    margin: 0px;
+    padding: 0px 32px;
+    outline: none;
+    transition: box-shadow 375ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    /* border-radius: 0px; */
+    text-decoration: none;
+    background: transparent;
+}
+.btn-default:hover{
+/*   font-size: 14px; */
+  line-height: 16px;
+  color: #1DB954;
+  cursor: pointer;
+  display: inline-block;
+  /* padding: 7.5px 20px; */
+  border-width: 1px;
+  border-style: solid;
+  border-color: white;
+  border-image: initial;
+  transition: all 0.3s ease 0s;
+  background-color: white;
+}
+
+.subir {
+  line-height: 1.3;
+    font-size: 40px;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
 }

@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 export default class Footer extends Component {
     render() {
         return (
-            <footer id="footer " class="footerEC text-white">
-                <div class="container text-left footerEco">
-                <p>De Ecollect con <ion-icon name="heart" class=""></ion-icon> para salvar el mundo<span class="icon-heart"></span></p>
+            <footer id="footer " className="footerEC text-white">
+                <div className="container text-left footerEco">
+                <p>De Ecollect con <ion-icon name="heart" className=""></ion-icon> para salvar el mundo<span className="icon-heart"></span></p>
                 </div>
             </footer>
         )
