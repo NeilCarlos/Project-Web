@@ -72,9 +72,10 @@ export default class Reciclar extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        let usuario=JSON.parse(localStorage.getItem('usuario-ecollect'));
         // Falta completar estos campos
         this.objReciclaje.publi_fecha=new Date();
-        this.objReciclaje.usu_id=17 ;
+        this.objReciclaje.usu_id=usuario.id ;
         // 
 
         var myHeaders = {
@@ -88,8 +89,8 @@ export default class Reciclar extends Component {
         console.log(this.objReciclaje);
         fetch('https://backend-ecollect.herokuapp.com/api/publicacion', myHeaders)
         .then(response => { return response.json(); })
-        .then(data => {
-            console.log(data);
+        .then(data => {            
+            // console.log(data);
             this.handleClick();
         })
     }
@@ -172,12 +173,12 @@ export default class Reciclar extends Component {
                                                 <label htmlFor="inEstado" className="col-form-label">Estado</label>
                                                 <div className="form-check">
                                                     <label className="form-check-label mr-5">
-                                                        <input name="optionsRadios" className="form-check-input" id="optionsRadios1" type="radio" defaultChecked value="1" 
+                                                        <input name="optionsRadios" className="form-check-input" id="optionsRadios1" type="radio" defaultChecked value="p" 
                                                             onChange={this.onChangeEstado}/>
                                                         Activo
                                                     </label>
                                                     <label className="form-check-label">
-                                                        <input name="optionsRadios" className="form-check-input" id="optionsRadios2" type="radio" value="0"
+                                                        <input name="optionsRadios" className="form-check-input" id="optionsRadios2" type="radio" value="a"
                                                             onChange={this.onChangeEstado} />
                                                         No Activo
                                                     </label>
@@ -268,7 +269,7 @@ export default class Reciclar extends Component {
 
                         <Row style={{ marginTop: 25 }}>
                             <Col>
-                                <button type="submit" className="btn btn-primary">Reciclar</button>
+                                <button type="submit" className="btn btn-primary">Publicar</button>
                                 <button className="btn btn-danger" type="button">Cancelar</button>
                             </Col>
                         </Row>

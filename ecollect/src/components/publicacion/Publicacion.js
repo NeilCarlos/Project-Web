@@ -6,7 +6,7 @@ import socketIOClient from "socket.io-client";
 
 // import Mapa from '../mapa/Mapa';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
-import {ToastsContainer, ToastsStore,ToastsContainerPosition} from 'react-toasts';
+import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 // Bootstrap react
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -22,6 +22,12 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 // Css
 var moment = require('moment')
 
@@ -30,6 +36,7 @@ export class Publicacion extends Component {
     // objOfertas = [];
     objCitas = {};
     socket;
+    idoferta;
 
     constructor(props) {
         super(props)
@@ -48,34 +55,34 @@ export class Publicacion extends Component {
             direccionPublicacion: '',
             objOfertas: [],
             displayBtnAceptarOferta: '',
-            displayBtnOfertar: '',
-            displayBtnAnularPublicacion: '',
+            displayBtnOfertar: '',                        
             displayBtnCrearOferta: '',
             show: false,
-            endpoint: "https://backend-ecollect.herokuapp.com/"
+            endpoint: "https://backend-ecollect.herokuapp.com/",
+            openModalAceptOferta: false            
         }
     }
 
     async componentDidMount() {
         // Verificando que el usuario sea el correcto
-       
+
 
         // Cargar el componente
         await this.BuscarPublicacionById(this.props.match.params.publi_id);
 
         // conectando con socket
-        const {endpoint} = this.state;
+        const { endpoint } = this.state;
         this.socket = socketIOClient(endpoint);
         this.socket.on("connect", (data) => {
-            console.log('Conectado con el servidor de sockets' + data);            
+            console.log('Conectado con el servidor de sockets');
         });
-        this.socket.on('actualizar-oferta',()=>{
+        this.socket.on('actualizar-oferta', () => {
             // Escuchar Todos los eventos agregaroferta
             // Ejecutar la fincion para obtener nuevamente las Ofertas
-            console.log('AgregarOferta Escuchado');            
+            // console.log('AgregarOferta Escuchado');            
             this.BuscarOfertasByIdPublicacion(this.props.match.params.publi_id);
         });
-        
+
 
     }
     BuscarPublicacionById = (publi_id) => {
@@ -104,7 +111,7 @@ export class Publicacion extends Component {
                     loadOfertas: true
                 });
 
-                console.log(this.state.objOfertas);
+                // console.log(this.state.objOfertas);
             }
         });
     }
@@ -112,9 +119,9 @@ export class Publicacion extends Component {
         fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.objPublicacion.publi_lat},${this.objPublicacion.publi_lng}&key=AIzaSyBcjhtE0FIFEO92Z_7xKQWODx3I_QXq33E`).then((respuesta) => {
             return respuesta.json();
         }).then((data) => {
-            console.log(data);
-            let fila=-1;
-            let direccion='Perú';
+            // console.log(data);
+            let fila = -1;
+            let direccion = 'Perú';
             // for (let index = 0; index < data.results[0].address_components.length; index++) {
             //     if(data.results[index].address_components.length>=6){
             //         fila=index;
@@ -122,53 +129,38 @@ export class Publicacion extends Component {
             //     }
             // }            
             // if(fila>-1){
-                direccion=data.results[0].formatted_address
-                // direccion = data.results[fila].address_components[2].long_name + ', ' +
-                // data.results[fila].address_components[3].long_name + ', ' +
-                // data.results[fila].address_components[4].long_name + ', ' +
-                // data.results[fila].address_components[5].long_name;
+            direccion = data.results[0].formatted_address
+            // direccion = data.results[fila].address_components[2].long_name + ', ' +
+            // data.results[fila].address_components[3].long_name + ', ' +
+            // data.results[fila].address_components[4].long_name + ', ' +
+            // data.results[fila].address_components[5].long_name;
             // }            
             this.setState({ direccionPublicacion: direccion })
         });
     }
-    VerificarPublicacionPropia=()=>{
+    VerificarPublicacionPropia = () => {
         // Hasta este punto se supon que ya cargo los datos de la publiacion
-        let usuario=JSON.parse(localStorage.getItem('usuario-ecollect'));
-     
-        if(this.objPublicacion.t_usuario.usu_id == usuario.id){
-            console.log('usuario dueño de la publicacion');
-            
-            // deshabilitando Botones Especficos
+        let usuario = JSON.parse(localStorage.getItem('usuario-ecollect'));
+
+        if (this.objPublicacion.t_usuario.usu_id == usuario.id) {
             this.setState({
                 displayBtnOfertar: 'none',
-            });       
-        }else{
-            console.log('usuario que visualiza la publicacion');
+            });
+        } else {
+            // console.log('usuario que visualiza la publicacion');
             this.setState({
+                displayBtnAnularPublicacion: 'none',
+                displayBtnAceptarOferta: 'none',
+            });
+        } 
+        if(this.objPublicacion.publi_estado==='e'){
+            this.setState({
+                displayBtnOfertar: 'none',
                 displayBtnAnularPublicacion: 'none',
                 displayBtnAceptarOferta: 'none',
             });
         }
     }
-
-    // handleInputChange = (event) => {
-    //     var sImagen;
-    //     var image = event.target.files[0];
-    //     var pattern = /image-*/;
-    //     //var reader = new FileReader();
-    //     if (!image.type.match(pattern)) {
-    //         console.error('File is not an image');
-    //         return;
-    //     }
-    //     var reader = new FileReader();
-    //     reader.onload = (e) => {
-    //         document.getElementById('imgReciclado').setAttribute('src', e.target.result);
-    //         sImagen = e.target.result;
-    //         this.objReciclaje.foto_img = sImagen;
-    //     }
-    //     reader.readAsDataURL(image);
-    // }
-
 
     // Mostrar Fecha
     CalcularFechaPublicacion = (fecha) => {
@@ -186,7 +178,6 @@ export class Publicacion extends Component {
             }
         }
     }
-
     // Modal Ofertas
     handleClose() {
         this.setState({ show: false });
@@ -202,8 +193,7 @@ export class Publicacion extends Component {
     //     // this.inputComentarioOferta.current.value=objoferta.ofer_comentario;     
     // }
     CrearOferta = () => {
-        let usuario = JSON.parse(localStorage.getItem('usuario-ecollect'));
-        // Creando Oferta
+        let usuario = JSON.parse(localStorage.getItem('usuario-ecollect'));        
         let objoferta = {
             ofer_precio_oferta: this.inputValorOferta.current.value,
             ofer_comentario: this.inputComentarioOferta.current.value,
@@ -219,33 +209,110 @@ export class Publicacion extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(objoferta)
-        };        
+        };
         fetch('https://backend-ecollect.herokuapp.com/api/oferta', headers)
             .then(response => {
                 return response.json();
             })
-            .then((data) => {
-                console.log(data);
+            .then((data) => {                
                 if (data.message === "created") {
-                    this.BuscarOfertasByIdPublicacion(this.props.match.params.publi_id);
-                    console.log('oferta creada');
-                    // Emitiendo Socket a todos los usuarios conectados a agregaroferta
-                    this.socket.emit('agregaroferta',{mensaje:'se ha agregado una oferta'})
-                    
+                    this.BuscarOfertasByIdPublicacion(this.props.match.params.publi_id);                    
+                    this.socket.emit('agregaroferta', { mensaje: 'se ha agregado una oferta' })
                     ToastsStore.success("Oferta creada con Exito !!!.")
                 }
                 else {
                     console.log('no se creo nada');
                     ToastsStore.error("No se creo la Oferta. Error !!!.")
                 }
-            }).catch((error)=>{
-                console.log(error);
+            }).catch((error) => {                
                 ToastsStore.error("No se creo la Oferta. Error !!!.")
             });
-
         this.setState({ show: false });
     }
 
+    CrearCita = () => {
+        // Creando Cita
+        let objcita = {
+            cita_ubicacion: '',
+            cita_fecha: new Date(),
+            cita_estado: 'a',
+            publi_id: this.props.match.params.publi_id,
+            ofer_id: this.idoferta
+        }
+        let headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objcita)
+        };
+        fetch('https://backend-ecollect.herokuapp.com/api/cita', headers).then((respuesta) => {
+            return respuesta.json();
+        }).then((data) => {
+            if (data.message === 'created') {
+                // Modificar el estado de la publicacion(e=escogido)          
+                fetch(`https://backend-ecollect.herokuapp.com/api/publicacion/cambiarEstado/${this.props.match.params.publi_id}/e`, {
+                    method: 'PUT',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then((resp2) => {
+                    return resp2.json();
+                }).then((data) => {
+                    // ToastsStore.success("Publicacion Actualizada !!!.")
+                    // console.log(data.message);
+                });
+
+                // Modificar el estado de la Oferta(e=elegido)
+                fetch(`https://backend-ecollect.herokuapp.com/api/oferta/cambiarestado/${this.idoferta}/e`).then((resp3) => {
+                    return resp3.json();
+                }).then((data) => {
+                    // ToastsStore.success("Oferta Actualizada !!!.")
+                    // console.log(data.message);
+                });
+                this.BuscarPublicacionById(this.props.match.params.publi_id)                
+                ToastsStore.success("Cita creada con Exito !!!.")      
+
+            }else{
+                ToastsStore.warning("No se creo la Cita !!!.")
+                // this.setState({ openModalAceptOferta: false });
+            }
+            // Si todo es correcto Cerrar Modal            
+            this.setState({ openModalAceptOferta: false });
+            //Ir a Mis Ofertas
+            // this.props.history.push("/")
+                         
+        });
+    }
+
+    AbrirModalAceptarOferta = async(ofer_id) => {
+        // console.log('id oferta actual : '+this.state.idoferta);
+        this.idoferta = await ofer_id;
+        await this.setState({
+            openModalAceptOferta: true            
+        });
+        // console.log('id oferta: '+this.idoferta);        
+    }
+    CerrarModalAceptarOferta = () => {
+        this.setState({ openModalAceptOferta: false });
+    }
+
+    verificarEstadoOferta=(estado)=>{
+        if(estado==='e'){
+            return '';
+        }else{
+            return'none';
+        }
+    }
+    verificarEstadoOPublicacion=(estado)=>{
+        if(estado==='e'){
+            return '';
+        }else{
+            return'none';
+        }
+    }
 
     render() {
         if (this.state.loadPublicacion) {
@@ -254,11 +321,11 @@ export class Publicacion extends Component {
             return (
                 <React.Fragment>
                     {/* Card */}
-                    <div style={{ display: 'flex', flexDirection: 'row',justifyContent:'flex-start' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                         <Card style={{ width: '60rem' }}>
                             <Card.Header style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <label style={{ fontWeight: 'bold', marginTop: 5 }}><Button style={{marginRight:10}} onClick={() => { this.props.history.push("/publicaciones") }} variant="outline-info"><i class="fas fa-chevron-left"></i></Button> Publicado por : </label>
+                                <label style={{ fontWeight: 'bold', marginTop: 5 }}><Button style={{ marginRight: 10 }} onClick={() => { this.props.history.push("/publicaciones") }} variant="outline-info"><i class="fas fa-chevron-left"></i></Button> Publicado por : </label>
                                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                     <Avatar style={{ marginLeft: 10, marginRight: 5 }}>{this.objPublicacion.t_usuario.usu_nombre.charAt(0).toUpperCase()}</Avatar>
                                     <label style={{ marginTop: 5 }}>{this.objPublicacion.t_usuario.usu_nombre}</label>
@@ -270,7 +337,7 @@ export class Publicacion extends Component {
                                 {/* Fecha */}
                                 <div >
                                     <label style={{ fontWeight: 'bold', marginTop: 2 }}>Fecha : </label>
-                                    <label style={{ marginLeft: 5 }}>{this.objPublicacion.publi_fecha}</label>
+                                    <label style={{ marginLeft: 5 }}>{this.CalcularFechaPublicacion(this.objPublicacion.publi_fecha)}</label>
                                 </div>
                                 {/* Precio */}
                                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -290,15 +357,16 @@ export class Publicacion extends Component {
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         <label style={{ fontWeight: 'bold' }}>Ubicación : </label>
-                                        <label style={{ marginLeft: 30 }}><i style={{marginRight:10}} class="fas fa-map-marker-alt"></i>{this.state.direccionPublicacion}</label>
+                                        <label style={{ marginLeft: 30 }}><i style={{ marginRight: 10 }} class="fas fa-map-marker-alt"></i>{this.state.direccionPublicacion}</label>
                                     </div>
                                 </div>
-                            </ListGroup.Item>
+                            </ListGroup.Item> 
                             {/* Mapa */}
                             <ListGroup.Item>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Button variant="outline-secondary" onClick={() => { this.setState({ showModalMapa: true }) }}>Ver Mapa</Button>
                                     <Button style={{ display: this.state.displayBtnAnularPublicacion }} variant="primary">Anular Publicación</Button>
+                                    <img style={{height:50,display:this.verificarEstadoOPublicacion(this.objPublicacion.publi_estado)}} src={require('./img/finalizado.png')}></img>
                                 </div>
                             </ListGroup.Item>
 
@@ -333,25 +401,25 @@ export class Publicacion extends Component {
                                                         <i class="fas fa-star fa-2x" style={{ color: '#F8C301', margin: 10 }}></i>
                                                         <label style={{ marginRight: 10, margintop: 5 }}>{oferta.t_usuario.usu_calificacion}</label>
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                                 <ExpansionPanel>
                                                     <ExpansionPanelSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
                                                         id="panel1a-header"
                                                     >
-                                                     
-                                                     {/* <ListGroup.Item style={{ display: 'flex', justifyContent: 'center' }}> */}
-                                                     <Typography >
-                                                         <div style={{display: 'flex', justifyContent: 'space-between' }}>
-                                                        <div>
-                                                            <label style={{ fontWeight: 'bold', marginRight: 10 }}>Monto </label>
-                                                            <label><h4>S/. {oferta.ofer_precio_oferta}</h4></label>
-                                                        </div>                                                        
-                                                    {/* <label>Comentario</label> */}
-                                                        </div>
+
+                                                        {/* <ListGroup.Item style={{ display: 'flex', justifyContent: 'center' }}> */}
+                                                        <Typography >
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                <div>
+                                                                    <label style={{ fontWeight: 'bold', marginRight: 10 }}>Monto </label>
+                                                                    <label><h4>S/. {oferta.ofer_precio_oferta}</h4></label>
+                                                                </div>
+                                                                {/* <label>Comentario</label> */}
+                                                            </div>
                                                         </Typography>
-                                                    {/* </ListGroup.Item> */}
+                                                        {/* </ListGroup.Item> */}
 
                                                     </ExpansionPanelSummary>
                                                     <ExpansionPanelDetails>
@@ -360,8 +428,12 @@ export class Publicacion extends Component {
                                                 </ExpansionPanel>
 
                                                 <ListGroup.Item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                    <Button style={{ display: this.state.displayBtnAceptarOferta }} variant="primary">Aceptar Oferta</Button>
+                                                    <Button style={{ display: this.state.displayBtnAceptarOferta }} variant="primary" onClick={() => { this.AbrirModalAceptarOferta(oferta.ofer_id) }}>Aceptar Oferta</Button>
                                                     {/* <Button variant="primary" onClick={() => { this.verOferta(oferta) }}>Ver Oferta</Button> */}
+                                                    <div style={{display:this.verificarEstadoOferta(oferta.ofer_estado)}}>
+                                                        <i style={{color:'#018B41',marginRight:10}} class="far fa-check-circle fa-2x"></i>
+                                                        <label>Oferta Aceptada</label>
+                                                    </div>                                                    
                                                 </ListGroup.Item>
                                             </Card>
 
@@ -433,10 +505,38 @@ export class Publicacion extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal >
+                    {/* Modal Aceptar Oferta */}
+
+                    <Dialog
+                        open={this.state.openModalAceptOferta}
+                        onClose={this.CerrarModalAceptarOferta}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"¿Como deseas contactar con el Ofertante?"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+
+                                <Button style={{ marginRight: 10 }} onClick={() => { this.CrearCita() }} variant="outline-secondary">
+                                    Ver Información
+                            </Button>
+                                <Button style={{ marginLeft: 10 }} onClick={() => { this.CerrarModalAceptarOferta() }} variant="outline-secondary">
+                                    Enviar Mensaje
+                            </Button>
+
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+
+                            <Button onClick={this.CerrarModalAceptarOferta} color="primary" autoFocus>
+                                Cancelar
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
 
 
 
-                    <ToastsContainer position={ToastsContainerPosition.TOP_CENTER} timer={5000} store={ToastsStore}/>
+                    <ToastsContainer position={ToastsContainerPosition.TOP_CENTER} timer={5000} store={ToastsStore} />
                 </React.Fragment >
 
             )

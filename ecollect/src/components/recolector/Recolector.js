@@ -14,7 +14,7 @@ var moment = require('moment')
 
 export default class Recolector extends Component {
 
-  itemsCountPerPage = 4;
+  itemsCountPerPage = 12;
   totalItemsCount = 0
   pageRangeDisplayed = 10;
   cambioDatos=false;

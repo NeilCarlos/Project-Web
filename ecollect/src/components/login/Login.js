@@ -37,7 +37,7 @@ export default class Login extends Component {
             // console.log(usuarioLocalstorage);
             if (usuarioLocalstorage.token != null) {
                 let userDetails = this.ObtenerDetalleToken(usuarioLocalstorage.token);
-                console.log(JSON.parse(userDetails));                
+                // console.log(JSON.parse(userDetails));                
                 if (userDetails) {                    
                     if (JSON.parse(userDetails).exp > ahora) {
                         return true;
@@ -94,6 +94,8 @@ export default class Login extends Component {
                 if (data.token) {
                     // Creando Usuario para localstorage
                     let detalle = JSON.parse(this.ObtenerDetalleToken(data.token));
+                    // console.log(detalle);
+                    
                     this.setState({
                         usuario: {
                             id: detalle.usu_id,
@@ -101,7 +103,7 @@ export default class Login extends Component {
                             email: detalle.usu_email,
                             token: data.token,
                             sesion: detalle.usu_tiposesion,
-                            img: `https://backend-ecollect.herokuapp.com/api/usuario/avatar/${1}`
+                            img: detalle.usu_urlimagen
                         }
                     })
                     this.mensaje.current.innerHTML = '';
@@ -141,7 +143,7 @@ export default class Login extends Component {
             return respuesta.json();
         }).then((data) => {
             if (data.message === 'ok') {
-                console.log(data);
+                // console.log(data);
                 // console.log(detalle);
                 this.setState({
                     usuario: {
@@ -186,7 +188,7 @@ export default class Login extends Component {
             return respuesta.json();
         }).then((data) => {
             if (data.message === 'ok') {
-                console.log(data);
+                // console.log(data);
                 // console.log(detalle);
                 this.setState({
                     usuario: {
