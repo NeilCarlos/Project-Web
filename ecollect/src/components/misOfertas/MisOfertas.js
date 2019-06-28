@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+var moment = require('moment')
 export default class MisOfertas extends Component {
 
     constructor(props) {
@@ -14,8 +15,7 @@ export default class MisOfertas extends Component {
     }
 
     componentDidMount() {
-        // ${this.idActual}
-        fetch(`https://backend-ecollect.herokuapp.com/api/oferta/misofertas/4`)
+        fetch(`https://backend-ecollect.herokuapp.com/api/oferta/misofertas/${this.idActual}`)
             .then(response => {
                 return response.json();
             })
@@ -27,18 +27,31 @@ export default class MisOfertas extends Component {
             });
     }
 
+    CalcularFechaPublicacion = (fecha) => {
+        let fecha1 = moment(fecha);
+        let hoy = moment(new Date());
+        let diferencia = hoy.diff(fecha1, 'day')
+        if (diferencia > 0) {
+            return `Hace ${diferencia} dias.`;
+        } else {
+            let diferencia = hoy.diff(fecha1, 'hours')
+            if (diferencia > 0) {
+                return `Hace ${diferencia} horas.`;
+            } else {
+                return `Hace unos minutos.`;
+            }
+        }
+    }
+
+    irAPublicacion = (idpublicacion) => {
+        // console.log("idpublicacion "+idpublicacion);
+        this.props.history.push(`/Publicacion/${idpublicacion}`);
+    }
+
     render() {
-        let publicaciones = [];
         return (
             <div>
-                {this.state.ofertas.map( async(oferta, i) => {
-                    await fetch(`https://backend-ecollect.herokuapp.com/api/publicacion/buscarById/${oferta.publi_id}`).then(response => {
-                        return response.json();
-                    })
-                        .then(data => {
-                            publicaciones = data.content;
-                            console.log(publicaciones[0]);
-                        });
+                {this.state.ofertas.map((oferta) => {
                     return (
                         <Card style={{ width: "100%" }}>
                             <Card.Body>
@@ -48,13 +61,13 @@ export default class MisOfertas extends Component {
                                         <hr />
                                         <Row>
                                             <Col sm={6}>
-                                                <Card.Img src={publicaciones[i].t_fotos[0].fot_img} />
-                                                <button className="btn btn-primary mb-5">Ver publicacion</button>
+                                                <Card.Img src={oferta.publi_foto} />
+                                                <button className="btn btn-primary mb-5" onClick={() => { this.irAPublicacion(oferta.publi_id) }}>Ver publicacion</button>
                                             </Col>
                                             <Col sm={6}>
-                                                <Card.Text> Publicado Por: {publicaciones[i].t_usuario.usu_nombre} </Card.Text>
-                                                <Card.Text> Fecha Publicacion: {publicaciones[i].publi_fecha} </Card.Text>
-                                                <Card.Text> Estado: {publicaciones[i].publi_estado} </Card.Text>
+                                                <Card.Text> Publicado Por: {oferta.usu_nombre} </Card.Text>
+                                                <Card.Text> Fecha Publicacion: {this.CalcularFechaPublicacion(oferta.publi_fecha)} </Card.Text>
+                                                <Card.Text> Estado: {oferta.publi_estado} </Card.Text>
                                             </Col>
                                         </Row>
 
@@ -62,7 +75,7 @@ export default class MisOfertas extends Component {
                                     <Col sm={3}>
                                         <Card.Title>Oferta</Card.Title>
                                         <hr />
-                                        <Card.Text> Fecha: {oferta.ofer_fecha} </Card.Text>
+                                        <Card.Text> Fecha: {this.CalcularFechaPublicacion(oferta.ofer_fecha)} </Card.Text>
                                         <Card.Text> Monto de Oferta: S/.{oferta.ofer_precio_oferta} </Card.Text>
 
                                     </Col>
