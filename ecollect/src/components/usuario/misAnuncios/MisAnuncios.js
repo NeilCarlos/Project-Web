@@ -22,10 +22,10 @@ export default class MisAnuncios extends Component {
                         <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     <li className="nav-item">
-                        <a className="nav-link active" data-toggle="tab" href="#todos">Todos</a>
+                        <a className="nav-link active" data-toggle="tab" href="#todos">Ativos</a>
 
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <a className="nav-link" data-toggle="tab" href="#activos">Activos</a>
                     </li>
                     <li className="nav-item">
@@ -33,7 +33,7 @@ export default class MisAnuncios extends Component {
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" data-toggle="tab" href="#caducados">Caducados</a>
-                    </li>
+                    </li> */}
 
                 </ul>
 
@@ -41,7 +41,7 @@ export default class MisAnuncios extends Component {
                     <div className="tab-pane fade show active" id="todos">
                         <Todos />
                     </div>
-                    <div className="tab-pane fade" id="activos">
+                    {/* <div className="tab-pane fade" id="activos">
                         <Activos />
                     </div>
                     <div className="tab-pane fade" id="pendientes">
@@ -49,7 +49,7 @@ export default class MisAnuncios extends Component {
                     </div>
                     <div className="tab-pane fade" id="caducados">
                         <Caducados />
-                    </div>
+                    </div> */}
                 </div>
             </React.Fragment>
         )

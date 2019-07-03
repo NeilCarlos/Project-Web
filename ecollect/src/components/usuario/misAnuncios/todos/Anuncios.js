@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import './Anuncios.css';
+// import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 var moment = require('moment');
 
@@ -26,6 +29,14 @@ export default class Anuncios extends Component {
         // , { publi_estado: 0 }
         axios.put(`https://backend-ecollect.herokuapp.com/api/publicacion/cambiarEstado/${anuncio.publi_id}/a`).then(res => {
             console.log(res);
+            console.log(res.data);
+            if(res.data.message==="updated"){
+                toast.success("Ok!")
+
+            }else{
+                toast.warn("Error!")
+            }
+            
 
         })
     }
@@ -99,19 +110,30 @@ export default class Anuncios extends Component {
                         {/* style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);" */}
                         <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
                             {/* Delete Post */}
-                            <button type="button" onClick={this.handleClickDelete} class="btn btn-outline-primary">Executed</button>
+                            {/* <button type="button" onClick={this.handleClickDelete} class="btn btn-outline-primary">Executed</button> */}
 
                             {/* Iplementando el Button */}
                             <button type="button" onClick={this.handleClick} class="btn btn-outline-primary">Marcar como Ejecutado</button>
+                            <ToastContainer
+                                 position="top-center"
+                                 autoClose={3000}
+                                 hideProgressBar={false}
+                                 newestOnTop
+                                 closeOnClick
+                                 rtl={false}
+                                 pauseOnVisibilityChange
+                                 draggable={false}
+                                 pauseOnHover={false}
+                            />
 
-                            <button type="button" className="btn btn-info">Setting</button>
+                            {/* <button type="button" className="btn btn-info">Setting</button>
                             <div className="btn-group" role="group">
                                 <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
                                     <a className="dropdown-item" href="#">Editar</a>
                                     <a className="dropdown-item" href="#">Finalizar</a>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
