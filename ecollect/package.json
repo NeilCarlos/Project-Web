@@ -5,7 +5,19 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+<<<<<<< Updated upstream
     "react-scripts": "3.0.1"
+=======
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.0.4",
+    "react-js-pagination": "^3.0.2",
+    "react-key-index": "^0.1.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "react-toastify": "^5.3.1",
+    "react-toasts": "^3.0.3",
+    "socket.io-client": "^2.2.0"
+>>>>>>> Stashed changes
   },
   "scripts": {
     "start": "react-scripts start",
