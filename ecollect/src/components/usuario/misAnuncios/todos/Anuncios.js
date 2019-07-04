@@ -4,12 +4,21 @@ import './Anuncios.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+// import { Link } from 'react-router-dom';
+// import { createBrowserHistory } from 'history';
+// import { createHashHistory} from 'history';
+
 var moment = require('moment');
+
 
 export default class Anuncios extends Component {
 
     constructor(props) {
         super(props);
+        // publicaciones: [],
+        // this.state = {
+        //     publicaciones: []
+        // }
 
         // this.obtenerUsuario();
     }
@@ -31,7 +40,7 @@ export default class Anuncios extends Component {
             console.log(res);
             console.log(res.data);
             if(res.data.message==="updated"){
-                toast.success("Ok!")
+                toast.success("Reciclado!")
 
             }else{
                 toast.warn("Error!")
@@ -40,6 +49,34 @@ export default class Anuncios extends Component {
 
         })
     }
+
+    handleClickOferta = (e) => {
+        
+        console.log("Holy, I'm Button Oferta");
+        // const history = createBrowserHistory ();
+        let{anuncio} = this.props
+        console.log(anuncio.publi_id);
+        // let history = history()
+        // let {history} = this.props
+        // console.log(history);
+        
+        
+        this.props.history.push(`/publicacion/${anuncio.publi_id}`);
+       
+        
+        
+        
+
+    }
+
+    handleClickReciclar = (e) => {
+        console.log("Holy, I'm Button Reciclar");
+        this.props.history.push("/reciclar");
+
+        
+    }
+
+    
 
 
 
@@ -73,6 +110,8 @@ export default class Anuncios extends Component {
     //     }
     // }
 
+    
+
 
     render() {
         let { anuncio } = this.props
@@ -99,7 +138,7 @@ export default class Anuncios extends Component {
                     <div className="col-lg-9">
                         <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
                             <div className="d-flex w-100 justify-content-between">
-                                <h5 className="mb-1">Description</h5>
+                                <h5 className="mb-1">Descripcion</h5>
                                 <small>{this.publicationTime(anuncio.publi_fecha)}</small>
                             </div>
                             <p className="mb-1">{anuncio.publi_descripcion}</p>
@@ -114,6 +153,10 @@ export default class Anuncios extends Component {
 
                             {/* Iplementando el Button */}
                             <button type="button" onClick={this.handleClick} class="btn btn-outline-primary">Marcar como Ejecutado</button>
+                            <button type="button" onClick={this.handleClickOferta} class="btn btn-outline-primary" >Oferta</button>
+                            <button type="button" onClick={this.handleClickReciclar} class="btn btn-outline-primary" >Reciclar</button>
+                            {/* component={Link} to="/crearvideov2" */}
+                            {/* <button type="button" onClick={()=>{this.handleClickOferta(anuncio.publi_id)}} class="btn btn-outline-primary">Oferta</button> */}
                             <ToastContainer
                                  position="top-center"
                                  autoClose={3000}

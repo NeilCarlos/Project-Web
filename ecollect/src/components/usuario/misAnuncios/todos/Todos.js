@@ -75,7 +75,7 @@ export default class Todos extends Component {
                             <div className="conteiner">
     
                                 {
-                                    publicaciones.map(anuncio=> (<Anuncios key={anuncio.publi_id} anuncio = {anuncio}/>))
+                                    publicaciones.map(anuncio=> (<Anuncios key={anuncio.publi_id} anuncio = {anuncio} history={this.props.history}/>))
                                 }
     
     

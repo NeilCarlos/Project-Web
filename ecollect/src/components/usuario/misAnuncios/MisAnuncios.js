@@ -39,7 +39,7 @@ export default class MisAnuncios extends Component {
 
                 <div id="myTabContent" className="tab-content">
                     <div className="tab-pane fade show active" id="todos">
-                        <Todos />
+                        <Todos  history={this.props.history}/>
                     </div>
                     {/* <div className="tab-pane fade" id="activos">
                         <Activos />
