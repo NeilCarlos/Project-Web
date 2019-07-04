@@ -61,9 +61,9 @@ export default class Todos extends Component {
         if(cargado){
             return (
                 <React.Fragment>
-                    <div>
+                    {/* <div>
                         Holy, I'm soy Todos los anuncios.
-                    </div>
+                    </div> */}
     
     
                     <div className="jumbotron">

@@ -8,10 +8,10 @@ export default class MisAnuncios extends Component {
     render() {
         return (
             <React.Fragment>
-                <div>
+                {/* <div>
                     Holy, I'm mis Anuncios.
 
-                </div>
+                </div> */}
 
 
 
@@ -19,7 +19,7 @@ export default class MisAnuncios extends Component {
 
                     <form className="form-inline my-2 my-lg-0">
                         <input className="form-control mr-sm-2" type="text" placeholder="Search" />
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                        <button className="btn btn-secondary my-2 my-sm-0" type="button">Search</button>
                     </form>
                     <li className="nav-item">
                         <a className="nav-link active" data-toggle="tab" href="#todos">Ativos</a>

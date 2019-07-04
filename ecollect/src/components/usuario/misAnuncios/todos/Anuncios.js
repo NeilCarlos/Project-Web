@@ -119,9 +119,9 @@ export default class Anuncios extends Component {
         return (
 
             <React.Fragment>
-                <div>
+                {/* <div>
                     Holy, soy el anuncio.
-                </div>
+                </div> */}
 
                 <div className="row">
                     {/* col-lg-3 */}
