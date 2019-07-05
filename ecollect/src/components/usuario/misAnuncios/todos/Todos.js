@@ -57,113 +57,235 @@ export default class Todos extends Component {
         let {cargado,publicaciones} = this.state;
         console.log(cargado);
         console.log(publicaciones);
+        let {cargadoS,searchAnuncios} = this.props
+        console.log(searchAnuncios);
+        console.log(cargadoS);
+        
+        
         
         if(cargado){
-            return (
-                <React.Fragment>
-                    {/* <div>
-                        Holy, I'm soy Todos los anuncios.
-                    </div> */}
-    
-    
-                    <div className="jumbotron">
-    
-                        <h1 className="display-3">Lista de Anuncios</h1>
-                        {/* <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> */}
-                        <hr className="my-4" />
-                        <div className="list-group">
-                            <div className="conteiner">
-    
-                                {
-                                    publicaciones.map(anuncio=> (<Anuncios key={anuncio.publi_id} anuncio = {anuncio} history={this.props.history}/>))
-                                }
-    
-    
-    
-                                {/* <div className="row">
-                                    <div className="col-lg-3">
-                                        <img src="http://placehold.it/300x300/" alt="" />
-    
-                                    </div>
-                                    <div className="col-lg-9">
-                                        <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
-                                            <div className="d-flex w-100 justify-content-between">
-                                                <h5 className="mb-1">List group item heading</h5>
-                                                <small>3 days ago</small>
-                                            </div>
-                                            <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                            <small>Donec id elit non mi porta.</small>
-                                        </a>
-                                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);"
-                                        <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                            <button type="button" class="btn btn-outline-primary">Destacar Anuncio</button>
-                                            <button type="button" class="btn btn-outline-primary">Marcar como vendido</button>
-                                            <button type="button" className="btn btn-info">Setting</button>
-                                            <div className="btn-group" role="group">
-                                                <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                                <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
-                                                    <a className="dropdown-item" href="#">Editar</a>
-                                                    <a className="dropdown-item" href="#">Finalizar</a>
+
+            if(!cargadoS){
+                return (
+                    <React.Fragment>
+                        {/* <div>
+                            Holy, I'm soy Todos los anuncios.
+                        </div> */}
+        
+        
+                        <div className="jumbotron">
+        
+                            <h1 className="display-3">Lista de Anuncios</h1>
+                            {/* <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> */}
+                            <hr className="my-4" />
+                            <div className="list-group">
+                                <div className="conteiner">
+        
+                                    {
+                                        publicaciones.map(anuncio=> (<Anuncios key={anuncio.publi_id} anuncio = {anuncio} history={this.props.history} />))
+                                    }
+        
+        
+                                     {/* searchAnuncios = {this.props.searchAnuncios}    */}
+                                    {/* <div className="row">
+                                        <div className="col-lg-3">
+                                            <img src="http://placehold.it/300x300/" alt="" />
+        
+                                        </div>
+                                        <div className="col-lg-9">
+                                            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
+                                                <div className="d-flex w-100 justify-content-between">
+                                                    <h5 className="mb-1">List group item heading</h5>
+                                                    <small>3 days ago</small>
                                                 </div>
+                                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small>Donec id elit non mi porta.</small>
+                                            </a>
+                                            style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);"
+                                            <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn btn-outline-primary">Destacar Anuncio</button>
+                                                <button type="button" class="btn btn-outline-primary">Marcar como vendido</button>
+                                                <button type="button" className="btn btn-info">Setting</button>
+                                                <div className="btn-group" role="group">
+                                                    <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
+                                                        <a className="dropdown-item" href="#">Editar</a>
+                                                        <a className="dropdown-item" href="#">Finalizar</a>
+                                                    </div>
+                                                </div>
+        
                                             </div>
-    
                                         </div>
                                     </div>
+                                    <hr /> */}
+                                    {/* <div className="row">
+                                        <div className="col-lg-3">
+                                            <img src="http://placehold.it/300x300/" alt="" />
+        
+        
+                                        </div>
+                                        <div className="col-lg-9">
+                                            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div className="d-flex w-100 justify-content-between">
+                                                    <h5 className="mb-1">List group item heading</h5>
+                                                    <small className="text-muted">3 days ago</small>
+                                                </div>
+                                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small className="text-muted">Donec id elit non mi porta.</small>
+                                            </a>
+        
+                                            <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn btn-outline-primary">Destacar Anuncio</button>
+                                                <button type="button" class="btn btn-outline-primary">Marcar como vendido</button>
+                                                <button type="button" className="btn btn-info">Setting</button>
+                                                <div className="btn-group" role="group">
+                                                    <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
+                                                        <a className="dropdown-item" href="#">Editar</a>
+                                                        <a className="dropdown-item" href="#">Finalizar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> */}
                                 </div>
-                                <hr /> */}
-                                {/* <div className="row">
-                                    <div className="col-lg-3">
-                                        <img src="http://placehold.it/300x300/" alt="" />
-    
-    
+                                {/* <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">List group item heading</h5>
+                                        <small>3 days ago</small>
                                     </div>
-                                    <div className="col-lg-9">
-                                        <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                                            <div className="d-flex w-100 justify-content-between">
-                                                <h5 className="mb-1">List group item heading</h5>
-                                                <small className="text-muted">3 days ago</small>
-                                            </div>
-                                            <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                            <small className="text-muted">Donec id elit non mi porta.</small>
-                                        </a>
-    
-                                        <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                            <button type="button" class="btn btn-outline-primary">Destacar Anuncio</button>
-                                            <button type="button" class="btn btn-outline-primary">Marcar como vendido</button>
-                                            <button type="button" className="btn btn-info">Setting</button>
-                                            <div className="btn-group" role="group">
-                                                <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                                <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
-                                                    <a className="dropdown-item" href="#">Editar</a>
-                                                    <a className="dropdown-item" href="#">Finalizar</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <small>Donec id elit non mi porta.</small>
+                                </a> */}
+        
+                                {/* <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">List group item heading</h5>
+                                        <small className="text-muted">3 days ago</small>
                                     </div>
-                                </div> */}
+                                    <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <small className="text-muted">Donec id elit non mi porta.</small>
+                                </a> */}
                             </div>
-                            {/* <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
-                                <div className="d-flex w-100 justify-content-between">
-                                    <h5 className="mb-1">List group item heading</h5>
-                                    <small>3 days ago</small>
-                                </div>
-                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                <small>Donec id elit non mi porta.</small>
-                            </a> */}
-    
-                            {/* <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                                <div className="d-flex w-100 justify-content-between">
-                                    <h5 className="mb-1">List group item heading</h5>
-                                    <small className="text-muted">3 days ago</small>
-                                </div>
-                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                <small className="text-muted">Donec id elit non mi porta.</small>
-                            </a> */}
                         </div>
-                    </div>
-    
-                </React.Fragment>
-            )
+        
+                    </React.Fragment>
+                )
+            }else{
+                console.log("Holy soy Search");
+                return (
+                    <React.Fragment>
+                        {/* <div>
+                            Holy, I'm soy Todos los anuncios.
+                        </div> */}
+        
+        
+                        <div className="jumbotron">
+        
+                            <h1 className="display-3">Lista de Anuncios</h1>
+                            {/* <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> */}
+                            <hr className="my-4" />
+                            <div className="list-group">
+                                <div className="conteiner">
+        
+                                    {
+                                        searchAnuncios.map(searchAnuncios=> (<Anuncios key={searchAnuncios.publi_id} searchAnuncios = {searchAnuncios} history={this.props.history} cargadoS={this.props.cargadoS}/>))
+                                    }
+        
+        
+                                    {/* searchAnuncios = {this.props.searchAnuncios}    */}
+                                    {/* <div className="row">
+                                        <div className="col-lg-3">
+                                            <img src="http://placehold.it/300x300/" alt="" />
+        
+                                        </div>
+                                        <div className="col-lg-9">
+                                            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
+                                                <div className="d-flex w-100 justify-content-between">
+                                                    <h5 className="mb-1">List group item heading</h5>
+                                                    <small>3 days ago</small>
+                                                </div>
+                                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small>Donec id elit non mi porta.</small>
+                                            </a>
+                                            style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);"
+                                            <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn btn-outline-primary">Destacar Anuncio</button>
+                                                <button type="button" class="btn btn-outline-primary">Marcar como vendido</button>
+                                                <button type="button" className="btn btn-info">Setting</button>
+                                                <div className="btn-group" role="group">
+                                                    <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
+                                                        <a className="dropdown-item" href="#">Editar</a>
+                                                        <a className="dropdown-item" href="#">Finalizar</a>
+                                                    </div>
+                                                </div>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr /> */}
+                                    {/* <div className="row">
+                                        <div className="col-lg-3">
+                                            <img src="http://placehold.it/300x300/" alt="" />
+        
+        
+                                        </div>
+                                        <div className="col-lg-9">
+                                            <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div className="d-flex w-100 justify-content-between">
+                                                    <h5 className="mb-1">List group item heading</h5>
+                                                    <small className="text-muted">3 days ago</small>
+                                                </div>
+                                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                                <small className="text-muted">Donec id elit non mi porta.</small>
+                                            </a>
+        
+                                            <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn btn-outline-primary">Destacar Anuncio</button>
+                                                <button type="button" class="btn btn-outline-primary">Marcar como vendido</button>
+                                                <button type="button" className="btn btn-info">Setting</button>
+                                                <div className="btn-group" role="group">
+                                                    <button id="btnGroupDrop3" type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" >
+                                                        <a className="dropdown-item" href="#">Editar</a>
+                                                        <a className="dropdown-item" href="#">Finalizar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> */}
+                                </div>
+                                {/* <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">List group item heading</h5>
+                                        <small>3 days ago</small>
+                                    </div>
+                                    <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <small>Donec id elit non mi porta.</small>
+                                </a> */}
+        
+                                {/* <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">List group item heading</h5>
+                                        <small className="text-muted">3 days ago</small>
+                                    </div>
+                                    <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <small className="text-muted">Donec id elit non mi porta.</small>
+                                </a> */}
+                            </div>
+                        </div>
+        
+                    </React.Fragment>
+                )
+
+                
+            }
+           
+
+            
+
+            
         }else{
             return( 
                 <div className="center"><Spinner style={{marginTop:50}}  animation="border" variant="success" /> </div>

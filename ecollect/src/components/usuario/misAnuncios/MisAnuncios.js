@@ -5,6 +5,38 @@ import Pendientes from './pendientes/Pendientes';
 import Caducados from './caducados/Caducados';
 
 export default class MisAnuncios extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            publicaciones: [],
+            cargado: false
+
+        }
+
+        this.inputSearch = React.createRef();
+        
+    }
+
+
+    searchPublicationByName = (e)=>{
+        e.preventDefault();
+        console.log(this.inputSearch.current.value);
+        
+
+        fetch(`https://backend-ecollect.herokuapp.com/api/publicacion/buscarByNombre/${this.inputSearch.current.value}/p`).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data.content);
+                this.setState({
+                    publicaciones: data.content,
+                    cargado: true,
+                });
+    
+            });
+
+    }
+    
     render() {
         return (
             <React.Fragment>
@@ -18,8 +50,8 @@ export default class MisAnuncios extends Component {
                 <ul className="nav nav-tabs">
 
                     <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="text" placeholder="Search" />
-                        <button className="btn btn-secondary my-2 my-sm-0" type="button">Search</button>
+                        <input ref={this.inputSearch} className="form-control mr-sm-2" type="search" placeholder="Search" />
+                        <button className="btn btn-secondary my-2 my-sm-0" type="submit" onClick={this.searchPublicationByName}>Search</button>
                     </form>
                     <li className="nav-item">
                         <a className="nav-link active" data-toggle="tab" href="#todos">Activos</a>
@@ -39,7 +71,7 @@ export default class MisAnuncios extends Component {
 
                 <div id="myTabContent" className="tab-content">
                     <div className="tab-pane fade show active" id="todos">
-                        <Todos  history={this.props.history}/>
+                        <Todos  history={this.props.history} searchAnuncios = {this.state.publicaciones} cargadoS = {this.state.cargado}/>
                     </div>
                     {/* <div className="tab-pane fade" id="activos">
                         <Activos />
