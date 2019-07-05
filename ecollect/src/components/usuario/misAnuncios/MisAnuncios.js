@@ -22,7 +22,7 @@ export default class MisAnuncios extends Component {
                         <button className="btn btn-secondary my-2 my-sm-0" type="button">Search</button>
                     </form>
                     <li className="nav-item">
-                        <a className="nav-link active" data-toggle="tab" href="#todos">Ativos</a>
+                        <a className="nav-link active" data-toggle="tab" href="#todos">Activos</a>
 
                     </li>
                     {/* <li className="nav-item">
